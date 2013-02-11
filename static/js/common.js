@@ -5,15 +5,35 @@ function shockwave(src, width, height, flashvar){
 	return '<embed src="' + src + '" width="' + width + '" height="' + height + '" wmode="transparent" allowScriptAccess="always"></embed>';
 }
 
-function pnotice(msg, script, width, height) {
-	var script = script ? script : '';
-	var width = width ? width : 400;
-	var height = height ? height : 110;
-	floatwin('open_confirm', -1, width, height);
-	$('floatwin_confirm').className = 'mainbox';
-	$('floatwin_confirm_mask').className = '';
-	$('floatwin_confirm_content').style.padding = '15px';
-	$('floatwin_confirm_content').innerHTML = msg + (script ? '<br /><button onclick="' + script + ';floatwin(\'close_confirm\')">ȷ��</button>' : '');
+function showmsg(){
+	var msg = arguments[0];
+	var width = arguments[1] ? arguments[1] : 400;
+	var height = arguments[2] ? arguments[2] : 200;
+
+	var win = $('<div></div>');
+	win.attr('class', 'box popup');
+	win.css({'width':width, 'height':height});
+	
+	var title = $('<h2></h2>');
+	title.html('系统提示');
+	
+	var content = $('<div></div>');
+	content.attr('class', 'content');
+	content.html(msg);
+
+	win.append(title);
+	win.append(content);
+
+	$('body').append(win);
+
+	popupelement(win);
+}
+
+function popupelement(element){
+	var top = ($(window).height() - element.outerHeight()) / 2 + $(window).scrollTop();
+	var left = ($(window).width() - element.outerWidth()) / 2 + $(window).scrollLeft();
+	element.css({'top':top, 'left':left});
+	element.animate({'opacity':'show','top':'-=80px'}, 1000);
 }
 
 function getcookie(Name){

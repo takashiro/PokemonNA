@@ -1,25 +1,23 @@
-function fw_rename(mid){
+ï»¿function popup_rename(mid){
 	var html = '<form action="pkw.php?index=mypokemon&action=rename&mid='+mid+'" method="post">';
-	html+= '<input type="hidden" name="formhash" value="'+FORMHASH+'" />';
-	html+= '<p>ĞÂÃû×Ö£º<input type="text" name="newname" maxlength=15 /></p>';
-	html+= '<button type="submit" class="submit" name="renamesubmit">È·¶¨</button>';
+	html+= '<p>æ–°åå­—ï¼š<input type="text" name="newname" maxlength=15 /></p>';
+	html+= '<button type="submit" class="submit" name="renamesubmit">ç¡®å®š</button>';
 	html+= '</form>';
-	pnotice(html);
+	showmsg(html);
 }
 
-function fw_give(mid){
+function popup_give(mid){
 	var html = '<form action="pkw.php?index=mypokemon&action=give&mid='+mid+'" method="post">';
-	html+= '<input type="hidden" id="formhash" name="formhash" value="'+FORMHASH+'" />';
-	html+= '<p>¶Ô·½ÓÃ»§Ãû£º<input type="text" id="receiver" name="receiver" maxlength=15 /></p>';
-	html+= '<button type="submit" class="submit" id="givesubmit" name="givesubmit">È·¶¨</button>';
+	html+= '<p>å¯¹æ–¹ç”¨æˆ·åï¼š<input type="text" id="receiver" name="receiver" maxlength=15 /></p>';
+	html+= '<button type="submit" class="submit" id="givesubmit" name="givesubmit">ç¡®å®š</button>';
 	html+= '</form>';
-	pnotice(html);
+	showmsg(html);
 }
 
-function fw_throw(mid){
-	msg = '<p>ÄúÈ·ÈÏ¶ªÆúÂğ£¿</p>';
-	msg+= '<p>ÇëÊäÈëÄúµÄµÇÂ¼ÃÜÂë£º<input type="text" type="password" id="password" name="password" /></p>';
-	msg+= '<button class="submit" onclick="location.href=\'pkw.php?index=mypokemon&action=throw&id='+mid+'\'">È·ÈÏ</button>&nbsp;';
-	msg+= '<button class="submit" onclick="floatwin(\'close_confirm\')">È¡Ïû</button>';
-	pnotice(msg, '', '', 140);
+function popup_throw(mid){
+	msg = '<p>æ‚¨ç¡®è®¤ä¸¢å¼ƒå—ï¼Ÿ</p>';
+	msg+= '<p>è¯·è¾“å…¥æ‚¨çš„ç™»å½•å¯†ç ï¼š<input type="text" type="password" id="password" name="password" /></p>';
+	msg+= '<button class="submit" onclick="location.href=\'pkw.php?index=mypokemon&action=throw&id='+mid+'\'">ç¡®è®¤</button>&nbsp;';
+	msg+= '<button class="submit" onclick="floatwin(\'close_confirm\')">å–æ¶ˆ</button>';
+	showmsg(msg);
 }

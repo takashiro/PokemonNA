@@ -1,7 +1,8 @@
 ﻿{template header}
+
 <div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 我<!--{if !$box}-->随身携带<!--{else}-->存放在研究所<!--{/if}-->的口袋怪兽</div>
 <!--{if !$box}--><script type="text/javascript">$('pkwnav_mypokemon').href += '&box=1';</script><!--{/if}-->
-<script type="text/javascript" src="Pokemon/js/mypokemon.js"></script>
+<script type="text/javascript" src="./static/js/mypokemon.js"></script>
 <!--{loop $pokelist $mon}-->
 <div class="mainbox formbox"><h1>$mon[name]的信息 (宠物ID：$mon[id])</h1>
   <table>
@@ -60,9 +61,9 @@
 		<!--{else}-->
 	  	<button class="submit" onclick="location.href='mypokemon.php?action=outofbox&id=$mon[id]'">传回</button>
 		<!--{/if}-->
-	  	<button class="submit" onclick="fw_give($mon[id])">赠送</button>
-	  	<button class="submit" onclick="fw_throw($mon[id])">丢弃</button>
-	  	<button class="submit" onclick="fw_rename($mon[id])">改名</button>
+	  	<button class="submit" onclick="popup_give($mon[id])">赠送</button>
+	  	<button class="submit" onclick="popup_throw($mon[id])">丢弃</button>
+	  	<button class="submit" onclick="popup_rename($mon[id])">改名</button>
 	  	</div>
 		<!--{/if}-->
 	  </td>
@@ -70,5 +71,7 @@
   </table>
 </div>
 <!--{/loop}-->
+
 $multipage
+
 {template footer}

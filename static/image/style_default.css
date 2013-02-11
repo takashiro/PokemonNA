@@ -1,7 +1,6 @@
 
 * { word-wrap: break-word; }
-body {background: #FFF; text-align: center; }
-li {list-style: none;}
+body {background: #FFF; text-align: center; padding:0; margin:0;}
 body, td, input, textarea, select, button { color: #000; font: 12px/1.6em 微软雅黑, Arial, sans-serif; }
 body, ul, dl, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset { margin: 0; padding: 0; }
 h1, h2, h3, h4, h5, h6 { font-size: 1em; }
@@ -28,7 +27,7 @@ input[disabled]{background-color:#E1E1E1;}
 input[id="formhash"]{display:none;}
 /* ~~~~ Layout & Block Style ~~~~ */
 
-.wrap { width:980px; text-align:left; margin:auto;}
+.wrap {width:980px; text-align:left; margin:auto;}
 .notice { font-size: 14px; border: 1px solid #EDEDCE; background: #FFFFF2 url(./common/notice.gif) no-repeat 1em 0.7em; padding: 0.5em 1em 0.3em 3em; margin-bottom: 10px; color: #090; }
 .message { margin: 5em 10em !important; }
 	.message h1 { line-height: 26px; border: 1px solid; background: #FFF url("./common/portalbox_bg.gif"); background-repeat: repeat-x; background-position: 0 0; border-color: #FFF #FFF #CAD9EA #FFF; padding-left: 1em; margin-bottom: 1em; }
