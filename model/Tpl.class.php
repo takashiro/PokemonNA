@@ -41,7 +41,6 @@ class Tpl{
 		$template = preg_replace("/ \?\>[\n\r]*\<\? /s", " ", $template);
 
 		$template = preg_replace("/\"(http)?[\w\.\/:]+\?[^\"]+?&[^\"]+?\"/e", "Tpl::transamp('\\0')", $template);
-		$template = preg_replace("/\<script[^\>]*?src=\"(.+?)\"(.*?)\>\s*\<\/script\>/ise", "Tpl::stripscriptamp('\\1', '\\2')", $template);
 
 		$template = preg_replace("/[\n\r\t]*\{block\s+([a-zA-Z0-9_]+)\}(.+?)\{\/block\}/ies", "Tpl::stripblock('\\1', '\\2')", $template);
 
@@ -63,12 +62,6 @@ class Tpl{
 		$expr = str_replace("\\\"", "\"", preg_replace("/\<\?\=(\\\$.+?)\?\>/s", "\\1", $expr));
 		$statement = str_replace("\\\"", "\"", $statement);
 		return $expr.$statement;
-	}
-
-	static public function stripscriptamp($s, $extra) {
-		$extra = str_replace('\\"', '"', $extra);
-		$s = str_replace('&amp;', '&', $s);
-		return "<script src=\"$s\" type=\"text/javascript\"$extra></script>";
 	}
 
 	static public function stripblock($var, $s) {
