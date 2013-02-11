@@ -5,25 +5,16 @@
 	<div class="wrap">
 		<div id="footlink">
 			<p>
-				<strong><a href="$siteurl" target="_blank">$sitename</a></strong>
-				<!--{if $icp}-->( <a href="http://www.miibeian.gov.cn/" target="_blank">$icp</a>)<!--{/if}-->
+				<strong><a href="$siteurl" target="_blank">Pokemon WG</a></strong>
 				 - <a href="mailto:$adminemail">联系我们</a>
-				<!--{if $allowviewstats}--> - <a href="stats.php">统计</a><!--{/if}-->
-				<!--{if $archiverstatus}--> - <a href="archiver/" target="_blank">Archiver</a><!--{/if}-->
-				<!--{if $wapstatus}--> - <a href="wap/" target="_blank">WAP</a><!--{/if}-->
-				<!--{if $statcode}--> - $statcode</span><!--{/if}-->
 			</p>
 			<p class="smalltext">
-				GMT$timenow[offset], $timenow[time]
+				GMT<!--{if $_CONFIG[timezone] >= 0}-->+<!--{/if}-->$_CONFIG[timezone], {eval echo rgmdate($_G[timestamp])}
 			</p>
 		</div>
 		<div id="rightinfo">
-			<p>Style Powered by <strong><a href="http://www.discuz.net" target="_blank">Discuz!</a></strong> <em>6.0.0</em><!--{if !empty($boardlicensed)}--> <a href="http://license.comsenz.com/?pid=1&host=$_SERVER[HTTP_HOST]" target="_blank">Licensed</a><!--{/if}--></p>
-			<p class="smalltext">&copy; 2001-2009 <a href="http://www.comsenz.com" target="_blank">Comsenz Inc.</a></p>
-		</div>
-		<div class="copyright">
-			<p><strong><a href="http://www.pokemon.com" target="_blank">Pokemon WG</a></strong> <em>$_CONFIG[version]</em><!--{if !empty($boardlicensed)}--> <a href="http://www.pokemon.com/?host=$_SERVER[HTTP_HOST]" target="_blank">Licensed</a><!--{/if}--></p>
-			<p class="smalltext">&copy; 2007-2009 <a href="http://www.pokemon.com" target="_blank" title="Takashiro Satoshi">S. Takashiro</a></p>
+			<p>Powered by <strong><a href="http://pokemon.3-a.net" target="_blank">Poekmon WG</a></strong> <em>{S_VERSION}</em></p>
+			<p class="smalltext">&copy; 2001-2009 <a href="http://inu.3-a.net/?1" target="_blank">Satoshi Takashiro</a></p>
 		</div>
 	</div>
 </div>
