@@ -1,0 +1,52 @@
+<!--{template header}-->
+
+<style type="text/css">
+<!--{if !$action}-->
+.pokelist{text-align:center;height:740px;}
+.pokelist li{float:left;width:18%;border:parent;margin:1%;cursor:pointer}
+<!--{elseif $action == 'zukan'}-->
+.pokelist li{float:left;width:13%; height:210px;border:1px #9DB3C5 solid;margin:0.7%;padding:10px;cursor:pointer}
+<!--{/if}-->
+.pokelist .name{font-weight:bold}
+</style>
+
+<div id="nav"><a href="center.php">Pokemon WG</a> &raquo; <a href="institude.php">研究所</a> &raquo; 全国图鉴</div>
+
+<div class="mainbox listbox">
+	<div class="headactions">
+	<!--{loop Pokemon::$atb $k $v}--><a href="pokedex.php?atb=$k">$v</a><!--{/loop}-->
+	</div>
+	<h1>全国图鉴</h1>
+		<ul class="pokelist">
+			<!--{loop $pokelist $pokemon}-->
+			<li id="mon{$pokemon[id]}" class="menu" onclick="SWFmon($pokemon[id])">
+				<p><img src="$localpath/pokemon/$pokemon[id].gif" width="130" height="120" /></p>
+				<p>编号：$pokemon[id]</p>
+				<p class="name">$pokemon[name_j] $pokemon[name_c]<br />$pokemon[name_e]</p>
+				<p>属性：$pokemon[atb1] $pokemon[atb2]</p>
+				<p>性别比：$pokemon[gender]</p>
+
+				<ul id="mon{$pokemon[id]}_menu" class="popupmenu_popup headermenu_popup">
+					<p><b>身高</b>：$pokemon[height]m <b>体重</b>：$pokemon[weight]kg</p>
+					<p><b>ＨＰ</b>：$pokemon[hp] <b>速度</b>：$pokemon[spd]</p>
+					<p><b>攻击</b>：$pokemon[atk] <b>防御</b>：$pokemon[def]</p>
+					<p><b>特攻</b>：$pokemon[stk] <b>特防</b>：$pokemon[sdf]</p>
+					<p><b>生蛋组</b>：$pokemon[eggtype1]组<!--{if $pokemon['eggtype2']}--> / $pokemon[eggtype2]组<!--{/if}--></p>
+					<p><b>成长速度组</b>：$pokemon[growthtype]</p>
+					<p><b>孵化天数</b>：$pokemon[eggstep] 天</p>
+					<p>$pokemon[intro]</p>
+				</ul>
+			</li>
+			<!--{/loop}-->
+		</ul>
+</div>
+
+<div class="multipage">$multipage</div>
+
+<script type="text/javascript">
+function SWFmon(pokeid){
+	pnotice(shockwave('$localpath/vector/'+pokeid+'.swf', '100%', '100%', ''), '', 500, 500);
+}
+</script>
+
+<!--{template footer}-->

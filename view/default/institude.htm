@@ -1,0 +1,85 @@
+﻿{template header}
+
+<script type="text/javascript">
+function pkw_select(selected){
+	$('#selectedimg').html(shockwave('$localpath/vector/'+selected+'.swf', '100%', 455, ''));
+	$('#selected').val(selected);
+}
+var Avail_mon = Array($_CONFIG['selectable_pokemon']);
+function random_select(){
+	pkw_select(Avail_mon[Math.floor(Math.random()*Avail_mon.length)]);
+}
+setTimeout("random_select()", 0);
+</script>
+
+<div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 研究所</div>
+
+<div class="box"><h4>大木研究所</h4>
+	<table>
+	  <tr>
+		<td title="宠物图鉴" style="color:gray"><h3><a href="pokedex.php">宠物图鉴<br /><img src="$localpath/common/zukan.gif" /></a></h3>
+		这里可以查看所有宠物小精灵的资料</td>
+		<td title="获取精灵球">
+		<h3>获取精灵球<br /><img src="$localpath/favicon.gif" /><img src="$localpath/favicon.gif" /><img src="$localpath/favicon.gif" /></h3>
+		每一个新人训练家到这里可以获取5个普通精灵球<br /><br />
+		<h3>选择最初的宠物小精灵</h3>从下列的宠物小精灵中决定一个吧！<br /><br />
+		<h3><a href="view.php">查看训练师登记表</a></h3>这里可以查到所有的训练师，你可以向他们发出挑战！</td>
+		<td width=200>欢迎来到我的研究所！<br />你可以去查看精灵图鉴，或者领取5个普通精灵球。</td>
+		<td width=143><img src="$localpath/common/ooki.gif" /></td>
+	  </tr>
+	</table>
+</div>
+
+<form action="institude.php" method="post">
+
+<div class="mainbox" style="float:left;width:40%"><h1>您选择的宠物</h1>
+	<div id="selectedimg"></div>
+</div>
+
+<div class="mainbox listbox" style="float:right;width:55%;">
+	<div class="headactions">
+		<a href="###" onclick="random_select()">随机选择一个</a>
+	</div>
+	<h1>选择自己最初的Pokemon！</h1>
+	<table>
+		<thead>
+			<tr><td>中文名</td><td>日文名</td><td>英文名</td><td>属性</td><td>性别比例</td></tr>
+		</thead>
+		<!--{loop $pokelist $pokemon}-->
+		<tr onclick="pkw_select($pokemon[id])" id="li_$pokemon[id]" title="$pokemon[introduction]">
+			<td class="name">$pokemon[name_c]</td>
+			<td>$pokemon[name_j]</td>
+			<td>$pokemon[name_e]</td>
+			<td>$pokemon[atb1] $pokemon[atb2]</td>
+			<td>$pokemon[gender]</td>
+		</tr>
+		<!--{/loop}-->
+	</table>
+	<input type="hidden" id="selected" name="selected" value="0" />
+</div>
+
+<div class="box" style="float:right;width:55%;">
+	<h4>开始新的冒险！</h4>
+	<div class="body">
+		<p>
+			这只口袋怪兽的名字：
+			<label><input type="radio" name="namelang" value='j' />日文</label>
+			<label><input type="radio" name="namelang" value='c' />中文</label>
+			<label><input type="radio" name="namelang" value='e' />英文</label>
+		</p>
+
+		<p>你的名字：<input type="text" name="trainer_name" /></p>
+		
+		<p>E-mail地址：<input type="text" name="trainer_email" /></p>
+		<p>登录密码：<input type="password" name="trainer_password" /></p>
+		<p>确认密码：<input type="password" name="trainer_password2" /></p>
+
+		<div class="post_buttons">
+			<button type="submit" class="submit" name="registersubmit">开始冒险</button>
+		</div>
+	</div>
+</div>
+
+</form>
+
+{template footer}

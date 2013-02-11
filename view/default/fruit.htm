@@ -1,0 +1,25 @@
+﻿{template header}
+<div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 树果屋</div>
+<div class="container">
+<div class="side">
+	<div><h2>您要做什么？</h2>
+	 <ul>
+	  <li><a href="fruit.php?item=plant">种植树果</a></li>
+	  <li><a href="fruit.php?item=prock">制作能量方块</a></li>
+	  <li><a href="fruit.php?item=pread">制作面包</a></li>
+	 </ul>
+	</div>
+</div>
+<div class="content">
+	<!--{if $item == 'prock'}-->
+      <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="550" height="400">
+        <param name="movie" value="$localpath/swf/prock.swf" />
+        <param name="quality" value="high" />
+		<param name="menu" value="false" />
+		<param name="flashVars" value="username=$discuz_user" />
+        <embed src="$localpath/swf/prock.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="550" height="400" quality="high" flashVars="username=$discuz_user" menu="false"></embed>
+      </object>	
+    <!--{/if}-->
+</div>
+</div>
+{template footer}

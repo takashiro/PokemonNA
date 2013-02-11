@@ -1,0 +1,108 @@
+﻿<!--{template header}-->
+
+<style type="text/css">
+div.policeoffice{width:49%;float:right};
+</style>
+
+<div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 精灵中心</div>
+
+<div class="content">
+	<div class="box" style="width:49%;float:left"><h4><img src="$localpath/favicon.gif" /><img src="$localpath/logo.gif" /><br />欢迎来到宠物小精灵中心！</h4>
+	<div style="text-align:right">Pocket Monster WG v1.0.0 for Discuz! By Takashiro Satoshi</div>
+	</div>
+	<div class="mainbox" style="width:49%;float:right"><h1>ポケモン救治中心</h1>
+	<table>
+		<tr><td rowspan=3><img src="$localpath/common/joy.gif" /></td>
+		<td>
+			<p>乔伊小姐温馨提示：<br />精灵中心在救治中的精灵<!--{if in_array($minute, array(15,45))}-->现在已经<!--{else}-->将会在{$joy_time}<!--{/if}-->全部送出，请注意查看自己的宠物是否已经恢复！谢谢合作！</p>
+		</td></tr>
+		<form id="rescueform" name="rescueform" action="module.php" method="post" onsubmit="$('rescuesubmit').click();">
+		<input type="text" id="formhash" name="formhash" value="{FORMHASH}" />
+		<tr><td>救治费用：$_CONFIG[rescue_fee]<br />需要救治的宠物ID：<input type="text" id="pokemonid" name="pokemonid" size=10 maxlength="8" /></td></tr>
+		<tr><td><button type="submit" class="submit" id="rescuesubmit" name="rescuesubmit" onclick="ajaxpost('rescueform', 'ajaxwaitid')">确认</button></td></tr>
+		</form>
+	</table>
+	</div>
+	<div class="mainbox" style="width:49%;float:left"><h1>ポケモン银行</h1>
+		[AUTO SERVICE]
+<script type="text/javascript">
+function changeService(service){
+	$('#deposit').attr('disabled', service != 'deposit');
+	$('#draw').attr('disabled', service != 'draw');
+	$('#' + service).select();
+}
+</script>
+		<p>您现有{$extcre[title]}<span id="bank_mycredit">{$extcredit}</span>{$extcre[unit]}，宠物币「现金：<span id="bank_mycash">$my[cash]</span> 存款：<span id="bank_mydeposit">$my[deposit]</span>」</p>
+		<div>
+			<form id="bankform" name="bankform" action="module.php" method="post" onsubmit="$('banksubmit').click()">
+			<input type="hidden" id="formhash" name="formhash" value="{FORMHASH}" />
+			<table>
+              <tr><td>办理转换业务</td><td><input type="text" id="exchange" name="exchange" maxlength="10" /></td></tr>
+              <tr onclick="changeService('deposit')"><td>办理存款业务</td><td><input type="text" id="deposit" name="deposit" maxlength="10" /></td></tr>
+              <tr onclick="changeService('draw')"><td>办理取款业务</td><td><input type="text" id="draw" name="draw" maxlength="10" /></td></tr>
+              <tr><td>&nbsp;</td><td><button type="submit" class="submit" id="banksubmit" name="banksubmit" onclick="ajaxpost('bankform', 'ajaxwaitid')">确认</button></td></tr>
+            </table><br />
+			</form>
+		</div>
+	</div>
+	<div class="mainbox policeoffice"><h1>ポケモン警察署</h1>
+		<div>
+		<form action="module.php" method="post">
+		<input type="hidden" name="formhash" value="{FORMHASH}" />
+			<table>
+			  <tr>
+				<td>被举报人：<input type="text" name="name" maxlength="15" /></td>
+				<td rowspan=3><img src="$localpath/common/kinsa.gif" /></td>
+			  </tr>
+			  <tr>
+				<td>举报原因：<br /><textarea rows="10" cols="40" name="reason"></textarea></td>
+			  </tr>
+			  <tr>
+				<td><button type="submit" class="submit" name="name""reportsubmit">确认</button></td>
+			  </tr>
+			</table>
+		</form>
+		</div>
+	</div>
+</div>
+
+<div class="side">
+	<!--{if $toptrainer[owner]}-->
+	<div><h2>最佳训练家（$toptrainer[owner]）</h2>
+	  <ul>
+		<li><img src="$localpath/pokemon/$toptrainer[pokeid].gif" width="130" height="120" /></li>
+		<li>Lv.$toptrainer[level] $toptrainer[name]</li>
+		<li>勋章数：$toptrainer[badgenum]</li>
+	  </ul>
+	</div>
+	<!--{/if}-->
+	<!--{if $topcoordinator[owner]}-->
+	<div><h2>最佳协调家（$topcoordinator[owner]）</h2>
+	  <ul>
+		<li><img src="$localpath/pokemon/$topcoordinator[pokeid].gif" width="130" height="120" /></li>
+		<li>Lv.$topcoordinator[level] $topcoordinator[name]</li>
+		<li>缎带数：$topcoordinator[ribonnum]</li>
+	  </ul>
+	</div>
+	<!--{/if}-->
+	<!--{if $topbreeder[owner]}-->
+	<div><h2>最佳培育家（$topbreeder[owner]）</h2>
+	  <ul>
+		<li><img src="$localpath/pokemon/$topbreeder[pokeid].gif" width="130" height="120" /></li>
+		<li>Lv.$topbreeder[level] $topbreeder[name]</li>
+	  </ul>
+	</div>
+	<!--{/if}-->
+</div>
+
+<div class="box" id="online" style="clear:both">
+	<h4><strong style="color:black">在战会员状况</strong> - $onlinenum 人</h4>
+	<dl id="onlinelist"><ul class="userlist">
+	<!--{if $onlinelist}-->
+	<!--{loop $onlinelist $user}-->
+	<li><a href='view.php?username=$user[username]' title='$user[action]'>$user[username]</a></li><!--{/loop}-->
+	<!--{else}-->没有会员正在战斗<!--{/if}-->
+	</ul></dl>
+</div>
+
+<!--{template footer}-->

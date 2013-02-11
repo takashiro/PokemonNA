@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=$_CONFIG['charset']" />
+<title>$navtitle Pocket Monster</title>
+<meta name="generator" content="$_CONFIG[version]" />
+<meta name="author" content="JKT Team" />
+<meta name="copyright" content="2001-2007 Jidaiwo Koeru Tabi Inc." />
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link rel="stylesheet" type="text/css" href="$localpath/style_default.css" />
+<script type="text/javascript">var charset = '$_CONFIG['charset']', discuz_uid = $_USER['id'], imgpath = '$localpath';</script>
+<script type="text/javascript" src="./static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="./static/js/common.js"></script>
+</head>
+
+<body onkeydown="if(event.keyCode==27) return false;">
+
+	<div id="append_parent"></div><div id="ajaxwaitid"></div>
+	<div id="wrap" class="wrap">
+		<div id="header">
+			<h2><img src="$localpath/common/toplogo.jpg" /></h2>
+			<div id="ad_headerbanner"></div>
+		</div>
+		<div id="umenu">
+			<dl class="avataonline">
+			<!--{if $_USER[id]}-->
+				<li><cite><a href="space.php?uid=$_USER[id]" class="notabs">$_USER[username]</a></cite></li>
+				<li><a href="memcp.php?action=logout">退出</a></li>
+				<li><a href="pm.php" id="pm_ntc"<!--{if $newpm && $_DCOOKIE['pmnum']}--> onmouseover="pmviewnew()" class="new" title="您有新消息！"<!--{/if}--> target="_blank">短消息<!--{if $newpm && $_DCOOKIE['pmnum']}--><span>($_DCOOKIE[pmnum])</span><!--{/if}--></a></li>
+			<!--{else}-->
+				<li><a href="$regname" onclick="floatwin('open_register', this.href, 600, 400, '600,0');return false;">$reglinkname</a></li>
+				<li><a href="memcp.php?action=login" onclick="floatwin('open_login', this.href, 600, 400);return false;">登录</a></li>
+			<!--{/if}-->
+			</dl>
+			<ul>
+				<li<!--{if $index == 'center'}--> class="current"<!--{/if}-->><a href="center.php">精灵中心</a></li>
+				<li<!--{if $index == 'institude'}--> class="current"<!--{/if}-->><a href="institude.php">研究所</a></li>
+				<li id="mypokemon" class="dropmenu<!--{if $index == 'mypokemon'}--> current<!--{/if}-->">
+					<a href="mypokemon.php">我的口袋怪兽</a>
+					<ul id="mypokemon_menu" class="headermenu_popup popupmenu_popup">
+			        	<li><a href="mypokemon.php">随身携带</a></li>
+			        	<li><a href="mypokemon.php?box=1">研究所电脑箱</a></li>
+			        </ul>
+				</li>
+				<li<!--{if $index == 'myware'}--> class="current"<!--{/if}-->><a href="myware.php">我的背包</a></li>
+				<li<!--{if $index == 'my'}--> class="current"<!--{/if}-->><a href="tool.php">我的工具</a></li>
+				<li<!--{if $index == 'shop'}--> class="current"<!--{/if}-->><a href="shop.php">宠物商店</a></li>
+				<li<!--{if $index == 'fruit'}--> class="current"<!--{/if}-->><a href="fruit.php">树果屋</a></li>
+				<li<!--{if $index == 'map'}--> class="current"<!--{/if}-->><a href="map.php">冒险大陆</a></li>
+				<!--{if $adminid == 1}-->
+					<li><a href="admincp.php?action=plugins&operation=config" target="_blank">系统设置</a></li>
+				<!--{elseif $groupid == $_CONFIG['gymleader_id']}-->
+					<li <!--{if $index == 'gym'}--> class="current"<!--{/if}-->><a href="gym.php">道馆设置</a></li>
+				<!--{/if}-->
+			</ul>
+		</div>

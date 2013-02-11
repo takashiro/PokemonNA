@@ -1,0 +1,74 @@
+﻿{template header}
+<div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 我<!--{if !$box}-->随身携带<!--{else}-->存放在研究所<!--{/if}-->的口袋怪兽</div>
+<!--{if !$box}--><script type="text/javascript">$('pkwnav_mypokemon').href += '&box=1';</script><!--{/if}-->
+<script type="text/javascript" src="Pokemon/js/mypokemon.js"></script>
+<!--{loop $pokelist $mon}-->
+<div class="mainbox formbox"><h1>$mon[name]的信息 (宠物ID：$mon[id])</h1>
+  <table>
+  	<thead><td>Lv.$mon[level] $mon[gender_i] $mon[name]</td><td>状态栏</td><td>能力</td><td>其他信息</td><td>技能列表</td><td>相关操作</td></thead>
+    <tr>
+      <td width=260><img src="$localpath/pokemon/$mon[picid].gif" /></td>
+      <td width=140>
+	  	<p>体力：$mon[hp] / $mon[maxhp]</p>
+		<div class="bar"><div class="hp" style="width:$mon[hp_pct]%"></div></div>
+		<p>气力：$mon[mp] / $mon[maxmp]</p>
+		<div class="bar"><div class="mp" style="width:$mon[mp_pct]%"></div></div>
+		<p>经验：$mon[exp_pct]% ($mon[exp])</p>
+		<div class="bar"><div class="exp" style="width:$mon[exp_pct]%"></div></div>
+	 	<p>亲密度：$mon[frd] / 255</p>
+		<div class="bar"><div class="frd" style="width:$mon[frd_pct]%"></div></div>
+		<p>善恶值：$mon[godev] / 100</p>
+		<div class="bar"><div class="godev" style="width:$mon[godev]%"></div></div>
+		<p>状态：$mon[status_c]</p>
+	  </td>
+      <td width=80>
+	  	<p>攻击：$mon[atk]</p>
+	  	<p>防御：$mon[def]</p>
+	  	<p>特攻：$mon[stk]</p>
+	  	<p>特防：$mon[sdf]</p>
+		<p>速度：$mon[spd]</p>
+		<p>命中：+$mon[spr]%</p><br />
+		<p>美丽：$mon[bty]</p>
+		<p>聪明：$mon[smt]</p>
+		<p>帅气：$mon[col]</p>
+		<p>强壮：$mon[tgh]</p>
+		<p>可爱：$mon[cut]</p>
+	  </td>
+	  <td width=170>
+	  	<p>种类全国编号：$mon[pokeid]</p>
+	  	<p>等级：$mon[level]</p>
+		<p>成长速度组：$mon[growthtype_c]</p>
+		<p>性格：$mon[nature_c]</p>
+		<p>携带物品：$warename[$mon[equip]]</p>
+		<p>身高：$mon[height_c]</p>
+		<p>体重：$mon[weight_c]</p>
+		<p>性别：$mon[gender_c]</p>
+		<p>属性：<img src="$localpath/atb/$mon[atb1].gif" /><!--{if $mon[atb2]}--> <img src="$localpath/atb/$mon[atb2].gif" /><!--{/if}--></p>
+		<p title="$mon[trait_i]">特性：$mon[trait_c]</p>
+		<p>相遇在$mon[regdate_c]</p>
+	  </td>
+      <td style="font-size:15px;">
+	  	<!--{loop $mon['skilllist'] $v}--><p>{$skillatb[$v]}「{$skillname[$v]}」</p><!--{/loop}-->
+	  </td>
+      <td width="80">
+	  	<!--{if $mon[status] < 9 && $mon[status] != 0 && $mon[status] != 2}-->
+	  	<div id="mypokemon_operation">
+		<!--{if !$box}-->
+	  	<button class="submit" onclick="location.href='train.php?mid=$mon[id]'">训练</button>
+	  	<button class="submit" onclick="location.href='mypokemon.php?action=evolute&mid=$mon[id]'">进化</button>
+	  	<button class="submit" onclick="location.href='mypokemon.php?action=intobox&id=$mon[id]'">入箱</button>
+		<!--{else}-->
+	  	<button class="submit" onclick="location.href='mypokemon.php?action=outofbox&id=$mon[id]'">传回</button>
+		<!--{/if}-->
+	  	<button class="submit" onclick="fw_give($mon[id])">赠送</button>
+	  	<button class="submit" onclick="fw_throw($mon[id])">丢弃</button>
+	  	<button class="submit" onclick="fw_rename($mon[id])">改名</button>
+	  	</div>
+		<!--{/if}-->
+	  </td>
+    </tr>
+  </table>
+</div>
+<!--{/loop}-->
+$multipage
+{template footer}

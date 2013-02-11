@@ -1,0 +1,16 @@
+﻿{template header}
+<div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 馆主管理面板</div>
+<!--{if $groupid == $_CONFIG['gymleader_id']}-->
+<div class="mainbox listbox"><h1>挑战者列表</h1>
+    <table>
+    	<thead><td>挑战者ID</td><td>挑战者</td><td>拥有徽章数</td><td>拥有缎带数</td><td>已获得本馆徽章</td><td>操作</td></thead>
+        <!--{loop $challengerlist $c}-->
+        <tr><td>$c[id]</td><td>$c[username]</td><td>$c[badgenum]</td><td>$c[ribbonnum]</td><td>$c[challenged]</td><td><a href="battle.php?obvid=$c[id]" target="_blank">[接受挑战]</a></td></tr>
+        <!--{/loop}-->
+    </table>
+</div>
+<div class="mainbox"><h1>道馆设置</h1>
+</div>
+<!--{else}-->
+<!--{/if}-->
+{template footer}

@@ -1,0 +1,82 @@
+﻿{template header}
+<style type="text/css">#monselect, #receiver_container{display:none}</style>
+<div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 我的背包</div>
+<div class="mainbox listbox">
+	<div class="headactions">
+	<a href="shop.php">所有</a>
+	<!--{loop $_CONFIG['waretype'] $key $value}-->
+	<a href="myware.php?type=$key">$value</a>
+	<!--{/loop}-->
+	</div>
+	<h1>我的背包</h1>
+	<table>
+	  <thead><td></td><td>名称</td><td>个数</td><td>说明</td><td>操作</td></thead>
+	<!--{loop $warelist $ware}-->
+	<tr onclick="$('usedid').value=$ware[id];$('slc_$ware[id]').click()"><td><img src="$localpath/ware/$ware[ico]" /></td>
+	<td>$ware[name_c]</td><td>$ware[nums]</td><td>$ware[intro]</td><td><input type="radio" id="slc_$ware[id]" name="selection" /></td></tr>
+	<!--{/loop}-->
+	</table>
+</div>
+
+<div class="multipage">$multipage</div>
+
+<div class="mainbox"><h1>背包操作</h1>
+<form id="warelist" action="myware.php" method="post">
+<input type="hidden" id="formhash" name="formhash" value="{FORMHASH}" />
+<input type="hidden" id="id" name="id" value="$ware[id]" />
+<table>
+	<thead><td>操作相关</td><td>操作类型</td><td>确定按钮</td></thead>
+	<tr>
+		<td><input type="hidden" id="usedid" name="usedid" />
+		  	个　数：<input type="text" id="nums" name="nums" value="1" /><br />
+			<div id="receiver_container">收件人：<input type="text" id="receiver" name="receiver" disabled="disabled" /></div>
+		</td>
+		<td>
+			<label>
+				<input type="radio" id="action" name="action" value="recycle" onclick="r(0,0)" />回收
+			</label>
+			<label>
+				<input type="radio" id="action" name="action" value="present" onclick="r(1,0)" />赠送
+			</label>
+			<label>
+				<input type="radio" id="action" name="action" value="use" onclick="r(1,1)" />使用
+			</label>
+			<label>
+				<input type="radio" id="action" name="action" value="carry" onclick="r(1,1)" />让怪兽携带
+			</label>
+			<label>
+				<input type="radio" id="action" name="action" value="disarm" onclick="r(1,1)" />从怪兽卸下
+			</label>
+		</td>
+		<td><button type="submit" class="submit" id="waresubmit" name="waresubmit">确定</button></td>
+	</tr>
+</table>
+</div>
+<div class="mainbox" id="monselect"><h1>我的口袋怪兽</h1>
+<!--{loop $mymon $mon}-->
+	<img src="$localpath/pokemon/$mon[picid].gif" width="130" height="120" id="mon_{$mon[id]}" alt="$mon[name]" onclick="setmon($mon[id])" />
+<!--{/loop}-->
+</div>
+<script type="text/javascript">
+var monselectHTML = $('monselect').innerHTML;
+function setmon(monid){
+	$('#receiver').val(monid);
+	$('#monselect').html(monselectHTML);
+	$('#mon_'+monid).css('background', 'lightgray');
+}
+
+function r(receiver_display, mon_display){
+	$('#receiver').attr('disabled', !receiver_display);
+	if(mon_display){
+		$('#monselect').slideDown();
+		$('#receiver_container').slideUp();
+	}else{
+		$('#monselect').slideUp();
+
+		if(receiver_display){
+			$('#receiver_container').slideDown();
+		}
+	}
+}
+</script>
+{template footer}

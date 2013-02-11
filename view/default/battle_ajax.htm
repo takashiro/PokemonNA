@@ -1,0 +1,41 @@
+﻿/* <script type="text/javascript"> */
+waittime = $_CONFIG[battlewaittime];
+skillbtn_ctrl('on');
+skill_onrequest = false;
+<!--{if $rev_hideskill}--> $('rev_skill').innerHTML=''; <!--{/if}-->
+<!--{if $obv_hideskill}--> $('obv_skill').innerHTML=''; <!--{/if}-->
+$('undermsg').innerHTML="$undermsg";
+$('rev_topmsg').innerHTML="$rev_topmsg";
+$('rev_sidemsg').innerHTML="$rev_sidemsg";
+$('rev_undermsg').innerHTML="$rev_undermsg";
+$('obv_topmsg').innerHTML="$obv_topmsg";
+$('obv_sidemsg').innerHTML="$obv_sidemsg";
+$('obv_undermsg').innerHTML="$obv_undermsg";
+$('revlevel').innerHTML="$rev[level]";
+$('revatb').innerHTML='<img src="$localpath/atb/$rev[atb1].gif" /><!--{if $rev[atb2]}--> <img src="$localpath/atb/$rev[atb2].gif" /><!--{/if}-->';
+$('revatk').innerHTML="$rev[atk]";
+$("revdef").innerHTML="$rev[def]";
+$('revhp').innerHTML="$rev[hp]";
+$('revmaxhp').innerHTML="$rev[maxhp]";
+$('revmp').innerHTML="$rev[mp]";
+$('revmaxmp').innerHTML="$rev[maxmp]";
+barpercent('revhpbar', $rev[hp_pct]);
+barpercent('revmpbar', $rev[mp_pct]);
+$('revstatus').innerHTML="$rev[status_c]";
+$('obvlevel').innerHTML="$obv[level]";
+$('obvstatus').innerHTML="$obv[status_c]";
+$('obvatb').innerHTML='<img src="$localpath/atb/$obv[atb1].gif" /><!--{if $obv[atb2]}--> <img src="$localpath/atb/$obv[atb2].gif" /><!--{/if}-->';
+$('obvhp').innerHTML="$obv[hp]";
+$('obvmaxhp').innerHTML="$obv[maxhp]";
+$('obvmp').innerHTML="$obv[mp]";
+$('obvmaxmp').innerHTML="$obv[maxmp]";
+barpercent('obvhpbar', $obv[hp_pct]);
+barpercent('obvmpbar', $obv[mp_pct]);
+$extrajs
+<!--{if $endbattle}-->
+$('undermsg').innerHTML = '战斗结束！';
+$('skillshow').innerHTML="<a class=btn href=view.php>离开这里</a>";
+<!--{/if}-->
+<!--{if debuginfo()}-->
+$('debuginfo').innerHTML = 'Processed in $debuginfo[time] second(s), $debuginfo[queries] queries<!--{if $gzipcompress}-->, Gzip enabled<!--{/if}-->.';
+<!--{/if}-->

@@ -1,0 +1,28 @@
+﻿{template header}
+<div id="nav"><a href="pkw.php">Pokemon WG</a><b>&raquo;</b> 训练师/精灵列表</div>
+<!--{if $username}-->
+  <div class="mainbox" title="点击可选择一个精灵进行挑战"><h1>训练师{$username}的精灵</h1>
+  <!--{loop $monlist $mon}-->
+  	<a href="battle.php?obvid=$mon[id]"><img src="$localpath/pokemon/$mon[picid].gif" alt="$mon[name] (Lv.$mon[level])" /></a>
+  <!--{/loop}-->
+  </div>
+<!--{else}-->
+<div class="mainbox listbox">
+	<div class="headactions"><a href="view.php?action=member">训练师</a><a href="view.php?action=pokemon">POKEMON</a></div>
+	<h1>{$headline}列表</h1>
+	<table>
+	<!--{if $action == 'member'}-->
+	  <thead><td>训练师名字</td><td>现金</td><td>存款</td><td>拥有精灵个数</td><td>勋章个数</td><td>缎带个数</td><td>接受挑战</td></thead>
+	    <!--{loop $list $u}-->
+	  <tr><td><a href="space.php?username=$u[username]">$u[username]</a></td><td>$u[cash]</td><td>$u[deposit]</td><td>$u[pokenum]</td><td>$u[badgenum]</td><td>$u[ribbonnum]</td><td><!--{if $u[battleon]}-->是<!--{else}-->否<!--{/if}--></td></tr>
+	  <!--{/loop}-->
+	<!--{elseif $action == 'pokemon'}-->
+	  <thead><td>精灵ID</td><td>训练师名字</td><td>名字</td><td>种类全国编号</td><td>属性</td><td>等级</td><td>性别</td><td>性格</td><td>身高</td><td>体重</td></thead>
+	  <!--{loop $list $m}-->
+	  <tr><td>$m[id]</td><td>$m[owner]</td><td>$m[name]</td><td>$m[pokeid]</td><td><img src="$localpath/atb/$m[atb1].gif" /><!--{if $m[atb2]}--> <img src="$localpath/atb/$m[atb2].gif" /><!--{/if}--></td><td>$m[level]</td><td>$m[gender_c]</td><td>$m[nature]</td><td>$m[height] m</td><td>$m[weight] kg</tr>
+	  <!--{/loop}-->
+	<!--{/if}-->
+	</table>
+</div>
+<!--{/if}-->
+{template footer}

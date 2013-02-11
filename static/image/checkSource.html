@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<div style="margin-top:15%;text-align:center">
+您的图片本地化路径应该填写的是：
+<input type="text" name="localpath" size="80" onclick="setcopy(this.value, '复制路径成功！')" />
+</div>
+<script type="text/javascript">
+function $(id){
+	return document.getElementById(id);
+}
+
+function setcopy(text, alertmsg){
+	if(is_ie) {
+		clipboardData.setData('Text', text);
+		alert(alertmsg);
+	} else if(prompt('Press Ctrl+C Copy to Clipboard', text)) {
+		alert(alertmsg);
+	}
+}
+
+var userAgent = navigator.userAgent.toLowerCase();
+var is_opera = userAgent.indexOf('opera') != -1 && opera.version();
+var is_moz = (navigator.product == 'Gecko') && userAgent.substr(userAgent.indexOf('firefox') + 8, 3);
+var is_ie = (userAgent.indexOf('msie') != -1 && !is_opera) && userAgent.substr(userAgent.indexOf('msie') + 5, 3);
+
+var path = location.href.split('/');
+path.length-= 1;
+var path = path.join('/');
+$('localpath').value = path;
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+﻿{template header}
+<div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; $g[name]华丽大赛</div>
+<div style="width:49%;float:left" style="text-align:center">
+	<div class="box"><h4><img src="$localpath/ribbon/$gid.gif" /><br />欢迎参加$g[name]华丽大赛！</h4>
+		<p>　　报名时间：$g[entertime1] ～ $g[entertime2]</p>
+		<p>一级审查时间：$g[starttime1] ～ $g[endtime1]</p>
+		<p>二级审查时间：$g[starttime2] ～ $g[endtime2]</p>
+	</div>
+	<div class="mainbox"><h1>参赛通行证领取处</h1>
+	<form action="contest.php?gid=$gid" method="post"><input type="hidden" name="formhash" value="{FORMHASH}" />
+		<table>
+		<tr><td>[SERVIER PICTRUE]</td></tr>
+		<tr><td>{$discuz_userss}，你好！请问你要？
+			<span onclick="this.firstChild.click()"><input type="radio" name="action" value="join" />领取通行证</span>
+			<span onclick="this.firstChild.click()"><input type="radio" name="action" value="exit" />退还通行证</span>
+		</td></tr>
+		<tr><td><button type="submit" class="submit" name="applypassport">确定</button></td></tr>
+		</table>
+	</form>
+	</div>
+</div>
+<div class="mainbox" style="width:50%;float:right"><h1>参赛者名单 [总人数：{$totalusernum}]</h1>
+<table>
+	<thead><td>ID卡号</td><td>姓名</td><td>拥有宠物</td><td>获得锻带</td><td>获得勋章</td></thead>
+<!--{loop $userlist $u}-->
+	<tr><td>$u[id]</td><td>$u[username]</td><td>$u[pokenum] 个</td><td>$u[badgenum] 枚</td><td>$u[ribbonnum] 枚</td></tr>
+<!--{/loop}-->
+</table>
+<div class="pages_btn">$multipage</div>
+</div>
+{template footer}

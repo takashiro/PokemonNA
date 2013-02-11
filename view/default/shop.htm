@@ -1,0 +1,49 @@
+﻿{template header}
+<div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 我的精灵</div>
+<div class="content">
+	<div class="mainbox listbox">
+	<div class="headactions">
+	<!--{loop $_CONFIG['waretype'] $key $value}-->
+	<a href="shop.php?type=$key">$value</a>
+	<!--{/loop}-->
+	</div>
+	<h1>商品列表</h1>
+	<form name="shoplist" action="shop.php" method="post" onSubmit="$('buysubmit').click()">
+	<input type="hidden" id="formhash" name="formhash" value="{FORMHASH}" />
+		<table><thead><tr>
+		  <td></td><td width=50>商品编号</td><td>名称</td><td>价格</td><td>介绍</td><td width=60>相关操作</td></thead>
+		<!--{loop $warelist $ware}-->
+		<tr onclick="this.lastChild.firstChild.click()">
+		  <td><img src="$localpath/ware/$ware[ico]" /></td>
+		  <td>$ware[id]</td><td>$ware[name_c]</td><td>$ware[price]</td><td>$ware[intro]</td>
+		<td><input type="radio" id="wareid" name="wareid" value="$ware[id]" />购买</td></tr>
+		<!--{/loop}-->
+		</table>
+	</div>
+	<div class="pages_btns">
+		<div class="multipage">$multipage</div>
+		<div class="postbtn">购买个数：<input type="text" id="buynums" name="buynums" maxlength="2" size="2" value=1 onclick="this.select()" />
+		&nbsp;<button type="submit" class="submit" id="buysubmit" name="buysubmit" onclick="ajaxpost('shoplist', 'ajaxwaitid');">确认</button></div>
+	</div>
+	</form>
+</div>
+
+<div class="side">
+	<div><h2>$_USER[username] 的信息</h2>
+		<li>$_USER[avatar]</li>
+	  	<li>现金：$_USER[cash]</li>
+		<li>存款：$_USER[deposit]</li>
+		<li>宠物个数：$_USER[pokenum]</li>
+	</div>
+	<form id="fastshopping" action="shop.php" method="post">
+	<input type="hidden" name="formhash" value="{FORMHASH}" />
+	<div><h2>快速购买</h2>
+	  <ul>
+		<li>商品编号：<input type="text" name="wareid" maxlength="8" size="7" /></li>
+		<li>购买个数：<input type="text" name="buynums" maxlength="2" size="7" value="1" /></li>
+		<p><button type="submit" class="submit" id="buysubmit" name="buysubmit" onclick="ajaxpost('fastshopping', 'ajaxwaitid')">确认购买</button></p>
+	  </ul>
+	</div>
+	</form>
+</div>
+{template footer}

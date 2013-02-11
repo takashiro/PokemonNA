@@ -1,0 +1,50 @@
+﻿{template header}
+
+<style type="text/css">
+#maptitle button{margin:5px}
+.side a:active {font-weight:bold}
+#map img{filter:Glow(color=white, strength=2);}
+</style>
+
+<script type="text/javascript" src="./static/js/map.js"></script>
+
+<div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 冒险大陆</div>
+
+<div class="side" style="width:15%">
+	<div><h2>地区选择</h2>
+        <li><a href="javascript:changemap(1);">关东地区</a></li>
+        <li><a href="javascript:changemap(2);">城都地区</a></li>
+        <li><a href="javascript:changemap(3);">芳缘地区</a></li>
+        <li><a href="javascript:changemap(4);">新奥地区</a></li>
+	</div>
+	<div><h2>路标类型</h2>
+		<li><a href="javascript:changetype('gym');">道馆赛</a></li>
+		<li><a href="javascript:changetype('contest');">华丽大赛</a></li>
+		<li><a href="javascript:changetype('land');">探险大陆</a></li>
+	</div>
+	<div><h2>地区选择</h2>
+	<ul id="maptitle" style="height:130px;overflow:auto"></ul>
+	</div>
+	<div><h2>道馆选择</h2>
+	<ul id="gymtitle" style="height:130px;overflow:auto"></ul>
+	</div>
+</div>
+
+<div class="content" style="width:84%">
+	<div id="map" style="text-align:center;margin:10px;overflow:auto">
+		<img src="$localpath/common/loading.gif" border="0" />
+	</div>
+	<div id="monselect" class="mainbox"><h1>选择一个宠物</h1>
+	<!--{loop $mymonlist $mon}--><img src="$localpath/pokemon/$mon[picid].gif" id="mon_{$mon[id]}" alt="$mon[name]" onclick="setmon($mon[id])" width="130" height="120" /><!--{/loop}-->
+	</div>
+</div>
+
+<!--{loop $ctsmap $landid $ctslist}-->
+<div id="contest_$landid" style="display:none">
+	<!--{loop $ctslist $cts}-->
+	<a href="contest.php?gid=$cts[id]"><img src="$localpath/common/contest.gif" alt="{$cts[name]}华丽大赛" align="left" style="position:relative;top:$g[top]px;left:$g[left]px" /></a>
+	<!--{/loop}-->
+</div>
+<!--{/loop}-->
+
+{template footer}

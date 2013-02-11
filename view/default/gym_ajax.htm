@@ -1,0 +1,33 @@
+﻿/* <script type="text/javascript"> */
+$('topmsg').innerHTML="$topmsg";
+$('midmsg').innerHTML="$midmsg";
+$('undermsg').innerHTML="$undermsg";
+$('my_topmsg').innerHTML="$my_topmsg";
+$('my_sidemsg').innerHTML="$my_sidemsg";
+$('my_undermsg').innerHTML="$my_undermsg";
+$('riv_topmsg').innerHTML="$riv_topmsg";
+$('riv_sidemsg').innerHTML="$riv_sidemsg";
+$('riv_undermsg').innerHTML="$riv_undermsg";
+$('mylevel').innerHTML="$mon[level]";
+$('myatb').innerHTML="$mon[atb1_c] $mon[atb2_c]";
+$('myatk').innerHTML="$mon[atk]";
+$("mydef").innerHTML="$mon[def]";
+$('myhp').innerHTML="$mon[hp]";
+$('mymaxhp').innerHTML="$mon[maxhp]";
+$('mymp').innerHTML="$mon[mp]";
+$('mymaxmp').innerHTML="$mon[maxmp]";
+$('myhpbar').style.width="$mon[hp_pct]%";
+$('mympbar').style.width="$mon[mp_pct]%";
+$('rivlevel').innerHTML="$riv[level]";
+$('rivatb').innerHTML="$riv[atb1_c] $riv[atb2_c]";
+$('rivatk').innerHTML="$riv[atk]";
+$("rivdef").innerHTML="$riv[def]";
+$('rivhp').innerHTML="$riv[hp]";
+$('rivmaxhp').innerHTML="$riv[maxhp]";
+$('rivmp').innerHTML="$riv[mp]";
+$('rivmaxmp').innerHTML="$riv[maxmp]";
+$('rivhpbar').style.width="$riv[hp_pct]%";
+$('rivmpbar').style.width="$riv[mp_pct]%";
+<!--{if $mon['hp']<=0 || $riv['hp']<=0}-->
+$('skillshow').innerHTML="<button onclick=\"location.href='list.php?action=battle';\">战斗结束</button>";
+<!--{/if}-->
