@@ -20,7 +20,7 @@
 		<ul class="pokelist">
 			<!--{loop $pokelist $pokemon}-->
 			<li id="mon{$pokemon[id]}" class="menu" onclick="SWFmon($pokemon[id])">
-				<p><img src="$localpath/pokemon/$pokemon[id].gif" width="130" height="120" /></p>
+				<p><img src="$staticdir/pokemon/$pokemon[id].gif" width="130" height="120" /></p>
 				<p>编号：$pokemon[id]</p>
 				<p class="name">$pokemon[name_j] $pokemon[name_c]<br />$pokemon[name_e]</p>
 				<p>属性：$pokemon[atb1] $pokemon[atb2]</p>
@@ -45,7 +45,7 @@
 
 <script type="text/javascript">
 function SWFmon(pokeid){
-	pnotice(shockwave('$localpath/vector/'+pokeid+'.swf', '100%', '100%', ''), '', 500, 500);
+	pnotice(shockwave('$staticdir/vector/'+pokeid+'.swf', '100%', '100%', ''), '', 500, 500);
 }
 </script>
 

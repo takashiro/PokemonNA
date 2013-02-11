@@ -212,10 +212,10 @@ $_CONFIG['maptype'] = array('所有','道路','建筑','城市','森林','草地
 $_CONFIG['institude_pagelimit'] = 12;
 $PKWpre = 'pkw_';
 
-$localpath = empty($localpath) ? $_DCOOKIE['pkw_localpath'] : $localpath;
-if(empty($localpath)){
-	$_USER[id] && $localpath = $db->result_first("SELECT localpath FROM {$PKWpre}myprofile WHERE id=$_USER[id]");
-	$localpath = $localpath ? $localpath : $_CONFIG['imgpath'];
-	dsetcookie('pkw_localpath', $localpath, $cookietime, 1, true);
+$staticdir = empty($staticdir) ? $_DCOOKIE['pkw_localpath'] : $staticdir;
+if(empty($staticdir)){
+	$_USER[id] && $staticdir = $db->result_first("SELECT localpath FROM {$PKWpre}myprofile WHERE id=$_USER[id]");
+	$staticdir = $staticdir ? $staticdir : $_CONFIG['imgpath'];
+	dsetcookie('pkw_localpath', $staticdir, $cookietime, 1, true);
 }
 ?>

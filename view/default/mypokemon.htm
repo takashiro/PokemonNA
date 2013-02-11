@@ -7,7 +7,7 @@
   <table>
   	<thead><td>Lv.$mon[level] $mon[gender_i] $mon[name]</td><td>状态栏</td><td>能力</td><td>其他信息</td><td>技能列表</td><td>相关操作</td></thead>
     <tr>
-      <td width=260><img src="$localpath/pokemon/$mon[picid].gif" /></td>
+      <td width=260><img src="$staticdir/pokemon/$mon[picid].gif" /></td>
       <td width=140>
 	  	<p>体力：$mon[hp] / $mon[maxhp]</p>
 		<div class="bar"><div class="hp" style="width:$mon[hp_pct]%"></div></div>
@@ -43,7 +43,7 @@
 		<p>身高：$mon[height_c]</p>
 		<p>体重：$mon[weight_c]</p>
 		<p>性别：$mon[gender_c]</p>
-		<p>属性：<img src="$localpath/atb/$mon[atb1].gif" /><!--{if $mon[atb2]}--> <img src="$localpath/atb/$mon[atb2].gif" /><!--{/if}--></p>
+		<p>属性：<img src="$staticdir/atb/$mon[atb1].gif" /><!--{if $mon[atb2]}--> <img src="$staticdir/atb/$mon[atb2].gif" /><!--{/if}--></p>
 		<p title="$mon[trait_i]">特性：$mon[trait_c]</p>
 		<p>相遇在$mon[regdate_c]</p>
 	  </td>

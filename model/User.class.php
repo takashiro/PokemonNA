@@ -39,6 +39,10 @@ class User{
 		return $this->attr['id'] != 0;
 	}
 
+	public function isAdministrator(){
+		return false;
+	}
+
 	public function toArray(){
 		return $this->attr;
 	}

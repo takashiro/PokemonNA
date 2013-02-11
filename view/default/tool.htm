@@ -15,7 +15,7 @@
 </div>
 <div class="content">
 <!--{if $item == 'calc'}-->
-	<script type="text/javascript">var imgpath = "$localpath";</script>
+	<script type="text/javascript">var imgpath = "$staticdir";</script>
 	<script type="text/javascript" src="./static/js/calc.js"></script>
 	<div id="gui" class="block">
 	<div class="mainbox"><h1>觉醒力量计算器</h1>
@@ -64,7 +64,7 @@
 	<table>
 		<tr>
 			<th>本地图片路径</th>
-			<td><input type="text" name="localpath" maxlength="50" value="$localpath" /></td>
+			<td><input type="text" name="localpath" maxlength="50" value="$staticdir" /></td>
 			<td>如果您不清楚应该填写什么，请打开图片包中的checkSource.html文件</td>
 		</tr>
 		<tr>
@@ -101,9 +101,9 @@
 		<thead><td>宠物编号</td><td>进化要求</td><td>进化后</td></thead>
 		<!--{loop $elist $e}-->
 		<tr>
-			<td><img src="$localpath/pokemon/$e[original].gif" width="130" height="120" /></td>
+			<td><img src="$staticdir/pokemon/$e[original].gif" width="130" height="120" /></td>
 			<td>$e[require_c]</td>
-			<td><img src="$localpath/pokemon/$e[evoluted].gif" width="130" height="120" /></td>
+			<td><img src="$staticdir/pokemon/$e[evoluted].gif" width="130" height="120" /></td>
 		</tr>
 		<!--{/loop}-->
 	  </table>

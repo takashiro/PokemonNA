@@ -13,15 +13,15 @@
 <link rel="stylesheet" type="text/css" href="Pokemon/data/style_battle.css" />
 <style type="text/css">
 .bar{width:120px;height:11px;border:1px solid}
-.bar .hp{background:url($localpath/common/greenbar.jpg) repeat-x}
-.bar .mp{background:url($localpath/common/bluebar.jpg) repeat-x}
-.bar .exp{background:url($localpath/common/orangebar.jpg) repeat-x}
+.bar .hp{background:url($staticdir/common/greenbar.jpg) repeat-x}
+.bar .mp{background:url($staticdir/common/bluebar.jpg) repeat-x}
+.bar .exp{background:url($staticdir/common/orangebar.jpg) repeat-x}
 </style>
 <script type="text/javascript" src="./include/js/common.js?{VERHASH}"></script>
 <script type="text/javascript" src="./Pokemon/js/common.js"></script>
 <script type="text/javascript" src="./Pokemon/js/battle.js"></script>
 <script type="text/javascript">
-var IMGDIR = '{IMGDIR}', localpath = '$localpath', skillurl='adven.php?action=fight', revid = '$revid', allowfloatwin = '1', STYLEID = '{STYLEID}', VERHASH = '{VERHASH}', allowfloatwin = 1, waittime = $_CONFIG[battlewaittime]</script>
+var IMGDIR = '{IMGDIR}', localpath = '$staticdir', skillurl='adven.php?action=fight', revid = '$revid', allowfloatwin = '1', STYLEID = '{STYLEID}', VERHASH = '{VERHASH}', allowfloatwin = 1, waittime = $_CONFIG[battlewaittime]</script>
 </head>
 
 <body onkeydown="if(event.keyCode==27) return false;" oncontextmenu="return false;">
@@ -42,9 +42,9 @@ var IMGDIR = '{IMGDIR}', localpath = '$localpath', skillurl='adven.php?action=fi
           <td colspan="4" id="rev_topmsg">$rev_topmsg</td>
         </tr>
       <tr>
-        <td colspan="3"><img src="$localpath/Pokemon/$obv[picid].gif" id="obv_img" /></td>
+        <td colspan="3"><img src="$staticdir/Pokemon/$obv[picid].gif" id="obv_img" /></td>
         <td>&nbsp;</td>
-        <td colspan="4"><img src="$localpath/Pokemon/$rev[picid].gif" id="rev_img" /></td>
+        <td colspan="4"><img src="$staticdir/Pokemon/$rev[picid].gif" id="rev_img" /></td>
         </tr>
       <tr>
         <td colspan="3" id="obv_undermsg">$obv_undermsg</td>
@@ -57,12 +57,12 @@ var IMGDIR = '{IMGDIR}', localpath = '$localpath', skillurl='adven.php?action=fi
         <p>气力：<span id="obvmp">$obv[mp]</span> / <span id="obvmaxmp">$obv[maxmp]</span></p>
 		<p><div class="bar"><div id="obvmpbar" class="mp" style="width:$obv[mp_pct]%"></div></div></p></td>
         <td><p>等级：Lv.<span id="obvlevel">$obv[level]</span></p>
-        <p>属性：<span id="obvatb"><img src="$localpath/atb/$obv[atb1].gif" /><!--{if $obv[atb2]}--> <img src="$localpath/atb/$obv[atb2].gif" /><!--{/if}--></span></p>
+        <p>属性：<span id="obvatb"><img src="$staticdir/atb/$obv[atb1].gif" /><!--{if $obv[atb2]}--> <img src="$staticdir/atb/$obv[atb2].gif" /><!--{/if}--></span></p>
 		<p>状态：<span id="obvstatus">$obv[status_c]</span></p></td>
         <td>性别：$obv[gender_c]</td>
         <td>&nbsp;</td>
         <td><p>等级：Lv.<span id="revlevel">$rev[level]</span></p>
-            <p>属性：<span id="revatb"><img src="$localpath/atb/$rev[atb1].gif" /><!--{if $rev[atb2]}--> <img src="$localpath/atb/$rev[atb2].gif" /><!--{/if}--></span></p>
+            <p>属性：<span id="revatb"><img src="$staticdir/atb/$rev[atb1].gif" /><!--{if $rev[atb2]}--> <img src="$staticdir/atb/$rev[atb2].gif" /><!--{/if}--></span></p>
             <p>攻击：<span id="revatk">$rev[atk]</span></p>
             <p>防御：<span id="revdef">$rev[def]</span></p></td>
         <td><p>性别：$rev[gender_c]</p>

@@ -48,7 +48,7 @@ if($username = dhtmlspecialchars($username)){
 	$query = $db->query("SELECT id,name,pokeid,shape FROM {$tpre}mymon WHERE owner='$discuz_user' AND status!=0 AND status!=9");
 	while($m = $db->fetch_array($query)){
 		$m['picid'] = $m['shape']?$m['pokeid'].'_'.$m['shape']:$m['pokeid'];
-		echo '<a href="adven.php?gid=1&revid='.$m['id'].'" title="'.$m['name'].'"><img src="'.$localpath.'/pokemon/'.$m['picid'].'.gif" width="130" height="120" /></a>';
+		echo '<a href="adven.php?gid=1&revid='.$m['id'].'" title="'.$m['name'].'"><img src="'.$staticdir.'/pokemon/'.$m['picid'].'.gif" width="130" height="120" /></a>';
 	}
 	exit();
 }

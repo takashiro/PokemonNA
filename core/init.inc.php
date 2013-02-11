@@ -62,11 +62,12 @@ $page = max(1, intval($_GET['page']));
 
 $_G['user'] = new User();
 $_G['user']->login();
+$_G['staticdir'] = './static/image';
 
 //Alias
 $_USER = $_G['user']->toArray();
 $_CONFIG = &$_G['config'];
 define('TIMESTAMP', $_G['timestamp']);
 
-$localpath = './static/image';
+$staticdir = &$_G['staticdir'];
 ?>

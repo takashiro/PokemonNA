@@ -12,7 +12,7 @@
 	<table>
 	  <thead><td></td><td>名称</td><td>个数</td><td>说明</td><td>操作</td></thead>
 	<!--{loop $warelist $ware}-->
-	<tr onclick="$('usedid').value=$ware[id];$('slc_$ware[id]').click()"><td><img src="$localpath/ware/$ware[ico]" /></td>
+	<tr onclick="$('usedid').value=$ware[id];$('slc_$ware[id]').click()"><td><img src="$staticdir/ware/$ware[ico]" /></td>
 	<td>$ware[name_c]</td><td>$ware[nums]</td><td>$ware[intro]</td><td><input type="radio" id="slc_$ware[id]" name="selection" /></td></tr>
 	<!--{/loop}-->
 	</table>
@@ -54,7 +54,7 @@
 </div>
 <div class="mainbox" id="monselect"><h1>我的口袋怪兽</h1>
 <!--{loop $mymon $mon}-->
-	<img src="$localpath/pokemon/$mon[picid].gif" width="130" height="120" id="mon_{$mon[id]}" alt="$mon[name]" onclick="setmon($mon[id])" />
+	<img src="$staticdir/pokemon/$mon[picid].gif" width="130" height="120" id="mon_{$mon[id]}" alt="$mon[name]" onclick="setmon($mon[id])" />
 <!--{/loop}-->
 </div>
 <script type="text/javascript">

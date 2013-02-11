@@ -7,7 +7,7 @@ if(!$revid = intval($revid)){
 	$query = $db->query("SELECT id,pokeid,shape,name FROM {$tpre}mymon WHERE owner='$discuz_user' AND status!=0 AND status!=2 AND status < 9");
 	while($m = $db->fetch_array($query)){
 		$m['picid'] = $m['shape']?"$m[pokeid]_$m[shape]":$m['pokeid'];
-		$monlist.= '<a href="battle.php?obvid='.$obvid.'&revid='.$m['id'].'"><img src="'.$localpath.'/pokemon/'.$m['picid'].'.gif" alt="'.$mon['name'].'" width="130" height="120" /></a>';
+		$monlist.= '<a href="battle.php?obvid='.$obvid.'&revid='.$m['id'].'"><img src="'.$staticdir.'/pokemon/'.$m['picid'].'.gif" alt="'.$mon['name'].'" width="130" height="120" /></a>';
 		$noavailuablemon = FALSE;
 	}
 	if(!$noavailuablemon) showmsg('请选择一个精灵！<br />'.$monlist);

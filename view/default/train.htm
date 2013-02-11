@@ -10,19 +10,19 @@
 	<!--{if $atb > 0}-->
 		<table><thead><td>编号</td><td>类型</td><td>中文名</td><td>属性</td><td>威力</td><td>华丽</td></td><td>命中率</td><td>消耗气力</td><td>优先级</td><td>对象</td><td>布尔判定</td></thead>
 		<!--{loop $skilllist $skill}-->
-		<tr title="{eval echo '战斗效果：'.$ext[$skill['ext']]."\n".'华丽效果：'.$btyext[$skill['btyext']];}"><td>$skill[id]</td><td><img src="$localpath/skilltype/$skill[type].gif" /></td><td onmouseover="this.innerHTML='$skill[name_j]';" onmouseout="this.innerHTML='$skill[name_c]';">$skill[name_c]</td><td>$skill[atb]</td><td>$skill[power]</td><td>$skill[bty]</td><td>$skill[spr]</td><td>1 / $skill[cmp]</td><td>$skill[priority]</td><td>$skill[aft]</td><td>$skill[bln]</td></tr>
+		<tr title="{eval echo '战斗效果：'.$ext[$skill['ext']]."\n".'华丽效果：'.$btyext[$skill['btyext']];}"><td>$skill[id]</td><td><img src="$staticdir/skilltype/$skill[type].gif" /></td><td onmouseover="this.innerHTML='$skill[name_j]';" onmouseout="this.innerHTML='$skill[name_c]';">$skill[name_c]</td><td>$skill[atb]</td><td>$skill[power]</td><td>$skill[bty]</td><td>$skill[spr]</td><td>1 / $skill[cmp]</td><td>$skill[priority]</td><td>$skill[aft]</td><td>$skill[bln]</td></tr>
 		<!--{/loop}-->
 		</table>
 	<!--{elseif $atb == -1}-->
 		<table><thead><td>类型</td><td>日文名</td><td>中文名</td><td>属性</td><td>威力</td><td>华丽</td><td>命中率</td><td>消耗气力</td><td>操作</td></thead>
 		<!--{loop $skilllist $skill}-->
-		<tr title="{eval echo '战斗效果：'.$ext[$skill['ext']]."\n".'华丽效果：'.$btyext[$skill['btyext']];}"><td><img src="$localpath/skilltype/$skill[type].gif" /></td><td>$skill[name_j]</td><td>$skill[name_c]</td><td>$skill[atb]</td><td>$skill[power]</td><td>$skill[bty]</td><td>$skill[spr]</td><td>1 / $skill[cmp]</td><td><a href=train.php?mid=$mid&forget=$skill[id]>[忘记]</a></td></tr>
+		<tr title="{eval echo '战斗效果：'.$ext[$skill['ext']]."\n".'华丽效果：'.$btyext[$skill['btyext']];}"><td><img src="$staticdir/skilltype/$skill[type].gif" /></td><td>$skill[name_j]</td><td>$skill[name_c]</td><td>$skill[atb]</td><td>$skill[power]</td><td>$skill[bty]</td><td>$skill[spr]</td><td>1 / $skill[cmp]</td><td><a href=train.php?mid=$mid&forget=$skill[id]>[忘记]</a></td></tr>
 		<!--{/loop}-->
 		</table>
 	<!--{else}-->
 		<table><thead><td>类型</td><td>要求等级</td><td>日文名</td><td>中文名</td><td>属性</td><td>威力</td><td>华丽</td><td>命中率</td><td>消耗气力</td><td>操作</td></thead>
 		<!--{loop $skilllist $skill}-->
-		<tr title="{eval echo '战斗效果：'.$ext[$skill['ext']]."\n".'华丽效果：'.$btyext[$skill['btyext']];}"><td><img src="$localpath/skilltype/$skill[type].gif" /></td><td>Lv. $skill[reqlevel]</td><td>$skill[name_j]</td><td>$skill[name_c]</td><td>$skill[atb]</td><td>$skill[power]</td><td>$skill[bty]</td><td>$skill[spr]</td><td>1 / $skill[cmp]</td><td><a href=train.php?mid=$mid&learn=$skill[id]>[学习]</a></td></tr>
+		<tr title="{eval echo '战斗效果：'.$ext[$skill['ext']]."\n".'华丽效果：'.$btyext[$skill['btyext']];}"><td><img src="$staticdir/skilltype/$skill[type].gif" /></td><td>Lv. $skill[reqlevel]</td><td>$skill[name_j]</td><td>$skill[name_c]</td><td>$skill[atb]</td><td>$skill[power]</td><td>$skill[bty]</td><td>$skill[spr]</td><td>1 / $skill[cmp]</td><td><a href=train.php?mid=$mid&learn=$skill[id]>[学习]</a></td></tr>
 		<!--{/loop}-->
 		</table>
 	<!--{/if}-->
@@ -33,7 +33,7 @@
 <div class="side">
 	<div><h2>$pm[name]的信息</h2>
 	  <ul>
-		<li><img src="$localpath/pokemon/$pm[pokeid].gif" width="130" height="120" /></li>
+		<li><img src="$staticdir/pokemon/$pm[pokeid].gif" width="130" height="120" /></li>
 	  	<li>体力：$pm[hp] / $pm[maxhp]</li>
 		<li>气力：$pm[mp] / $pm[maxmp]</li>
 		<li>智慧：$pm[mqp]</li>

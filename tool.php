@@ -31,11 +31,11 @@ if($item == 'calc'){
 	}
 }elseif($item == 'cpanel'){
 	if(submitcheck('cpanelupdate')){
-		$localpath = dhtmlspecialchars($localpath);
+		$staticdir = dhtmlspecialchars($staticdir);
 		$battleon = intval($battleon);
 		$post_monid = intval($post_monid);
-		$db->query("UPDATE {$tpre}trainer SET localpath='$localpath',battleon=$battleon,post_monid=$post_monid WHERE id=$_USER[id]");
-		dsetcookie('pkw_localpath', $localpath, $cookietime, 1, true);
+		$db->query("UPDATE {$tpre}trainer SET localpath='$staticdir',battleon=$battleon,post_monid=$post_monid WHERE id=$_USER[id]");
+		dsetcookie('pkw_localpath', $staticdir, $cookietime, 1, true);
 		showmsg('成功修改设置！', 'javascript:history.back()');
 	}else{
 		$my = $db->fetch_first("SELECT localpath,battleon FROM {$tpre}trainer WHERE id=$_USER[id]");

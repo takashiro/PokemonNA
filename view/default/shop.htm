@@ -14,7 +14,7 @@
 		  <td></td><td width=50>商品编号</td><td>名称</td><td>价格</td><td>介绍</td><td width=60>相关操作</td></thead>
 		<!--{loop $warelist $ware}-->
 		<tr onclick="this.lastChild.firstChild.click()">
-		  <td><img src="$localpath/ware/$ware[ico]" /></td>
+		  <td><img src="$staticdir/ware/$ware[ico]" /></td>
 		  <td>$ware[id]</td><td>$ware[name_c]</td><td>$ware[price]</td><td>$ware[intro]</td>
 		<td><input type="radio" id="wareid" name="wareid" value="$ware[id]" />购买</td></tr>
 		<!--{/loop}-->

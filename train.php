@@ -38,7 +38,7 @@ if(!$learn && !$forget){
 	$query = $db->query("SELECT $selected FROM {$tpre}skill $condition LIMIT $offset,$limit");
 	while($skill = $db->fetch_array($query)){
 		if($skill['id'] == 185 && $skill['reqlevel'] < $pm['level']) continue;
-		$skill['atb'] = "<img src=$localpath/atb/$skill[atb].gif />";
+		$skill['atb'] = "<img src=$staticdir/atb/$skill[atb].gif />";
 		$skill['aft'] = $_CONFIG['aftarray'][$skill['aft']];
 		$skilllist[] = $skill;
 	};
