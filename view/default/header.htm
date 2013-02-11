@@ -37,9 +37,9 @@
 			<ul>
 				<li><a href="center.php">精灵中心</a></li>
 				<li><a href="institude.php">研究所</a></li>
-				<li id="mypokemon" class="menu">
+				<li id="mypokemon" class="menu dropmenu">
 					<a href="mypokemon.php">我的口袋怪兽</a>
-					<ul id="mypokemon_menu" class="headermenu_popup popupmenu_popup">
+					<ul id="mypokemon_menu" class="headermenu_popup popup">
 			        	<li><a href="mypokemon.php">随身携带</a></li>
 			        	<li><a href="mypokemon.php?box=1">研究所电脑箱</a></li>
 			        </ul>
@@ -55,4 +55,26 @@
 				<li><a href="gym.php">道馆设置</a></li>
 				<!--{/if}-->
 			</ul>
+
+			<script type="text/javascript">
+			$('#umenu > ul > li > a').each(function(){
+				var current = this.href == location.href.substr(0, this.href.length);
+
+				if(!current){
+					$(this).parent().find('.popup a').each(function(){
+						if(this.href == location.href.substr(0, this.href.length)){
+							current = true;
+							return false;
+						}
+					});
+				}
+				
+				if(current){
+					$(this).parent().addClass('current');
+					$(this).attr('href', '#');
+					index = false;
+					return false;
+				}
+			});
+			</script>
 		</div>

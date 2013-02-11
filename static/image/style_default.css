@@ -5,7 +5,7 @@ li {list-style: none;}
 body, td, input, textarea, select, button { color: #000; font: 12px/1.6em 微软雅黑, Arial, sans-serif; }
 body, ul, dl, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset { margin: 0; padding: 0; }
 h1, h2, h3, h4, h5, h6 { font-size: 1em; }
-#umenu li, .popupmenu_popup li, #announcement li, .portalbox li, .tabs li, .postmessage fieldset li, .side li, .formbox li, .notice li { list-style: none; }
+#umenu li, .popup li, #announcement li, .portalbox li, .tabs li, .postmessage fieldset li, .side li, .formbox li, .notice li { list-style: none; }
 a { color: #000; text-decoration: none; }
 	a:hover { text-decoration: underline; }
 	a img { border: none; }
@@ -47,13 +47,13 @@ input[id="formhash"]{display:none;}
 			#debuginfo { color: #999; }
 	.scrolltop { cursor: pointer; }
 #umenu { height: 31px; border: 1px solid #CAD9EA; background: #FFF url("./common/menu_bg.gif"); background-repeat: repeat-x; }
-	#umenu ul { float: right; padding: 4px 10px 0; border-right: 1px solid #FFF; }
+	#umenu > ul { float: right; padding: 4px 10px 0; border-right: 1px solid #FFF; }
 		#umenu li { float: left; }
 			#umenu li a { text-decoration: none; display: block; color: #333; padding: 4px 8px 3px; background: url(./common/menu_itemline.gif) no-repeat 0 6px; }
 				#umenu li.hover, #umenu li.current { background-color: #FFF; border: 1px solid; border-color: #CAD9EA #CAD9EA #FFF; }
-					#umenu li.current { font-weight: bold; }
-					#umenu li.hover a { padding: 3px 7px; background-image: none; }
-					#umenu li.current a { padding: 4px 7px 3px; background-image: none; }
+					#umenu li.current { }
+					#umenu li.hover > a { padding: 3px 7px; background-image: none; }
+					#umenu li.current > a { font-weight: bold; padding: 4px 7px 3px; background-image: none; }
 			#umenu cite a { font-weight: bold; background-image: none; }
 	.frameswitch { float: left; height: 30px; line-height: 30px; padding-left: 10px; }
 		#umenu a.frameoff, #umenu a.frameon { float: left; border: none; padding-left: 16px; margin-left: 0; background: no-repeat 0 50%; }
@@ -231,7 +231,7 @@ td.selector { width: 20px; text-align: center; }
 /* ~~~~ DropMenu ~~~~ */
 
 .dropmenu { padding-right: 15px !important; background-image: url(./common/arrow_down.gif) !important; background-position: 100% 50% !important; background-repeat: no-repeat !important; cursor: pointer; }
-#pm_ntc_view ul, .popupmenu_popup { text-align: left; line-height: 1.4em; padding: 10px; overflow: hidden; border: 1px solid #CAD9EA; background: #FFF url("./common/portalbox_bg.gif"); background-repeat: repeat-x; background-position: 0 1px;  }
+#pm_ntc_view ul, .popup { text-align: left; line-height: 1.4em; padding: 10px; overflow: hidden; border: 1px solid #CAD9EA; background: #FFF url("./common/portalbox_bg.gif"); background-repeat: repeat-x; background-position: 0 1px;  }
 	#pm_ntc_view ul li{font-weight:bold}
 	#pm_ntc_view ul em{font-weight:normal;margin-right:10px}
 #pm_ntc span{color:red;font-weight:bold;}
@@ -245,16 +245,16 @@ td.selector { width: 20px; text-align: center; }
 	.userinfopanel dl { border-bottom: 1px solid #E8E8E8; margin: 5px 0; padding: 5px 0; }
 	.postauthor cite a { float: left; padding: 5px; border: solid #E8F3FD; border-width: 1px 1px 0; height: 10px; overflow: hidden; }
 		.postauthor cite a.hover { border-color: #CAD9EA; background-color: #FFF; }
-	.popupmenu_popup .postauthor { width: 180px; }
-		.popupmenu_popup .postauthor a { color: #069; }
+	.popup .postauthor { width: 180px; }
+		.popup .postauthor a { color: #069; }
 #styleswitcher_menu { overflow: visible; }
 	#styleswitcher_menu, #styleswitcher_menu ul li, #styleswitcher_menu ul li.current a, #styleswitcher_menu ul li a { white-space: nowrap; }
 	#styleswitcher_menu ul li.current { font-weight: bold; }
 		#styleswitcher_menu ul li.current a { color: #666; }
 #styleswitcher_menu {}
 	#styleswitcher_menu li.current { font-weight: bold; }
-.headactions .popupmenu_popup a, .headactions .popupmenu_popup strong { color: #666; background: none; white-space: nowrap; }
-	.headactions .popupmenu_popup { overflow: visible; }
+.headactions .popup a, .headactions .popup strong { color: #666; background: none; white-space: nowrap; }
+	.headactions .popup { overflow: visible; }
 
 /* ~~~~ Form Style ~~~~ */
 
@@ -315,4 +315,4 @@ li.poplink { text-indent: 20px; padding: 4px; background: url(./common/homelink.
 		.announcementinfo span { float: left; font-weight: 700; height: 30px; line-height: 30px; margin-left: 16px; color: #000; }
 		.announcementmessage { padding: 10px; border-bottom: 1px solid #CAD9EA; }
 
-.popupmenu_popup {display:none; position:absolute; }
+.popup {display:none; position:absolute; }
