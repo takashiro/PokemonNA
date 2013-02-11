@@ -14,7 +14,7 @@ function pkw_exp_incre($orilevel, $exp, $monid, $pokeid, $natureid){
 	$mon['level'] = pkw_exp2lv($orilevel, $exp, $mon['growthtype']);
 	$mon['hp'] = ceil(($mon['hp']*2 + $mon['iv_hp'] + ($mon['ep_hp'] / 4)) * $mon['level'] / 100 + 10 + $mon['level']);
 
-	$naturefix = Pokemon::$nature[$natureid];
+	$naturefix = PokemonNature::$value[$natureid];
 	foreach(array('atk','def','stk','sdf','spd') as $pi => $p){
 		$mon[$p] = ceil((($mon[$p] * 2 + $mon['iv_'.$p] + ( $mon['ep_'.$p] / 4)) * $mon['level'] / 100 + 5) * $naturefix[$pi]);
 	}

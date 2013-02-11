@@ -21,9 +21,9 @@ if(!$action){
 	$query = $db->query("SELECT m.*,s.growthtype FROM {$tpre}pokemon m LEFT JOIN {$tpre}pokemoninfo s ON s.id=m.pokeid WHERE ownerid=$_USER[id] $extrac");
 	while($mon = $db->fetch_array($query)){
 		$box && $mon['status'] -= 10;
-		$mon['nature_c'] = Pokemon::$nature[$mon['natureid']]['name_c'];
-		$mon['trait_c'] = Pokemon::$trait[$mon['trait']]['name_c'];
-		$mon['trait_i'] = Pokemon::$trait[$mon['trait']]['intro'];
+		$mon['nature_c'] = PokemonNature::$value[$mon['natureid']]['name_c'];
+		$mon['trait_c'] = PokemonTrait::$value[$mon['trait']]['name_c'];
+		$mon['trait_i'] = PokemonTrait::$value[$mon['trait']]['intro'];
 		$pokelist[] = Pokemon::ToReadable($mon);
 
 		if(!empty($mon['skill'])) $allskill.= ','.$mon['skill'];

@@ -64,7 +64,7 @@ if($item == 'calc'){
 		$elist[] = $e;
 	}
 }elseif($item == 'trait'){
-	$_CONFIG['trait'] = Pokemon::$trait;
+	$_CONFIG['trait'] = PokemonTrait::$value;
 	unset($_CONFIG['trait'][0]);
 }
 

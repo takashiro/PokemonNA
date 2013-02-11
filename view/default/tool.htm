@@ -34,7 +34,7 @@
 	<tr><td colspan="2">性格：<input type="hidden" name="nature" /></td>
 	<td colspan="5">
 	<select class="required" onchange="show_nature(this.options[selectedIndex].value)">
-	<!--{loop Pokemon::$nature $n}-->
+	<!--{loop PokemonNature::$value $n}-->
 		<option value="$n[name_e]">$n[name_c]</option>
 	<!--{/loop}-->
 	</select></td><td></td></tr>
