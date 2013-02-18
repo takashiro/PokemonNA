@@ -41,6 +41,7 @@ function onDownloadDone(data){
 }
 
 function changemap(landid){
+	alert(type);
 	G['landid'] = landid;
 	changetype(G['type']);
 	setcookie('G['landid']', G['landid'], 3600*1000);
