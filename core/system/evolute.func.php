@@ -123,7 +123,7 @@ function pkw_evolute($mon = array(), $action = ''){
 		}
 		break;
 		case 21:
-			$query = $db->query("SELECT pokeid FROM {$PKWpre}mymon WHERE owner=$discuz_user");
+			$query = $db->query("SELECT pokeid FROM {$PKWpre}pokemon WHERE owner=$discuz_user");
 			while($evo['require'] == $db->result($query, 0)){
 				//$success_msg = "队伍中有$evo[require]进化";
 				$success = TRUE;

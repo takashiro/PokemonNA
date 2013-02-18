@@ -10,7 +10,7 @@ function pkw_exp_incre($orilevel, $exp, $monid, $pokeid, $natureid){
 	global $tpre, $db;
 	$selectfields = 's.growthtype';
 	foreach(array('hp','atk','def','stk','sdf','spd') as $p) $selectfields.= ',s.'.$p.',i.iv_'.$p.',i.ep_'.$p;
-	$mon = $db->fetch_first("SELECT $selectfields FROM {$PKWpre}mymonext i LEFT JOIN {$PKWpre}mon s ON s.id=$pokeid WHERE i.id=$monid");
+	$mon = $db->fetch_first("SELECT $selectfields FROM {$PKWpre}pokemonext i LEFT JOIN {$PKWpre}mon s ON s.id=$pokeid WHERE i.id=$monid");
 	$mon['level'] = pkw_exp2lv($orilevel, $exp, $mon['growthtype']);
 	$mon['hp'] = ceil(($mon['hp']*2 + $mon['iv_hp'] + ($mon['ep_hp'] / 4)) * $mon['level'] / 100 + 10 + $mon['level']);
 
@@ -204,7 +204,6 @@ require_once S_ROOT.'data/cache_settings.php';
 
 $_CONFIG['aftarray'] = array('所有','选择','敌二体','自身','不定','己方全场','自身以外','全场','敌随机','队友');
 $_CONFIG['evostatus'] = array('所有', '初级形态', '中等形态', '最终形态','神兽');
-$_CONFIG['waretype'] = array('所有','一般道具','回复药品','精灵球','技能机器','树果','信纸','对战道具','重要物品');
 $_CONFIG['weather'] = array('正常','晴天','下雨','寒冷','沙暴','大雾');
 $_CONFIG['btytype'] = array('所有','出色','美丽','可爱','聪明','坚强');
 $_CONFIG['land'] = array('所有','关东','城都','芳缘','新奥');
@@ -212,10 +211,10 @@ $_CONFIG['maptype'] = array('所有','道路','建筑','城市','森林','草地
 $_CONFIG['institude_pagelimit'] = 12;
 $PKWpre = 'pkw_';
 
-$staticdir = empty($staticdir) ? $_DCOOKIE['pkw_localpath'] : $staticdir;
-if(empty($staticdir)){
-	$_USER[id] && $staticdir = $db->result_first("SELECT localpath FROM {$PKWpre}myprofile WHERE id=$_USER[id]");
-	$staticdir = $staticdir ? $staticdir : $_CONFIG['imgpath'];
-	dsetcookie('pkw_localpath', $staticdir, $cookietime, 1, true);
+$imgdir = empty($imgdir) ? $_DCOOKIE['pkw_localpath'] : $imgdir;
+if(empty($imgdir)){
+	$_USER[id] && $imgdir = $db->result_first("SELECT localpath FROM {$PKWpre}myprofile WHERE id=$_USER[id]");
+	$imgdir = $imgdir ? $imgdir : $_CONFIG['imgpath'];
+	dsetcookie('pkw_localpath', $imgdir, $cookietime, 1, true);
 }
 ?>

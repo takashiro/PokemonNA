@@ -6,7 +6,7 @@
 				 - <a href="mailto:$adminemail">联系我们</a>
 			</p>
 			<p class="smalltext">
-				GMT<!--{if $_CONFIG[timezone] >= 0}-->+<!--{/if}-->$_CONFIG[timezone], {eval echo rgmdate($_G[timestamp])}
+				GMT<!--{if $_CONFIG[timezone] >= 0}-->+<!--{/if}-->$_CONFIG[timezone], {eval echo rgmdate($_G[timestamp])}, {eval echo $db->querynum;} queries.
 			</p>
 		</div>
 		<div id="rightinfo">

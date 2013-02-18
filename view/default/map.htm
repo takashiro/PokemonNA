@@ -6,7 +6,7 @@
 #map img{filter:Glow(color=white, strength=2);}
 </style>
 
-<script type="text/javascript" src="./static/js/map.js"></script>
+<script type="text/javascript" src="./js/map.js"></script>
 
 <div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 冒险大陆</div>
 
@@ -32,17 +32,17 @@
 
 <div class="content" style="width:84%">
 	<div id="map" style="text-align:center;margin:10px;overflow:auto">
-		<img src="$staticdir/common/loading.gif" border="0" />
+		<img src="$imgdir/common/loading.gif" border="0" />
 	</div>
 	<div id="monselect" class="mainbox"><h1>选择一个宠物</h1>
-	<!--{loop $mymonlist $mon}--><img src="$staticdir/pokemon/$mon[picid].gif" id="mon_{$mon[id]}" alt="$mon[name]" onclick="setmon($mon[id])" width="130" height="120" /><!--{/loop}-->
+	<!--{loop $mymonlist $mon}--><img src="$imgdir/pokemon/$mon[picid].gif" id="mon_{$mon[id]}" alt="$mon[name]" onclick="setmon($mon[id])" width="130" height="120" /><!--{/loop}-->
 	</div>
 </div>
 
 <!--{loop $ctsmap $landid $ctslist}-->
 <div id="contest_$landid" style="display:none">
 	<!--{loop $ctslist $cts}-->
-	<a href="contest.php?gid=$cts[id]"><img src="$staticdir/common/contest.gif" alt="{$cts[name]}华丽大赛" align="left" style="position:relative;top:$g[top]px;left:$g[left]px" /></a>
+	<a href="contest.php?gid=$cts[id]"><img src="$imgdir/common/contest.gif" alt="{$cts[name]}华丽大赛" align="left" style="position:relative;top:$g[top]px;left:$g[left]px" /></a>
 	<!--{/loop}-->
 </div>
 <!--{/loop}-->

@@ -14,12 +14,12 @@ $condition.= " LIMIT $offset, $limit";
 
 $query = $db->query("SELECT m.id,m.name_e,m.name_j,m.name_c,m.atb1,m.atb2,m.gender,m.height,m.weight,m.hp,m.atk,m.def,m.stk,m.sdf,m.spd,m.eggtype1,m.eggtype2,m.growthtype,m.eggstep,m.intro FROM {$tpre}pokemoninfo m WHERE $condition");
 while($pokemon = $db->fetch_array($query)){
-	$pokemon['atb1'] = Pokemon::$atb[$pokemon['atb1']];
-	$pokemon['atb2'] = $pokemon['atb2'] ? Pokemon::$atb[$pokemon['atb2']] : '';
+	$pokemon['atb1'] = Pokemon::$Atb[$pokemon['atb1']];
+	$pokemon['atb2'] = $pokemon['atb2'] ? Pokemon::$Atb[$pokemon['atb2']] : '';
 	$pokemon['gender'] = (254 - $pokemon['gender']).'：'.$pokemon['gender'];
-	$pokemon['eggtype1'] = Pokemon::$eggType[$pokemon['eggtype1']];
-	$pokemon['eggtype2'] = $pokemon['eggtype2']?Pokemon::$eggType[$pokemon['eggtype2']]:0;
-	$pokemon['growthtype'] = Pokemon::$growthType[$pokemon['growthtype']];
+	$pokemon['eggtype1'] = Pokemon::$EggType[$pokemon['eggtype1']];
+	$pokemon['eggtype2'] = $pokemon['eggtype2']?Pokemon::$EggType[$pokemon['eggtype2']]:0;
+	$pokemon['growthtype'] = Pokemon::$GrowthType[$pokemon['growthtype']];
 	$pokelist[] = $pokemon;
 }
 

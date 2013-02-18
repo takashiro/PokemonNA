@@ -24,18 +24,16 @@ if($item == 'calc'){
 	$fruitlist = array();
 	$query = $db->query("SELECT w.id,w.name_c,w.name_j,f.* FROM {$tpre}ware w LEFT JOIN {$tpre}fruit f ON f.id=w.id WHERE w.type=5 LIMIT $offset, $limit");
 	while($f = $db->fetch_array($query)){
-		$f['powertype'] = Pokemon::$atb[$f['powertype']];
+		$f['powertype'] = Pokemon::$Atb[$f['powertype']];
 		$f['name_c'] = $f['name_c']?$f['name_c']:$f['name_j'];
 		$f['hard'] = $hardarray[$f['hard']];
 		$fruitlist[] = $f;
 	}
 }elseif($item == 'cpanel'){
 	if(submitcheck('cpanelupdate')){
-		$staticdir = dhtmlspecialchars($staticdir);
-		$battleon = intval($battleon);
-		$post_monid = intval($post_monid);
-		$db->query("UPDATE {$tpre}trainer SET localpath='$staticdir',battleon=$battleon,post_monid=$post_monid WHERE id=$_USER[id]");
-		dsetcookie('pkw_localpath', $staticdir, $cookietime, 1, true);
+		$_G['user']->attr('localpath', $_POST['localpath']);
+		$_G['user']->attr('battleone', intval($_POST['battleon']));
+
 		showmsg('成功修改设置！', 'javascript:history.back()');
 	}else{
 		$my = $db->fetch_first("SELECT localpath,battleon FROM {$tpre}trainer WHERE id=$_USER[id]");

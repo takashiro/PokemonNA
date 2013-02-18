@@ -1,9 +1,11 @@
 
+/* Global */
 * { word-wrap: break-word; }
 body {background: #FFF; text-align: center; padding:0; margin:0;}
 body, td, input, textarea, select, button { color: #000; font: 12px/1.6em 微软雅黑, Arial, sans-serif; }
 body, ul, dl, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset { margin: 0; padding: 0; }
 h1, h2, h3, h4, h5, h6 { font-size: 1em; }
+li{list-style:none;}
 #umenu li, .popup li, #announcement li, .portalbox li, .tabs li, .postmessage fieldset li, .side li, .formbox li, .notice li { list-style: none; }
 a { color: #000; text-decoration: none; }
 	a:hover { text-decoration: underline; }
@@ -94,7 +96,7 @@ input[id="formhash"]{display:none;}
 	.pages_btns .pages em { line-height: 26px; }
 .multipage {border: 1px solid #CAD9EA; background: #F7F7F7; height: 24px; line-height: 26px; color: #999; overflow: hidden; margin:5px 0;}
 	.multipage a, .multipage strong, .multipage em, .multipage kbd, .multipage em { float: left; padding: 0 8px; line-height:26px; }
-		.multipage a:hover { background-color: #FFF; }
+		.multipage a:hover, .multipage a.current { background-color: #FFF; font-weight:bold; }
 		.multipage strong { font-weight: bold; color: #090; background: #CAD9EA; }
 			.multipage a.prev, .multipage a.next { line-height: 24px; font-family: Verdana, Arial, Helvetica, sans-serif; }
 				.multipage a.next { padding: 0 15px; }

@@ -4,6 +4,10 @@ require_once './core/init.inc.php';
 
 $action = &$_GET['action'];
 
+if(!$_G['user']->isLoggedIn()){
+	showmsg('请先登录本站。', 'memcp.php?action=login');
+}
+
 if(!$action){
 	$pokelist = array();
 	$allskill = $allequip = $multipage = '';
@@ -38,7 +42,7 @@ if(!$action){
 		$query = $db->query("SELECT id,name_c,atb FROM {$tpre}skill WHERE id IN ($allskill)");
 		while($k = $db->fetch_array($query)){
 			$skillname[$k['id']] = $k['name_c'];
-			$skillatb[$k['id']] = Pokemon::$atb[$k['atb']];
+			$skillatb[$k['id']] = Pokemon::$Atb[$k['atb']];
 		}
 	}
 
@@ -52,30 +56,24 @@ if(!$action){
 	}
 	$warename[0] = '没有';
 
-}elseif($action=='evolute'){
-	if($mon['status'] >= 9 || !$mon['status'] || $mon['status'] == 9) exit('error');
-	require_once S_ROOT.'system/evolute.func.php';
-	$mon = pkw_evolute($mon);
-	if($mon){
-		$db->query("UPDATE {$tpre}mymon SET pokeid=$mon[pokeid],atk=$mon[atk],def=$mon[def],hp=$mon[hp],stk=$mon[stk],sdf=$mon[sdf],spd=$mon[spd],maxhp=$mon[hp],mp=$mon[mp],maxmp=$mon[mp],atb1=$mon[atb1],atb2=$mon[atb2],height=$mon[height],weight=$mon[weight],trait=$mon[trait],exp=$mon[exp] WHERE id=$mon[id]");
-		writelog('pokemon', "$mon[ori_pokeid]\tEvolution\t$mon[pokeid]");
-		showmsg("进化{$mon[name_c]}成功！",'mypokemon.php');
+}elseif($action == 'evolute'){
+	$pokemon = new Pokemon($_GET['mid']);
+	if($pokemon->evolute()){
+		showmsg('进化'.$pokemon->attr('name').'成功！','mypokemon.php');
 	}else{
 		showmsg('条件不足！进化失败！', 'back');
 	}
 
-
 }elseif($action=='rename'){
 	if($mon['status'] >= 9 || !$mon['status']) exit();
-	if($newname){
-		$mid = intval($mid);
-		$newname = dhtmlspecialchars($newname);
-		if(!empty($newname)) $db->query("UPDATE {$tpre}mymon SET name='$newname' WHERE id=$mid");
+	if($newname = $_POST['newname']){
+		$mid = intval($_POST['mid']);
+		if(!empty($newname)) $db->query("UPDATE {$tpre}pokemon SET name='$newname' WHERE id=$mid");
 		showmsg('成功改名为'.$newname.'！', 'mypokemon.php');
 	}
 
 }elseif($action=='give'){
-	if($username = daddslashes($receiver)){
+	if($username = raddslashes($receiver)){
 		$extsql = '';
 		$rec = $db->fetch_first("SELECT id,pokenum,username FROM {$tpre}trainer WHERE username='$username'");
 		
@@ -84,7 +82,7 @@ if(!$action){
 		elseif($rec['pokenum'] >= 6) $extsql = ',status=status+10';
 		else{
 			$id = intval($id);
-			$db->query("UPDATE {$tpre}mymon SET owner='$username' $extsql WHERE id=$mid");
+			$db->query("UPDATE {$tpre}pokemon SET owner='$username' $extsql WHERE id=$mid");
 			$db->query("UPDATE {$tpre}trainer SET status=status+1 WHERE username='$rec[id]'");
 			$db->query("UPDATE {$tpre}trainer SET status=status-1 WHERE id=$_USER[id]");
 			writelog('pokemon', "$mid\tPresent\t$username");
@@ -94,7 +92,7 @@ if(!$action){
 				require_once S_ROOT.'system/evolute.func.php';
 				$mon = pkw_evolute($mon, 'give');
 				if($mon){
-					$db->query("UPDATE {$tpre}mymon SET pokeid=$mon[pokeid],atk=$mon[atk],def=$mon[def],hp=$mon[hp],stk=$mon[stk],sdf=$mon[sdf],spd=$mon[spd],maxhp=$mon[hp],mp=$mon[mp],maxmp=$mon[mp],atb1=$mon[atb1],atb2=$mon[atb2],height=$mon[height],weight=$mon[weight],trait=$mon[trait],exp=$mon[exp] WHERE id=$mon[id]");
+					$db->query("UPDATE {$tpre}pokemon SET pokeid=$mon[pokeid],atk=$mon[atk],def=$mon[def],hp=$mon[hp],stk=$mon[stk],sdf=$mon[sdf],spd=$mon[spd],maxhp=$mon[hp],mp=$mon[mp],maxmp=$mon[mp],atb1=$mon[atb1],atb2=$mon[atb2],height=$mon[height],weight=$mon[weight],trait=$mon[trait],exp=$mon[exp] WHERE id=$mon[id]");
 					writelog('pokemon', "$mon[ori_pokeid]\tEvolution\t$mon[pokeid]");
 				}
 				$message.= '精灵在传送过程中进化了。';
@@ -113,10 +111,10 @@ if(!$action){
 		if($uid <= 0 || empty($password)){
 			showmsg('密码错误！', 'back');
 		}
-		$mon_status = $db->result_first("SELECT status FROM {$tpre}mymon WHERE id=$id AND ownerid=$_USER[id]");
+		$mon_status = $db->result_first("SELECT status FROM {$tpre}pokemon WHERE id=$id AND ownerid=$_USER[id]");
 		if($mon_status > 0){
-			$db->query("DELETE FROM {$tpre}mymon WHERE id=$id");
-			$db->query("DELETE FROM {$tpre}mymonext WHERE id=$id");
+			$db->query("DELETE FROM {$tpre}pokemon WHERE id=$id");
+			$db->query("DELETE FROM {$tpre}pokemonext WHERE id=$id");
 			$mon_status > 9 && $db->query("UPDATE {$tpre}trainer SET pokenum=pokenum-1 WHERE id=$_USER[id]");
 			showmsg('你好残忍啊！！！', 'mypokemon.php');
 		}else{
@@ -126,23 +124,23 @@ if(!$action){
 		exit('Illegal Operation');
 	}
 }elseif(substr($action, -3) == 'box'){
-	$id = intval($id);
-	$mon = $db->fetch_first("SELECT name,status FROM {$tpre}mymon WHERE id=$id AND ownerid=$_USER[id]");
+	$id = intval($_GET['id']);
+	$mon = $db->fetch_first("SELECT name,status FROM {$tpre}pokemon WHERE id=$id AND ownerid=$_USER[id]");
 	!$mon && showmsg('No_such_pokemon Error:1', 'back');
 
-	$my_pokenum = $db->result_first("SELECT pokenum FROM {$tpre}trainer WHERE id=$_USER[id]");
+	$my_pokenum = &$_USER['pokenum'];
 	if($action == 'intobox'){
 		$mon['status'] > 9 && showmsg('No_such_pokemon Error:2', 'back');
 		$my_pokenum <= 1 && showmsg('至少要留1只精灵在身边哦！', 'back');
 
-		$db->query("UPDATE {$tpre}mymon SET status=status+10 WHERE id=$id");
+		$db->query("UPDATE {$tpre}pokemon SET status=status+10 WHERE id=$id");
 		$db->query("UPDATE {$tpre}trainer SET pokenum=pokenum-1 WHERE id=$_USER[id]");
 		showmsg($mon['name'].'成功进入箱子并传送到研究所。', 'mypokemon.php?box=1');
 	}else{
 		$mon['status'] < 10 && showmsg('No_such_pokemon Error:3', 'back');
 		$my_pokenum >= 6 && showmsg('最多携带6只精灵在身边！', 'back');
 
-		$db->query("UPDATE {$tpre}mymon SET status=status-10 WHERE id=$id");
+		$db->query("UPDATE {$tpre}pokemon SET status=status-10 WHERE id=$id");
 		$db->query("UPDATE {$tpre}trainer SET pokenum=pokenum+1 WHERE id=$_USER[id]");
 		showmsg($mon['name'].'成功传回！', 'mypokemon.php');
 	}

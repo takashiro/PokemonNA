@@ -47,26 +47,32 @@ function rsetcookie($varname, $value = '', $extexpiry = 0){
 }
 
 function multi($totalnum, $limit, $curpage, $baseurl){
-	$pagelimit=9;
+	$pagelimit = 9;
 	
 	$pagenum = ceil($totalnum / $limit);
-	$startpage = max($curpage - floor($pagelimit / 2),1);
-	$endpage = min($curpage + floor($pagelimit / 2),$pagenum);
-	$pre = strstr($baseurl, '?') ? '&' : '?';
-	
 	if($pagenum <= 1){
 		return '';
 	}
+
+	$startpage = max($curpage - floor($pagelimit / 2), 1);
+	$endpage = min($curpage + floor($pagelimit / 2), $pagenum);
+	$pre = strstr($baseurl, '?') ? '&' : '?';
 	
 	$html = '<div id="multipage">';
 	
-	if($curpage>1) {
+	if($curpage > 1){
 		$html.= '<a href="'.$baseurl.$pre.'page=1">首页</a>';
 		$html.= '<a href="'.$baseurl.$pre.'page='.($curpage - 1).'">上一页</a>';
 	}
 
-	for($i = $startpage; $i <= $endpage; $i++){
-		$html.= '<a href="'.$baseurl.$pre.'page='.$i.'"'.($curpage == $i ? ' class="current"' : '').'>'.$i.'</a>';
+	for($i = $startpage; $i < $curpage; $i++){
+		$html.= '<a href="'.$baseurl.$pre.'page='.$i.'">'.$i.'</a>';
+	}
+
+	$html.= '<a href="'.$baseurl.$pre.'page='.$i.'" class="current">'.$i.'</a>';
+
+	for($i = $i + 1; $i <= $endpage; $i++){
+		$html.= '<a href="'.$baseurl.$pre.'page='.$i.'">'.$i.'</a>';
 	}
 	
 	if($curpage<$pagenum) {

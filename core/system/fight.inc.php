@@ -267,7 +267,7 @@ function tmpstatus_massedit($statusid = 0, $value, $side = 'both'){
 
 	$pokelist = array();
 	$all_tmpstatus_empty = TRUE;
-	$query = $db->query("SELECT id,tmpstatus FROM {$PKWpre}mymon WHERE $extrac");
+	$query = $db->query("SELECT id,tmpstatus FROM {$PKWpre}pokemon WHERE $extrac");
 	while($m = $db->fetch_array($query)){
 		if($m['id'] != $GLOBALS['rev']['id'] && $m['id'] != $GLOBALS['obv']['id']){
 			if($all_tmpstatus_empty && $m['tmpstatus']) $all_tmpstatus_empty = FALSE;
@@ -278,20 +278,20 @@ function tmpstatus_massedit($statusid = 0, $value, $side = 'both'){
 		$tmpstatus = array();
 		$tmpstatus[$statusid] = $value;
 		$tmpstatus = serialize($tmpstatus);
-		$db->query("UPDATE {$PKWpre}mymon SET tmpstatus='$tmpstatus' WHERE $extrac");
+		$db->query("UPDATE {$PKWpre}pokemon SET tmpstatus='$tmpstatus' WHERE $extrac");
 	}elseif(!$all_tmpstatus_empty && $value){
 		foreach($pokelist as $m){
 			$m['tmpstatus'] = unserialize($m['tmpstatus']);
 			$m['tmpstatus'][$statusid] = $value;
 			$m['tmpstatus'] = serialize($m['tmpstatus']);
-			$db->query("UPDATE {$PKWpre}mymon SET tmpstatus='$m[tmpstatus]' WHERE id=$m[id]");
+			$db->query("UPDATE {$PKWpre}pokemon SET tmpstatus='$m[tmpstatus]' WHERE id=$m[id]");
 		}
 	}elseif(!$all_tmpstatus_empty && !$value){
 		foreach($pokelist as $m){
 			$m['tmpstatus'] = unserialize($m['tmpstatus']);
 			unset($m['tmpstatus'][$statusid]);
 			$m['tmpstatus'] = serialize($m['tmpstatus']);
-			$db->query("UPDATE {$PKWpre}mymon SET tmpstatus='$m[tmpstatus]' WHERE id=$m[id]");
+			$db->query("UPDATE {$PKWpre}pokemon SET tmpstatus='$m[tmpstatus]' WHERE id=$m[id]");
 		}
 	}
 

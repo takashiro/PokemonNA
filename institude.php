@@ -41,15 +41,11 @@ if(submitcheck('registersubmit')){
 
 	Pokemon::InsertIntoDB($mon);
 
+	$backpack = new Backpack($_G['user']->attr('id'));
+	$backpack->updateStorage(198, 5);
+
 	//writelog('institude', $selected);
 	showmsg("成功领取{$mon[name]}！", 'mypokemon.php');
-
-}elseif($_GET['action'] == 'join'){
-	$query = $db->query("SELECT id FROM {$tpre}trainer WHERE username='$discuz_user'");
-	if($db->fetch_array($query)) showmsg('对不起，你已经领取过了！', 'institude.php');
-	$db->query("INSERT INTO {$tpre}trainer (id,username,battleon,pokenum) VALUES ('$_USER[id]','$discuz_user', 1, 1)");
-	pkw_storage(198, 5, $_USER[id]);
-	showmsg('成功获取宠物球！你可以开始在这里的冒险了！', 'institude.php');
 
 }else{
 	$condition = 'm.id IN ('.$_CONFIG['selectable_pokemon'].')';
@@ -57,12 +53,12 @@ if(submitcheck('registersubmit')){
 	$pokelist = array();
 	$query = $db->query("SELECT m.id,m.name_e,m.name_j,m.name_c,m.atb1,m.atb2,m.gender,m.height,m.weight,m.hp,m.atk,m.def,m.stk,m.sdf,m.spd,m.eggtype1,m.eggtype2,m.growthtype,m.eggstep,m.intro FROM {$tpre}pokemoninfo m WHERE $condition");
 	while($pokemon = $db->fetch_array($query)){
-		$pokemon['atb1'] = Pokemon::$atb[$pokemon['atb1']];
-		$pokemon['atb2'] = $pokemon['atb2'] ? Pokemon::$atb[$pokemon['atb2']] : '';
+		$pokemon['atb1'] = Pokemon::$Atb[$pokemon['atb1']];
+		$pokemon['atb2'] = $pokemon['atb2'] ? Pokemon::$Atb[$pokemon['atb2']] : '';
 		$pokemon['gender'] = (254 - $pokemon['gender']).'：'.$pokemon['gender'];
-		$pokemon['eggtype1'] = Pokemon::$eggType[$pokemon['eggtype1']];
-		$pokemon['eggtype2'] = $pokemon['eggtype2']?Pokemon::$eggType[$pokemon['eggtype2']]:0;
-		$pokemon['growthtype'] = Pokemon::$growthType[$pokemon['growthtype']];
+		$pokemon['eggtype1'] = Pokemon::$EggType[$pokemon['eggtype1']];
+		$pokemon['eggtype2'] = $pokemon['eggtype2']?Pokemon::$EggType[$pokemon['eggtype2']]:0;
+		$pokemon['growthtype'] = Pokemon::$GrowthType[$pokemon['growthtype']];
 		$pokelist[] = $pokemon;
 	}
 }

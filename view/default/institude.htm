@@ -2,7 +2,7 @@
 
 <script type="text/javascript">
 function pkw_select(selected){
-	$('#selectedimg').html(shockwave('$staticdir/vector/'+selected+'.swf', '100%', 455, ''));
+	$('#selectedimg').html(shockwave('$imgdir/vector/'+selected+'.swf', '100%', 455, ''));
 	$('#selected').val(selected);
 }
 var Avail_mon = Array($_CONFIG['selectable_pokemon']);
@@ -17,15 +17,15 @@ setTimeout("random_select()", 0);
 <div class="box"><h4>大木研究所</h4>
 	<table>
 	  <tr>
-		<td title="宠物图鉴" style="color:gray"><h3><a href="pokedex.php">宠物图鉴<br /><img src="$staticdir/common/zukan.gif" /></a></h3>
+		<td title="宠物图鉴" style="color:gray"><h3><a href="pokedex.php">宠物图鉴<br /><img src="$imgdir/common/zukan.gif" /></a></h3>
 		这里可以查看所有宠物小精灵的资料</td>
 		<td title="获取精灵球">
-		<h3>获取精灵球<br /><img src="$staticdir/favicon.gif" /><img src="$staticdir/favicon.gif" /><img src="$staticdir/favicon.gif" /></h3>
+		<h3>获取精灵球<br /><img src="$imgdir/favicon.gif" /><img src="$imgdir/favicon.gif" /><img src="$imgdir/favicon.gif" /></h3>
 		每一个新人训练家到这里可以获取5个普通精灵球<br /><br />
 		<h3>选择最初的宠物小精灵</h3>从下列的宠物小精灵中决定一个吧！<br /><br />
 		<h3><a href="view.php">查看训练师登记表</a></h3>这里可以查到所有的训练师，你可以向他们发出挑战！</td>
 		<td width=200>欢迎来到我的研究所！<br />你可以去查看精灵图鉴，或者领取5个普通精灵球。</td>
-		<td width=143><img src="$staticdir/common/ooki.gif" /></td>
+		<td width=143><img src="$imgdir/common/ooki.gif" /></td>
 	  </tr>
 	</table>
 </div>

@@ -2,7 +2,7 @@
 require_once './core/init.inc.php';
 if(!$revid) showmsg('请选择一个精灵！');
 else{
-	$rev = $db->fetch_first("SELECT u.weather,u.obvid,u.mapid,u.status AS ustatus, u.actiontime,m.* FROM {$tpre}mymon m
+	$rev = $db->fetch_first("SELECT u.weather,u.obvid,u.mapid,u.status AS ustatus, u.actiontime,m.* FROM {$tpre}pokemon m
 	LEFT JOIN {$tpre}trainer u ON u.id=m.ownerid WHERE m.id=$revid AND m.ownerid=$_USER[id]");
 	$ori_rev = $rev = pkw_ShowInfo($rev);
 	$rev['tmpstatus'] && $rev['tmpstatus'] = unserialize($rev['tmpstatus']);
@@ -105,14 +105,14 @@ if($gid){
 				$extep = preg_replace("/ep_([a-z]+)\+([\w]+)/", "ep_\\1=ep_\\1+\\2", $query['ep']);
 				$rev['exp'] += floor($baseexp / 7 * $obv['level']);
 				$revsql.= pkw_exp_incre($rev['level'], $rev['exp'], $rev['id'], $rev['pokeid'], $rev['natureid']);
-				$db->query("UPDATE {$tpre}mymonext SET $extep WHERE id=$rev[id]");
+				$db->query("UPDATE {$tpre}pokemonext SET $extep WHERE id=$rev[id]");
 				$db->query("DELETE FROM {$tpre}adventure WHERE id=$_USER[id]");
 				writelog('adven', "$rev[id]\t$obv[pokeid]\tReverse");
 				$endbattle = TRUE;
 			}
 			if($rev['hp'] <= 0){
 				$revsql = '';
-				$db->query("UPDATE {$tpre}mymon SET status=0,hp=0 $clear_temp_point WHERE id=$rev[id]");
+				$db->query("UPDATE {$tpre}pokemon SET status=0,hp=0 $clear_temp_point WHERE id=$rev[id]");
 				writelog('adven', "$rev[id]\t$obv[pokeid]\tObverse");
 				$endbattle = TRUE;
 			}
@@ -130,7 +130,7 @@ if($gid){
 			foreach($obv_change as $k => $v) $obvsql.= ','.$k.(is_numeric($v)?'='.$v:"='$v'");
 
 			$revsql && $revsql = substr($revsql, 1);
-			empty($revsql) || $db->query("UPDATE {$tpre}mymon SET $revsql WHERE id=$rev[id]");
+			empty($revsql) || $db->query("UPDATE {$tpre}pokemon SET $revsql WHERE id=$rev[id]");
 			$obvsql = substr($obvsql, 1);
 			empty($obvsql) || $db->query("UPDATE {$tpre}adventure SET $obvsql WHERE id=$_USER[id]");
 

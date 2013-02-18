@@ -4,7 +4,7 @@
 <div class="mainbox listbox">
 	<div class="headactions">
 	<a href="shop.php">所有</a>
-	<!--{loop $_CONFIG['waretype'] $key $value}-->
+	<!--{loop Ware::$Type $key $value}-->
 	<a href="myware.php?type=$key">$value</a>
 	<!--{/loop}-->
 	</div>
@@ -12,7 +12,7 @@
 	<table>
 	  <thead><td></td><td>名称</td><td>个数</td><td>说明</td><td>操作</td></thead>
 	<!--{loop $warelist $ware}-->
-	<tr onclick="$('usedid').value=$ware[id];$('slc_$ware[id]').click()"><td><img src="$staticdir/ware/$ware[ico]" /></td>
+	<tr onclick="$('#usedid').val($ware[id]);$('#slc_$ware[id]').attr('checked', true)"><td><img src="$imgdir/ware/$ware[ico]" /></td>
 	<td>$ware[name_c]</td><td>$ware[nums]</td><td>$ware[intro]</td><td><input type="radio" id="slc_$ware[id]" name="selection" /></td></tr>
 	<!--{/loop}-->
 	</table>
@@ -22,7 +22,6 @@
 
 <div class="mainbox"><h1>背包操作</h1>
 <form id="warelist" action="myware.php" method="post">
-<input type="hidden" id="formhash" name="formhash" value="{FORMHASH}" />
 <input type="hidden" id="id" name="id" value="$ware[id]" />
 <table>
 	<thead><td>操作相关</td><td>操作类型</td><td>确定按钮</td></thead>
@@ -54,7 +53,7 @@
 </div>
 <div class="mainbox" id="monselect"><h1>我的口袋怪兽</h1>
 <!--{loop $mymon $mon}-->
-	<img src="$staticdir/pokemon/$mon[picid].gif" width="130" height="120" id="mon_{$mon[id]}" alt="$mon[name]" onclick="setmon($mon[id])" />
+	<img src="$imgdir/pokemon/$mon[picid].gif" width="130" height="120" id="mon_{$mon[id]}" alt="$mon[name]" onclick="setmon($mon[id])" />
 <!--{/loop}-->
 </div>
 <script type="text/javascript">

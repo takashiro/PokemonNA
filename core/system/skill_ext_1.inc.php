@@ -180,7 +180,7 @@ break;
 break;
 	case 47:
 	$db->query("DELETE FROM {$PKWpre}adventure WHERE id=$mid");
-	$db->query("UPDATE {$PKWpre}mymon SET obvid=0,mapid=0 WHERE id=$mid AND owner='$discuz_user'");
+	$db->query("UPDATE {$PKWpre}pokemon SET obvid=0,mapid=0 WHERE id=$mid AND owner='$discuz_user'");
 	writelog('battle', "$rev[id]\t$obv[pokeid]\tAdventure\tObverse");
 	showmsg('Ã”¿Î≥…π¶£°', 'pkw.php?index=map', 'undermsg');
 break;

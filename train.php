@@ -38,13 +38,13 @@ if(!$learn && !$forget){
 	$query = $db->query("SELECT $selected FROM {$tpre}skill $condition LIMIT $offset,$limit");
 	while($skill = $db->fetch_array($query)){
 		if($skill['id'] == 185 && $skill['reqlevel'] < $pm['level']) continue;
-		$skill['atb'] = "<img src=$staticdir/atb/$skill[atb].gif />";
+		$skill['atb'] = "<img src=$imgdir/atb/$skill[atb].gif />";
 		$skill['aft'] = $_CONFIG['aftarray'][$skill['aft']];
 		$skilllist[] = $skill;
 	};
 	$skillnum = $db->result_first("SELECT COUNT(*) FROM {$tpre}skill $condition");
 	$multipage = multi($skillnum, $limit, $page, "train.php?mid=$mid&atb=$atb");
-	unset(Pokemon::$atb[0]);
+	unset(Pokemon::$Atb[0]);
 
 }elseif($learn){
 	if(count($pm['skilllist']) >= 7)

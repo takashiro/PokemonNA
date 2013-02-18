@@ -2,23 +2,23 @@
 
 if(!defined('IN_PLUSQUIZ')) exit('Access Denied');
 
-class User{
-	protected $attr = array(
-		'id' => 0,
-	);	//用户信息
-	//protected $o = array();	//原始用户信息，用于判断信息是否被修改和更新数据库
+class User extends DBObject{
+	public function __construct(){
+		parent::__construct('trainer');
+	}
 
 	public function login($email = '', $password = ''){
 		global $db, $tpre;
 
 		if(!$email){
 			if($_COOKIE['rcuserinfo']){
-				$this->attr = $this->decodeCookie($_COOKIE['rcuserinfo']);
+				$cookie = $this->decodeCookie($_COOKIE['rcuserinfo']);
+				parent::fetchAttributesFromDB('*', $cookie);
 				return $this->isLoggedIn();
 			}
 		}else{
 			$pwmd5 = rmd5($password);
-			$this->attr = $db->fetch_first("SELECT * FROM {$tpre}trainer WHERE email='$email' AND pwmd5='$pwmd5'");
+			parent::fetchAttributesFromDB('*', "email='$email' AND pwmd5='$pwmd5'");
 
 			if($this->attr){
 				rsetcookie('rcuserinfo', $this->encodeCookie());
@@ -41,18 +41,6 @@ class User{
 
 	public function isAdministrator(){
 		return false;
-	}
-
-	public function toArray(){
-		return $this->attr;
-	}
-
-	public function attr($attr, $value = null){
-		if($value == null){
-			return $this->attr[$attr];
-		}else if(array_key_exists($attr, $this->attr)){
-			$this->attr[$attr] = $value;
-		}
 	}
 
 	static public function ip(){
@@ -111,7 +99,8 @@ class User{
 	}
 	
 	protected function encodeCookie(){
-		return $this->authcode(serialize($this->attr), 'ENCODE', $GLOBALS['_CONFIG']['halt']);
+		$userinfo = array('id' => $this->attr['id'], 'email' => $this->attr['email']);
+		return $this->authcode(serialize($userinfo), 'ENCODE', $GLOBALS['_CONFIG']['halt']);
 	}
 	
 	protected function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {

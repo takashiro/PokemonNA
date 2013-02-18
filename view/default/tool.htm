@@ -15,8 +15,8 @@
 </div>
 <div class="content">
 <!--{if $item == 'calc'}-->
-	<script type="text/javascript">var imgpath = "$staticdir";</script>
-	<script type="text/javascript" src="./static/js/calc.js"></script>
+	<script type="text/javascript">var imgpath = "$imgdir";</script>
+	<script type="text/javascript" src="./js/calc.js"></script>
 	<div id="gui" class="block">
 	<div class="mainbox"><h1>觉醒力量计算器</h1>
 	<table>
@@ -58,24 +58,19 @@
 	</div>
 	<div class="pages_btns"><button class="postbtn submit" onclick="calc_hiddenpower()">计算觉醒力量</button></div>
 <!--{elseif $item == 'cpanel'}-->
-	<form action="tool.php?item=cpanel" method="post"><input type="hidden" name="formhash" value="{FORMHASH}" />
+	<form action="tool.php?item=cpanel" method="post">
 	<div class="mainbox"><h1>个人设置修改</h1>
 	<ul class="tabs"><li class="current"><a>基本信息</a></li></ul>
 	<table>
 		<tr>
 			<th>本地图片路径</th>
-			<td><input type="text" name="localpath" maxlength="50" value="$staticdir" /></td>
+			<td><input type="text" name="localpath" maxlength="50" value="$_USER[localpath]" /></td>
 			<td>如果您不清楚应该填写什么，请打开图片包中的checkSource.html文件</td>
 		</tr>
 		<tr>
 			<th>是否接受挑战</th>
-			<td><input type="radio" name="battleon" value="1"<!--{if $my[battleon]}--> checked="checked"<!--{/if}--> />是 <input type="radio" name="battleon" value="0"<!--{if !$my[battleon]}--> checked="checked"<!--{/if}--> />否</td>
+			<td><input type="radio" name="battleon" value="1"<!--{if $_USER[battleon]}--> checked="checked"<!--{/if}--> />是 <input type="radio" name="battleon" value="0"<!--{if !$USER[battleon]}--> checked="checked"<!--{/if}--> />否</td>
 			<td>此处关闭则拒绝所有挑战</td>
-		</tr>
-		<tr>
-			<th>帖内个人信息显示的精灵</th>
-			<td><select name="post_monid"><!--{loop $monlist $m}--><option value="$m[id]">$m[name]</option><!--{/loop}--></select></td>
-			<td></td>
 		</tr>
 		<tr>
 			<th>&nbsp;</th>
@@ -101,9 +96,9 @@
 		<thead><td>宠物编号</td><td>进化要求</td><td>进化后</td></thead>
 		<!--{loop $elist $e}-->
 		<tr>
-			<td><img src="$staticdir/pokemon/$e[original].gif" width="130" height="120" /></td>
+			<td><img src="$imgdir/pokemon/$e[original].gif" width="130" height="120" /></td>
 			<td>$e[require_c]</td>
-			<td><img src="$staticdir/pokemon/$e[evoluted].gif" width="130" height="120" /></td>
+			<td><img src="$imgdir/pokemon/$e[evoluted].gif" width="130" height="120" /></td>
 		</tr>
 		<!--{/loop}-->
 	  </table>
@@ -120,5 +115,5 @@
 	</div>
 <!--{/if}-->
 </div>
-</div>
+
 {template footer}

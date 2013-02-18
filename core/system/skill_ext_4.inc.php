@@ -11,7 +11,7 @@ break;
 break;
 	case 155://='威力与属性随个体值而变化';
 	if(!isset($rev['iv_hp'])){
-		$revext = $db->fetch_first("SELECT iv_hp,iv_atk,iv_def,iv_stk,iv_sdf,iv_spd FROM {$PKWpre}mymonext WHERE id=$rev[id]");
+		$revext = $db->fetch_first("SELECT iv_hp,iv_atk,iv_def,iv_stk,iv_sdf,iv_spd FROM {$PKWpre}pokemonext WHERE id=$rev[id]");
 		$rev = array_merge($rev, $revext);
 	}
 	$rev_skill['power'] = hidden_power($rev);

@@ -43,9 +43,9 @@ if(submitcheck('banksubmit')){
 	$id = intval($pokemonid);
 	$cash = $PKW_user['cash'];
 	if($_CONFIG['rescue_fee'] > $cash) showmsg('您没有那么多现金！', 'pkw.php');
-	$db->query("UPDATE {$tpre}mymon SET status=2 WHERE id=$id AND owner='$discuz_user' AND status<9");
+	$db->query("UPDATE {$tpre}pokemon SET status=2 WHERE id=$id AND owner='$discuz_user' AND status<9");
 	if($db->affected_rows <= 0){
-		$mon = $db->fetch_first("SELECT status,owner FROM {$tpre}mymon WHERE id=$id");
+		$mon = $db->fetch_first("SELECT status,owner FROM {$tpre}pokemon WHERE id=$id");
 		$mon['owner'] != $discuz_user && showmsg('该精灵不属于您！', 'back');
 		$mon['status'] == 9 && showmsg('该精灵尚未孵化！', 'back');
 		$mon['status'] >= 10 && showmsg('该精灵还在暂存在研究所中！', 'back');

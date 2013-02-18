@@ -7,12 +7,12 @@ div.policeoffice{width:49%;float:right};
 <div id="nav"><a href="pkw.php">Pokemon WG</a> &raquo; 精灵中心</div>
 
 <div class="content">
-	<div class="box" style="width:49%;float:left"><h4><img src="$staticdir/favicon.gif" /><img src="$staticdir/logo.gif" /><br />欢迎来到宠物小精灵中心！</h4>
+	<div class="box" style="width:49%;float:left"><h4><img src="$imgdir/favicon.gif" /><img src="$imgdir/logo.gif" /><br />欢迎来到宠物小精灵中心！</h4>
 	<div style="text-align:right">Pocket Monster WG v1.0.0 for Discuz! By Takashiro Satoshi</div>
 	</div>
 	<div class="mainbox" style="width:49%;float:right"><h1>ポケモン救治中心</h1>
 	<table>
-		<tr><td rowspan=3><img src="$staticdir/common/joy.gif" /></td>
+		<tr><td rowspan=3><img src="$imgdir/common/joy.gif" /></td>
 		<td>
 			<p>乔伊小姐温馨提示：<br />精灵中心在救治中的精灵<!--{if in_array($minute, array(15,45))}-->现在已经<!--{else}-->将会在{$joy_time}<!--{/if}-->全部送出，请注意查看自己的宠物是否已经恢复！谢谢合作！</p>
 		</td></tr>
@@ -35,7 +35,6 @@ function changeService(service){
 		<p>您现有{$extcre[title]}<span id="bank_mycredit">{$extcredit}</span>{$extcre[unit]}，宠物币「现金：<span id="bank_mycash">$my[cash]</span> 存款：<span id="bank_mydeposit">$my[deposit]</span>」</p>
 		<div>
 			<form id="bankform" name="bankform" action="module.php" method="post" onsubmit="$('banksubmit').click()">
-			<input type="hidden" id="formhash" name="formhash" value="{FORMHASH}" />
 			<table>
               <tr><td>办理转换业务</td><td><input type="text" id="exchange" name="exchange" maxlength="10" /></td></tr>
               <tr onclick="changeService('deposit')"><td>办理存款业务</td><td><input type="text" id="deposit" name="deposit" maxlength="10" /></td></tr>
@@ -48,11 +47,11 @@ function changeService(service){
 	<div class="mainbox policeoffice"><h1>ポケモン警察署</h1>
 		<div>
 		<form action="module.php" method="post">
-		<input type="hidden" name="formhash" value="{FORMHASH}" />
+		
 			<table>
 			  <tr>
 				<td>被举报人：<input type="text" name="name" maxlength="15" /></td>
-				<td rowspan=3><img src="$staticdir/common/kinsa.gif" /></td>
+				<td rowspan=3><img src="$imgdir/common/kinsa.gif" /></td>
 			  </tr>
 			  <tr>
 				<td>举报原因：<br /><textarea rows="10" cols="40" name="reason"></textarea></td>
@@ -70,7 +69,7 @@ function changeService(service){
 	<!--{if $toptrainer[owner]}-->
 	<div><h2>最佳训练家（$toptrainer[owner]）</h2>
 	  <ul>
-		<li><img src="$staticdir/pokemon/$toptrainer[pokeid].gif" width="130" height="120" /></li>
+		<li><img src="$imgdir/pokemon/$toptrainer[pokeid].gif" width="130" height="120" /></li>
 		<li>Lv.$toptrainer[level] $toptrainer[name]</li>
 		<li>勋章数：$toptrainer[badgenum]</li>
 	  </ul>
@@ -79,7 +78,7 @@ function changeService(service){
 	<!--{if $topcoordinator[owner]}-->
 	<div><h2>最佳协调家（$topcoordinator[owner]）</h2>
 	  <ul>
-		<li><img src="$staticdir/pokemon/$topcoordinator[pokeid].gif" width="130" height="120" /></li>
+		<li><img src="$imgdir/pokemon/$topcoordinator[pokeid].gif" width="130" height="120" /></li>
 		<li>Lv.$topcoordinator[level] $topcoordinator[name]</li>
 		<li>缎带数：$topcoordinator[ribonnum]</li>
 	  </ul>
@@ -88,7 +87,7 @@ function changeService(service){
 	<!--{if $topbreeder[owner]}-->
 	<div><h2>最佳培育家（$topbreeder[owner]）</h2>
 	  <ul>
-		<li><img src="$staticdir/pokemon/$topbreeder[pokeid].gif" width="130" height="120" /></li>
+		<li><img src="$imgdir/pokemon/$topbreeder[pokeid].gif" width="130" height="120" /></li>
 		<li>Lv.$topbreeder[level] $topbreeder[name]</li>
 	  </ul>
 	</div>

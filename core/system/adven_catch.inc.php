@@ -44,8 +44,8 @@ if(rand(1, 100) <= $catchrate){
 	$my_pokenum >= 6 && $obv['status'] += 10;
 
 	$db->query("UPDATE {$PKWpre}myprofile SET pokenum=pokenum+1,obvid=0,mapid=0 WHERE id=$_USER[id]");
-	$db->query("INSERT INTO {$PKWpre}mymon (`pokeid`,`shape`,`ownerid`,`owner`,`name`,`regdate`,`atb1`,`atb2`,`level`,`exp`,`status`,`gender`,`natureid`,`trait`,`height`,`weight`,`godev`,`frd`,`hp`,`maxhp`,`mp`,`maxmp`,`atk`,`def`,`stk`,`sdf`,`spd`,`equip`,`skill`) VALUES ('$obv[pokeid]','$obv[shape]','$_USER[id]','$discuz_user','$obv[name]','$timestamp','$obv[atb1]','$obv[atb2]','$obv[level]','$obv[exp]','$obv[status]','$obv[gender]','$obv[natureid]','$obv[trait]','$obv[height]','$obv[weight]','$obv[godev]','$obv[frd]','$obv[hp]','$obv[maxhp]','$obv[mp]','$obv[maxmp]','$obv[atk]','$obv[def]','$obv[stk]','$obv[sdf]','$obv[spd]','$obv[equip]','$obv[skill]')");
-	$db->query("INSERT INTO {$PKWpre}mymonext (`iv_hp`,`iv_atk`,`iv_def`,`iv_stk`,`iv_sdf`,`iv_spd`) VALUES ($obv[iv_hp],$obv[iv_atk],$obv[iv_def],$obv[iv_stk],$obv[iv_sdf],$obv[iv_spd])");
+	$db->query("INSERT INTO {$PKWpre}pokemon (`pokeid`,`shape`,`ownerid`,`owner`,`name`,`regdate`,`atb1`,`atb2`,`level`,`exp`,`status`,`gender`,`natureid`,`trait`,`height`,`weight`,`godev`,`frd`,`hp`,`maxhp`,`mp`,`maxmp`,`atk`,`def`,`stk`,`sdf`,`spd`,`equip`,`skill`) VALUES ('$obv[pokeid]','$obv[shape]','$_USER[id]','$discuz_user','$obv[name]','$timestamp','$obv[atb1]','$obv[atb2]','$obv[level]','$obv[exp]','$obv[status]','$obv[gender]','$obv[natureid]','$obv[trait]','$obv[height]','$obv[weight]','$obv[godev]','$obv[frd]','$obv[hp]','$obv[maxhp]','$obv[mp]','$obv[maxmp]','$obv[atk]','$obv[def]','$obv[stk]','$obv[sdf]','$obv[spd]','$obv[equip]','$obv[skill]')");
+	$db->query("INSERT INTO {$PKWpre}pokemonext (`iv_hp`,`iv_atk`,`iv_def`,`iv_stk`,`iv_sdf`,`iv_spd`) VALUES ($obv[iv_hp],$obv[iv_atk],$obv[iv_def],$obv[iv_stk],$obv[iv_sdf],$obv[iv_spd])");
 	showmsg('²¶×½³É¹¦£¡', 'pkw.php?index=mypokemon');
 }else showmsg('²¶×½Ê§°Ü£¡', 'back');
 ?>

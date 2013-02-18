@@ -1,24 +1,10 @@
 <?php
 
-class Pokemon{
-	private $attr = array();
-
+class Pokemon extends DBObject{
 	function __construct($id){
 		global $db;
-		$db->select_table('pokemon');
-		$this->attr = $db->FETCH('*', 'id='.$id);
-	}
-
-	function __destruct(){
-
-	}
-
-	function attr($key, $value = null){
-		if($value == null){
-			return $this->attr[$key];
-		}else if(isset($this->attr[$key])){
-			$this->attr[$key] = $value;
-		}
+		parent::__construct('pokemon');
+		parent::fetchAttributesFromDB('*', 'id='.$id);
 	}
 
 	function acquireSkill($skillid){
@@ -35,10 +21,6 @@ class Pokemon{
 
 	function getSkillIds(){
 		return $this->attr['skill'];
-	}
-
-	function toArray(){
-		return $this->attr;
 	}
 
 	function toReadable($mon = NULL){
@@ -58,9 +40,9 @@ class Pokemon{
 			$mon['picid'] = $mon['shape']?($mon['pokeid'].'_'.$mon['shape']):$mon['pokeid'];
 			if($mon['hp'] > $mon['maxhp']) $mon['hp'] = $mon['maxhp'];
 			if($mon['mp'] > $mon['maxmp']) $mon['mp'] = $mon['maxmp'];
-			$mon['atb1_c'] = Pokemon::$atb[$mon['atb1']];
-			$mon['atb2_c'] =  $mon['atb2'] ? Pokemon::$atb[$mon['atb2']] : '';
-			$mon['gender_c'] = Pokemon::$gender[$mon['gender']];
+			$mon['atb1_c'] = Pokemon::$Atb[$mon['atb1']];
+			$mon['atb2_c'] =  $mon['atb2'] ? Pokemon::$Atb[$mon['atb2']] : '';
+			$mon['gender_c'] = Pokemon::$Gender[$mon['gender']];
 			if($mon['maxhp'] != 0) $mon['hp_pct'] = intval(100 * $mon['hp'] / $mon['maxhp']);
 			if($mon['maxmp'] != 0) $mon['mp_pct'] = intval(100 * $mon['mp'] / $mon['maxmp']);
 			if(isset($mon['growthtype'])){
@@ -69,7 +51,7 @@ class Pokemon{
 				$mon['exp_pct'] = intval (100 * ($mon['exp'] - $levelbase) / $levelfloor);
 			}
 			$mon['frd_pct'] = floor(100 * $mon['frd'] / 255);
-			$mon['status_c'] = Pokemon::$status[$mon['status']];
+			$mon['status_c'] = Pokemon::$Status[$mon['status']];
 			if($mon['skill']){
 				$mon['skilllist'] = array_unique(explode(',', $mon['skill']));
 			}
@@ -83,7 +65,7 @@ class Pokemon{
 			$mon['spr'] = floor(($mon['atk'] + $mon['hp'] + $mon['speed'] + $mon['mqp']) / 10) + $mon['tmpspr'];
 			$mon['height_c'] = $mon['height'].' m';
 			$mon['weight_c'] = $mon['weight'].' kg';
-			$mon['growthtype_c'] = Pokemon::$growthType[$mon['growthtype']];
+			$mon['growthtype_c'] = Pokemon::$GrowthType[$mon['growthtype']];
 		}
 		return $mon;
 	}
@@ -210,7 +192,7 @@ class Pokemon{
 			}
 			break;
 			case 21:
-				$query = $db->query("SELECT pokeid FROM {$tpre}mymon WHERE owner=$discuz_user");
+				$query = $db->query("SELECT pokeid FROM {$tpre}pokemon WHERE owner=$discuz_user");
 				while($evo['require'] == $db->result($query, 0)){
 					//$success_msg = "队伍中有$evo[require]进化";
 					$success = TRUE;
@@ -240,11 +222,12 @@ class Pokemon{
 			}
 		}
 		if($success){
-			$newmon = pkw_generateMon($evo['evoluted'], $mon['level'], $gender = $mon['gender'], $mon['shape'], $mon['natureid'], 0, $mon['status']);
+			$newmon = Pokemon::Generate($evo['evoluted'], $mon['level'], $gender = $mon['gender'], $mon['shape'], $mon['natureid'], 0, $mon['status']);
 			$newmon['id'] = $mon['id'];
 			$newmon['ori_pokeid'] = $evo['original'];
-			return $newmon;
-		}else return false;
+		}
+
+		return $success;
 	}
 
 	function useSkill($skillid, $target = null){
@@ -292,7 +275,7 @@ class Pokemon{
 		global $tpre, $db;
 		$selectfields = 's.growthtype';
 		foreach(array('hp','atk','def','stk','sdf','spd') as $p) $selectfields.= ',s.'.$p.',i.iv_'.$p.',i.ep_'.$p;
-		$mon = $db->fetch_first("SELECT $selectfields FROM {$tpre}mymonext i LEFT JOIN {$tpre}mon s ON s.id=$pokeid WHERE i.id=$monid");
+		$mon = $db->fetch_first("SELECT $selectfields FROM {$tpre}pokemonext i LEFT JOIN {$tpre}mon s ON s.id=$pokeid WHERE i.id=$monid");
 		$mon['level'] = pkw_exp2lv($orilevel, $exp, $mon['growthtype']);
 		$mon['hp'] = ceil(($mon['hp']*2 + $mon['iv_hp'] + ($mon['ep_hp'] / 4)) * $mon['level'] / 100 + 10 + $mon['level']);
 
@@ -474,14 +457,14 @@ class Pokemon{
 		return $e;
 	}
 
-	static private $individualAttributes = array('pokeid','shape','ownerid','owner','name','regdate','atb1','atb2','level','exp','status','tmpstatus','gender','natureid','trait','tmptrait','height','weight','godev','frd','hp','maxhp','mp','maxmp','atk','tmpatk','def','tmpdef','stk','tmpstk','sdf','tmpsdf','spd','tmpspd','tmpspr','col','bty','cut','smt','tgh','equip','skill','ep_hp','ep_atk','ep_def','ep_stk','ep_sdf','ep_spd','iv_hp','iv_atk','iv_def','iv_stk','iv_sdf','iv_spd');
+	static private $IndividualAttributes = array('pokeid','shape','ownerid','owner','name','regdate','atb1','atb2','level','exp','status','tmpstatus','gender','natureid','trait','tmptrait','height','weight','godev','frd','hp','maxhp','mp','maxmp','atk','tmpatk','def','tmpdef','stk','tmpstk','sdf','tmpsdf','spd','tmpspd','tmpspr','col','bty','cut','smt','tgh','equip','skill','ep_hp','ep_atk','ep_def','ep_stk','ep_sdf','ep_spd','iv_hp','iv_atk','iv_def','iv_stk','iv_sdf','iv_spd');
 	
-	static public $attrName = array('godev'=>'善恶值','status'=>'状态','mqp'=>'智慧','bty'=>'魅力','level'=>'等级','frd'=>'友好度','hp'=>'体力','maxhp'=>'体力上限','mp'=>'气力','maxmp'=>'气力上限','atk'=>'攻击','atktemp'=>'临时攻击','def'=>'防御','deftemp'=>'临时防御','atk'=>'特攻','atktemp'=>'临时特攻','def'=>'特防','deftemp'=>'临时特防','spd'=>'速度','spdtemp'=>'临时速度','spr'=>'速度','sprtemp'=>'临时速度');
-	static public $atb = array('所有','火','水','电','草','冰','超','龙','恶','普','格','飞','虫','毒','地','岩','钢','鬼','???');
-	static public $eggType = array('所有', '???','怪兽','水中1','水中2','水中3','虫','飞行','陆上','妖精','植物','矿物','人形','不定形','百变怪','龙','未发现');
-	static public $growthType = array('较快','不定','波动','较慢','快','慢');
-	static public $gender = array('任意','<font color=#3399FF>雄性</font>','<font color=#FF3366>雌性</font>','无');
-	static public $status = array('<font color=gray>不能战斗</font>','正常','<font color=pink>救治中……</font>','<font color=purple>中毒</font>','<font color=lightblue>睡眠</font>','<font color=brown>麻痹</font>','<font color=red>烧伤</font>','<font color=blue>冰冻</font>','','蛋');
+	static public $AttrName = array('godev'=>'善恶值','status'=>'状态','mqp'=>'智慧','bty'=>'魅力','level'=>'等级','frd'=>'友好度','hp'=>'体力','maxhp'=>'体力上限','mp'=>'气力','maxmp'=>'气力上限','atk'=>'攻击','atktemp'=>'临时攻击','def'=>'防御','deftemp'=>'临时防御','atk'=>'特攻','atktemp'=>'临时特攻','def'=>'特防','deftemp'=>'临时特防','spd'=>'速度','spdtemp'=>'临时速度','spr'=>'速度','sprtemp'=>'临时速度');
+	static public $Atb = array('所有','火','水','电','草','冰','超','龙','恶','普','格','飞','虫','毒','地','岩','钢','鬼','???');
+	static public $EggType = array('所有', '???','怪兽','水中1','水中2','水中3','虫','飞行','陆上','妖精','植物','矿物','人形','不定形','百变怪','龙','未发现');
+	static public $GrowthType = array('较快','不定','波动','较慢','快','慢');
+	static public $Gender = array('任意','<font color=#3399FF>雄性</font>','<font color=#FF3366>雌性</font>','无');
+	static public $Status = array('<font color=gray>不能战斗</font>','正常','<font color=pink>救治中……</font>','<font color=purple>中毒</font>','<font color=lightblue>睡眠</font>','<font color=brown>麻痹</font>','<font color=red>烧伤</font>','<font color=blue>冰冻</font>','','蛋');
 	
 	static public function nature(){
 		return PokemonNature::$value;

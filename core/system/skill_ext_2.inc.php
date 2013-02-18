@@ -50,7 +50,7 @@ break;
 	$obv['tmpstatus'][13] = array($rev['skill'], $timestamp + 5 * $_CONFIG['battlewaitime']);
 	if($obv['username']){
 		$tmpstatus = $obv['tmpstatus'][13];
-		$db->query("UPDATE {$PKWpre}mymon SET tmpstatus='$tmpstatus' WHERE owner='$obv[username]' AND status < 10 AND status!=0 AND status!=9");
+		$db->query("UPDATE {$PKWpre}pokemon SET tmpstatus='$tmpstatus' WHERE owner='$obv[username]' AND status < 10 AND status!=0 AND status!=9");
 	} 
 	//己方拥有的技巧敌全队不可使用
 break;

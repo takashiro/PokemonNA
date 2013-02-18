@@ -25,17 +25,19 @@ if(!submitcheck('buysubmit')){
 	$ware = $db->fetch_first("SELECT id,price FROM {$tpre}ware WHERE id=$wareid AND selltag=1");
 	if(!$ware){
 		showmsg('您要买的东西不存在！', 'back');
-	}else{
-		if($ware['price'] * $buybums > $my['cash']){
-			showmsg('你的钱不够了！', 'back');
-		}else{
-			$ware['price'] *= $buynums;
-			$db->query("UPDATE {$tpre}trainer SET cash=cash-$ware[price] WHERE id=$_USER[id]");
-			writelog('ware', "{$ware[id]}\t{$buynums}\tbuy");
-			pkw_storage($ware['id'], $buynums, $_USER[id]);
-		}
-		showmsg('成功购买！', 'refresh');
 	}
+
+	$ware['price'] *= $buynums;
+	if($ware['price'] > $_USER['cash']){
+		showmsg('你的钱不够了！', 'back');
+	}
+
+	$db->query("UPDATE {$tpre}trainer SET cash=cash-$ware[price] WHERE id=$_USER[id]");
+	writelog('ware', "{$ware[id]}\t{$buynums}\tbuy");
+	$backpack = new Backpack($_USER['id']);
+	$backpack->updateStorage($ware['id'], $buynums);
+
+	showmsg('成功购买！', 'refresh');
 }
 
 include view('shop');

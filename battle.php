@@ -4,16 +4,16 @@ require_once './core/init.inc.php';
 if(!$revid = intval($revid)){
 	$monlist = '';
 	$noavailuablemon = TRUE;
-	$query = $db->query("SELECT id,pokeid,shape,name FROM {$tpre}mymon WHERE owner='$discuz_user' AND status!=0 AND status!=2 AND status < 9");
+	$query = $db->query("SELECT id,pokeid,shape,name FROM {$tpre}pokemon WHERE owner='$discuz_user' AND status!=0 AND status!=2 AND status < 9");
 	while($m = $db->fetch_array($query)){
 		$m['picid'] = $m['shape']?"$m[pokeid]_$m[shape]":$m['pokeid'];
-		$monlist.= '<a href="battle.php?obvid='.$obvid.'&revid='.$m['id'].'"><img src="'.$staticdir.'/pokemon/'.$m['picid'].'.gif" alt="'.$mon['name'].'" width="130" height="120" /></a>';
+		$monlist.= '<a href="battle.php?obvid='.$obvid.'&revid='.$m['id'].'"><img src="'.$imgdir.'/pokemon/'.$m['picid'].'.gif" alt="'.$mon['name'].'" width="130" height="120" /></a>';
 		$noavailuablemon = FALSE;
 	}
 	if(!$noavailuablemon) showmsg('请选择一个精灵！<br />'.$monlist);
 	else showmsg('您没有可战斗的精灵了！', 'pkw.php');
 }else{
-	$rev = $db->fetch_first("SELECT m.*,u.cash,u.weather,u.obvid,u.battleon,u.actiontime FROM {$tpre}mymon m LEFT JOIN {$tpre}trainer u ON u.id=$_USER[id] WHERE m.id=$revid");
+	$rev = $db->fetch_first("SELECT m.*,u.cash,u.weather,u.obvid,u.battleon,u.actiontime FROM {$tpre}pokemon m LEFT JOIN {$tpre}trainer u ON u.id=$_USER[id] WHERE m.id=$revid");
 	$rev['tmpstatus'] && $rev['tmpstatus'] = unserialize($rev['tmpstatus']);
 	$ori_rev = $rev = pkw_ShowInfo($rev);
 	if(!$rev['battleon']) showmsg('请您开启您的接受挑战，否则无法发出挑战！', 'back');
@@ -38,7 +38,7 @@ $rev_skill_back = TRUE;
 
 $revusql.= ',actiontime='.$timestamp;//加入动作时间
 
-$obv = $db->fetch_first("SELECT u.id AS uid,u.username,u.cash,u.monkid,u.obvid,u.obvhurt,u.battleon,m.* FROM {$tpre}trainer u LEFT JOIN {$tpre}mymon m ON m.id=u.monid WHERE u.id=$rev[obvid]");//取出对手数据
+$obv = $db->fetch_first("SELECT u.id AS uid,u.username,u.cash,u.monkid,u.obvid,u.obvhurt,u.battleon,m.* FROM {$tpre}trainer u LEFT JOIN {$tpre}pokemon m ON m.id=u.monid WHERE u.id=$rev[obvid]");//取出对手数据
 $obv['tmpstatus'] && $obv['tmpstatus'] = unserialize($obv['tmpstatus']);
 $ori_obv = $obv = pkw_ShowInfo($obv);
 
@@ -142,10 +142,10 @@ if($action == 'fight'){
 
 	$revsql = substr($revsql, 1);
 	if(!empty($revsql))
-		$db->query("UPDATE {$tpre}mymon SET $revsql WHERE id=$rev[id]");
+		$db->query("UPDATE {$tpre}pokemon SET $revsql WHERE id=$rev[id]");
 	$obvsql = substr($obvsql, 1);
 	if(!empty($obvsql))
-		$db->query("UPDATE {$tpre}mymon SET $obvsql WHERE id=$obv[id]");
+		$db->query("UPDATE {$tpre}pokemon SET $obvsql WHERE id=$obv[id]");
 	$battlesql = substr($battlesql, 1);
 	if(!empty($battlesql))
 		$db->query("UPDATE {$tpre}trainer SET $battlesql WHERE id=$_USER[id] OR id=$obv[uid]");

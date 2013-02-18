@@ -3,18 +3,17 @@
 <div class="content">
 	<div class="mainbox listbox">
 	<div class="headactions">
-	<!--{loop $_CONFIG['waretype'] $key $value}-->
+	<!--{loop Ware::$Type $key $value}-->
 	<a href="shop.php?type=$key">$value</a>
 	<!--{/loop}-->
 	</div>
 	<h1>商品列表</h1>
 	<form name="shoplist" action="shop.php" method="post" onSubmit="$('buysubmit').click()">
-	<input type="hidden" id="formhash" name="formhash" value="{FORMHASH}" />
 		<table><thead><tr>
 		  <td></td><td width=50>商品编号</td><td>名称</td><td>价格</td><td>介绍</td><td width=60>相关操作</td></thead>
 		<!--{loop $warelist $ware}-->
 		<tr onclick="this.lastChild.firstChild.click()">
-		  <td><img src="$staticdir/ware/$ware[ico]" /></td>
+		  <td><img src="$imgdir/ware/$ware[ico]" /></td>
 		  <td>$ware[id]</td><td>$ware[name_c]</td><td>$ware[price]</td><td>$ware[intro]</td>
 		<td><input type="radio" id="wareid" name="wareid" value="$ware[id]" />购买</td></tr>
 		<!--{/loop}-->
@@ -36,7 +35,7 @@
 		<li>宠物个数：$_USER[pokenum]</li>
 	</div>
 	<form id="fastshopping" action="shop.php" method="post">
-	<input type="hidden" name="formhash" value="{FORMHASH}" />
+	
 	<div><h2>快速购买</h2>
 	  <ul>
 		<li>商品编号：<input type="text" name="wareid" maxlength="8" size="7" /></li>

@@ -9,8 +9,8 @@ while($entry = $tpl->read()) {
 }
 $tpl->close();
 
-$db->query("TRUNCATE {$tpre}mymon");
-$db->query("TRUNCATE {$tpre}mymonext");
+$db->query("TRUNCATE {$tpre}pokemon");
+$db->query("TRUNCATE {$tpre}pokemonext");
 $db->query("TRUNCATE {$tpre}adventure");
 $db->query("TRUNCATE {$tpre}trainer");
 ?>
