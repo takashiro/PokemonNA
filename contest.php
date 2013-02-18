@@ -1,6 +1,6 @@
 ﻿<?php
 require_once './core/init.inc.php';
-include S_ROOT.'data/cache_contest.php';
+include S_ROOT.'data/cache/contest.php';
 
 if(!$g = $_CONFIG['contest'][$gid]) showmsg('抱歉，本次华丽大赛已经结束了！', 'back');
 else $g['banneduser'] = explode(',', $g['banneduser']);

@@ -4,7 +4,7 @@ require_once './core/init.inc.php';
 $gid = intval($gid);
 
 if($groupid == $_CONFIG['gymleader_id']){
-	include S_ROOT.'data/cache_gym.php';
+	include S_ROOT.'data/cache/gym.php';
 	foreach($_CONFIG['gym'] as $tempg){
 		if($tempg['leader'] == $discuz_user) $g = $tempg;break;
 	}
@@ -26,7 +26,7 @@ if($groupid == $_CONFIG['gymleader_id']){
 		$db->query("UPDATE {$tpre}trainer SET gymid=$gymid WHERE id=$_USER[id]");
 		showmsg('您的挑战申请已经送出，请耐心等待回应！', 'refresh');
 	}else{
-		include S_ROOT.'data/cache_gym.php';
+		include S_ROOT.'data/cache/gym.php';
 		$g = $_CONFIG['gym'][$gid];
 		unset($_CONFIG['gym']);
 

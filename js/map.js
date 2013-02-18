@@ -1,65 +1,73 @@
-﻿var G = new Array();
-var G['type'] = getcookie('type');if(!G['type']) G['type'] = 'gym';
-var G['landid'] = getcookie('landid');if(!G['landid']) G['landid'] = 1;
-var G['mapid'] = 0;
-var selectedmon = 0;
-var mapimg = new Array('','kanto','johto','hoenn','shinnoh');
-var monselectHTML = $('#monselect').html();
+﻿
+var G = new Array();
+G['area_id'] = 1;
+G['land_id'] = 0;
+G['type'] = 'gym';
+G['pokemon_id'] = 0;
 
-function changetype(type){
-	G['type'] = type;
-	setcookie('G['type']', G['type'], 3600*1000);
-	map_src = imgpath+'/map/'+mapimg[G['landid']]+'.jpg';
-	$('#map').html('<img src="'+map_src+'" usemap="#'+type+'_'+G['landid']+'" border=0 />');
-	if(G['type'] == 'contest'){
-		var map_object = $('#map>div:first-child');
-		map_width = map_object.width();
-		map_height = map_object.height();
-		$('#map').html('<div style="width:'+map_width+';height:'+map_height+';background:url('+map_src+') no-repeat scroll center;"></div>');
-		$('#map>div').html($('#contest_'+G['landid']).length > 0 ? $('#contest_'+G['landid']).html() : '');
-	}
-};
-function onDownloadDone(data){
-	$('#gymtitle').html('');
-	$('#maptitle map:first-child area').each(function(){
-		var a = $('<a></a>');
-		a.html($(this).attr('alt'));
-		a.attr('href', $(this).attr('href'));
-		var li = $('<li></li>');
-		li.append(a);
-		$('#gymtitle').append(li);
-	});
+var area_data = new Array();
+var area_name = new Array('', 'kanto', 'johto', 'hoenn', 'shinnoh');
 
-	$('#maptitle map:first-child area').each(function(){
-		var a = $('<a></a>');
-			a.html($(this).attr('alt'));
-			a.attr('href', $(this).attr('href'));
+function setArea(area_id){
+	G['area_id'] = area_id;
+
+	var pic_path = imgpath + '/map/' + area_name[area_id] + '.jpg';
+	var img = $('<img></img>');
+	img.attr('src', pic_path);
+	img.attr('usemap', '#' + G['type'] + '_' + G['area_id']);
+	
+	$('#map').html('');
+	$('#map').append(img);
+
+	$('#landmark').load('./data/map_' + area_id + '.htm', function(){
+		$('#landtitle').html('');
+		$('#landmark map:eq(0) area').each(function(){
 			var li = $('<li></li>');
+			var a = $('<a></a>');
+			a.attr('href', $(this).attr('href'));
+			a.html($(this).attr('alt'));
 			li.append(a);
-			$('#maptitle').append(li);
+			$('#landtitle').append(li);
+
+			$(this).attr('title', $(this).attr('alt'));
+		});
+
+		$('#gymtitle').html('');
+		$('#landmark map:eq(1) area').each(function(){
+			var li = $('<li></li>');
+			var a = $('<a></a>');
+			a.attr('href', $(this).attr('href'));
+			a.html($(this).attr('alt'));
+			li.append(a);
+			$('#gymtitle').append(li);
+
+			$(this).attr('title', $(this).attr('alt'));
+		});
 	});
 }
 
-function changemap(landid){
-	alert(type);
-	G['landid'] = landid;
-	changetype(G['type']);
-	setcookie('G['landid']', G['landid'], 3600*1000);
-	$('#maptitle').load('./data/data_map_'+G['landid']+'.htm', onDownloadDone);
+function setLand(land_id){
+	G['land_id'] = land_id;
+	redirect();
 }
 
-function setmap(type, id){
+function setType(type){
 	G['type'] = type;
-	G['mapid'] = id;
-	if(G['type'] == 'land') index = 'adven';
-	else if(G['type'] == 'gym') index = 'gym';
-	if(selectedmon) location.href="pkw.php?index="+index+"&gid="+G['mapid']+"&revid="+selectedmon;
+	$('#map img').attr('usemap', '#' + G['type'] + '_' + G['area_id']);
 }
-function setmon(mid){
-	$('monselect').innerHTML = monselectHTML;
-	$('mon_'+mid).style.filter = 'Alpha(opacity=100)';
-	selectedmon = mid;
-	if(G['type'] == 'land') index = 'adven';
-	else if(G['type'] == 'gym') index = 'gym';
-	if(G['mapid']) location.href="pkw.php?index="+index+"&gid="+G['mapid']+"&revid="+selectedmon;
+
+function setPokemon(pokemon_id){
+	G['pokemon_id'] = pokemon_id;
+	redirect();
+}
+
+function setMap(type, land_id){
+	setType(type);
+	setLand(land_id);
+}
+
+function redirect(){
+	if(G['land_id'] && G['pokemon_id']){
+		location.href = G['type'] + '.php?gid=' + G['land_id'] + '&mid=' + G['pokemon_id'];
+	}
 }

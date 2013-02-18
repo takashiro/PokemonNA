@@ -23,7 +23,7 @@ $battlesql.= ',actiontime='.$timestamp;//初始化并加入动作时间
 
 if($gid){
 	$cachenum = ceil($gid / $_CONFIG['mapcache_per']);
-	include S_ROOT.'data/cache_map_'.$cachenum.'.php';
+	include S_ROOT.'data/cache/map_'.$cachenum.'.php';
 	$map = $_CONFIG['map'][$gid];
 	unset($_CONFIG['map']);
 	$map['land_c'] = $_CONFIG['land'][$map['land']];

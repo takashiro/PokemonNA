@@ -77,4 +77,16 @@ $(function(){
 		var menu_id = '#' + this.id + '_menu';
 		$(menu_id).fadeOut();
 	});
+
+	$('.radio_img img').click(function(){
+		var list = $(this).parent();
+		list.children('img').css('border', '0');
+		$(this).css('border', 'black 1px dotted');
+	});
+
+	$('ul.radio li').click(function(){
+		var list = $(this).parent();
+		list.children('li').css('font-weight', 'normal');
+		$(this).css('font-weight', 'bold');
+	});
 });

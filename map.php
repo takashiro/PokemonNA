@@ -8,15 +8,15 @@ while($m = $db->fetch_array($query)){
 	$mymonlist[] = $m;
 }
 
-include S_ROOT.'data/cache_contest.php';
-include S_ROOT.'data/data_city.php';
 $ctsmap = array();
-foreach($_CONFIG['contest'] as $gid => $g){
-	$g['id'] = $gid;
-	list($g['left'], $g['top']) = explode(',', $_CONFIG['city'][$g['place']][2]);
-	$ctsmap[$g['landid']][] = $g;
+$contest = readcache('contest');
+if($contest && is_array($contest)){
+	foreach($_CONFIG['contest'] as $gid => $g){
+		$g['id'] = $gid;
+		list($g['left'], $g['top']) = explode(',', $_CONFIG['city'][$g['place']][2]);
+		$ctsmap[$g['landid']][] = $g;
+	}
 }
-unset($_CONFIG['contest'], $_CONFIG['city']);
 
 include view('map');
 ?>
