@@ -2,3 +2,4 @@
 data/tpl/
 data/cache/
 *.log.php
+*.db
