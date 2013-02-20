@@ -1,6 +1,8 @@
 ﻿<?php
 require_once './core/init.inc.php';
 
+showmsg('全国道馆正在建设中，お楽しみに！');
+
 $gid = intval($gid);
 
 if($groupid == $_CONFIG['gymleader_id']){
