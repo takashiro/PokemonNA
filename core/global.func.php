@@ -1,7 +1,5 @@
 <?php
 
-if(!defined('IN_PLUSQUIZ')) exit('Access Denied');
-
 //显示一个消息，并跳转到$url_forward
 function showmsg($message, $url_forward = ''){
 	extract($GLOBALS, EXTR_SKIP);
