@@ -194,14 +194,11 @@ if($action == 'fight'){
 	exit(json_encode($return_data));
 
 }elseif($action == 'escape'){
-	if($obv['spd'] - $rev['spd'] >= rand(-120, 120)){
-		showmsg('逃离失败！', 'back');
-	}else{
-		$db->query("DELETE FROM {$tpre}adventure WHERE id=$_USER[id]");
-		$db->query("UPDATE {$tpre}trainer SET obvid=0,mapid=0 WHERE id=$_USER[id]");
-		writelog('adven', "$rev[id]\t$obv[pokeid]\tObverse");
-		showmsg('逃离成功！', 'map.php');
-	}
+	$neg->deleteFromDB();
+	$_G['user']->attr('negid', 0);
+	$_G['user']->attr('mapid', 0);
+	//writelog('adven', "$rev[id]\t$obv[pokeid]\tObverse");
+	showmsg('逃离成功！', 'map.php');
 
 }elseif($action == 'catch' && $ballid = intval($_GET['ballid'])){
 	$backpack = new Backpack($_USER['id']);
