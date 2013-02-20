@@ -58,7 +58,7 @@ class DBObject{
 		global $db;
 		$db->select_table($this->table_name);
 		$db->DELETE('id='.$this->attr['id']);
-		$this->attr = array();
+		$this->attr = $this->oattr = array();
 	}
 }
 
