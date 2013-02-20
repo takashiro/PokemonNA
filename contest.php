@@ -5,7 +5,7 @@ include S_ROOT.'data/cache/contest.php';
 if(!$g = $_CONFIG['contest'][$gid]) showmsg('抱歉，本次华丽大赛已经结束了！', 'back');
 else $g['banneduser'] = explode(',', $g['banneduser']);
 
-if($timestamp >= $g['entertime1'] && $timestamp <= $g['entertime2']){//报名时间
+if(TIMESTAMP >= $g['entertime1'] && TIMESTAMP <= $g['entertime2']){//报名时间
 	if(!submitcheck('applypassport')){
 		$limit = 12;
 		$page = intval($page);
@@ -33,10 +33,10 @@ if($timestamp >= $g['entertime1'] && $timestamp <= $g['entertime2']){//报名时
 	}
 	include view('contest_enter');
 
-}elseif($timestamp >= $g['starttime1'] && $timestamp <= $g['endtime1']){//一级审查
+}elseif(TIMESTAMP >= $g['starttime1'] && TIMESTAMP <= $g['endtime1']){//一级审查
 	include view('contest_ex1');
 
-}elseif($timestamp >= $g['starttime2'] && $timestamp <= $g['endtime2']){//二级审查
+}elseif(TIMESTAMP >= $g['starttime2'] && TIMESTAMP <= $g['endtime2']){//二级审查
 	include view('contest_ex2');
 }
 ?>

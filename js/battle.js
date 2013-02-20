@@ -1,77 +1,66 @@
-var skill_ext25 = new Array(32,55,148,219,298,378,394,413);
+ï»¿var skill_ext25 = new Array(32,55,148,219,298,378,394,413);
 var skill_onrequest = false;
 
-function creatrequest(){
-	var request = false;
-	if(window.XMLHttpRequest) {
-		request = new XMLHttpRequest();
-		if(request.overrideMimeType) {
-			request.overrideMimeType('text/xml');
-		}
-	} else if(window.ActiveXObject) {
-		var versions = ['Microsoft.XMLHTTP', 'MSXML.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.7.0', 'Msxml2.XMLHTTP.6.0', 'Msxml2.XMLHTTP.5.0', 'Msxml2.XMLHTTP.4.0', 'MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP'];
-		for(var i=0; i<versions.length; i++) {
-			try {
-				request = new ActiveXObject(versions[i]);
-				if(request) {
-					return request;
-				}
-			} catch(e) {
-				//alert(e.message);
+function useSkill(skill_id){
+	if(!skill_onrequest){
+		if(in_array(skill_id, skill_ext25)){
+			if(waittime >= 3){
+				waittime -= 3;
+			}else{
+				waittime = 0;//å…ˆåˆ¶æ”»å‡»
 			}
 		}
-	}
-	return request;
-}
 
-function skill(skillname){
-	if(!skill_onrequest){
-		if(in_array(skillname, skill_ext25)) if(waittime >=3) waittime -= 3;else waittime = 0;//ÏÈÖÆ¹¥»÷
 		skill_onrequest = true;
-		skillbtn_ctrl('off');
+		$('#skillshow button').attr('disabled', true);
 	}
-		
 
 	if(waittime > 0){
-		$('undermsg').innerHTML = '¼¼ÄÜÊ©Õ¹ÖÐ...';
-		setTimeout('skill('+skillname+')', waittime);
+		$('#undermsg').html('æŠ€èƒ½ä½¿ç”¨ä¸­...');
+		setTimeout('useSkill('+skill_id+');', waittime * 1000);
+		waittime = 0;
 		return;
 	}
-	var url = skillurl+'&revid='+revid;
-	var request=creatrequest();
-	var data="kid="+skillname;
-	request.open("Post", url, true);
-	request.onreadystatechange = updatePage;
-	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	request.send(data);
-	function updatePage() {
-		if (request.readyState == 1){
-			$("undermsg").innerHTML = '¼¼ÄÜÊ©Õ¹ÖÐ...';
-		}
-		if (request.readyState == 4){
-			if (request.status == 200){
-				response = request.responseText;
-				var tt = response.split("\n");
-				for( id in tt) eval(tt[id]);
-			}else{
-				$("undermsg").innerHTML = '¼¼ÄÜÊ©Õ¹Ê§°Ü£¬ÇëÖØÐÂÊ©Õ¹';
+
+	$.ajax({
+		url:skillurl + '&mid=' + mid + '&kid=' + skill_id,
+		type:'get',
+		dataType:'json',
+		success:function(data){
+			$('#undermsg').html('');
+			
+			setHp('pos', data.pos_hp);
+			setHp('neg', data.neg_hp);
+
+			for(var i in data.msg){
+				$('#msg_' + i).html(data.msg[i]);
 			}
+		},
+		error:function(){
+			$('#undermsg').html('æŠ€èƒ½æ–½å±•å¤±è´¥ï¼Œè¯·é‡æ–°æ–½å±•');
+		},
+		complete:function(){
+			skill_onrequest = false;
+			$('#skillshow button').attr('disabled', false);
+			waittime = 3;
 		}
-	}
+	});
 }
 
-function skillbtn_ctrl(status){
-	var skill_button = $('skillshow').getElementsByTagName('button');
-	for(var i in skill_button){
-		if(typeof skill_button[i] == 'object'){
-			skill_button[i].disabled = (status == 'off') ? true : false;
-		}
-	}
+function setHp(side, hp){
+	var hp_bar = $('#' + side + '_hpbar');
+
+	var percent = hp / parseInt($('#' + side + '_maxhp').html(), 10);
+	var max_width = hp_bar.parent().width();
+	var new_width = percent * max_width;
+	hp_bar.animate({width : new_width + 'px'});
+
+	$('#' + side + '_hp').html(hp);
 }
 
-function changeMon(){
+/*function changeMon(){
 	if(waittime > 0){
-		$('undermsg').innerHTML = 'Ìæ»»ÖÐ...Ê£Óà'+waittime+'Ãë';
+		$('undermsg').innerHTML = 'æ›¿æ¢ä¸­...å‰©ä½™'+waittime+'ç§’';
 		setTimeout('changeMon()', waittime);
 		return;
 	}
@@ -101,7 +90,7 @@ function changeMon(){
 
 function viewBackpack(type){
 	if(waittime > 0){
-		$('undermsg').innerHTML = '´ò¿ª±³°üÖÐ£¬Ê£Óà'+waittime+'Ãë';
+		$('undermsg').innerHTML = 'æ‰“å¼€èƒŒåŒ…ä¸­ï¼Œå‰©ä½™'+waittime+'ç§’';
 		setTimeout('viewBackpack('+type+')', waittime);
 		return;
 	}
@@ -174,3 +163,5 @@ function shockimg(element){
 	setattrib(element, 'style.left', '-30px', 200);
 	setattrib(element, 'style.left', '0px', 250);
 }
+
+*/

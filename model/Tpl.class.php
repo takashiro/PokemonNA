@@ -2,8 +2,6 @@
 
 class Tpl{
 	static public function parse_template($tplfile){
-		$timestamp = &$_G['timestamp'];
-
 		$nest = 6;
 
 		if(!@$fp = fopen($tplfile, 'r')) {

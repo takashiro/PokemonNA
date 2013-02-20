@@ -5,21 +5,20 @@
 <div class="side" style="width:15%">
 	<div><h2>地区选择</h2>
 		<ul class="radio">
-	        <li><a href="javascript:setArea(1);">关东地区</a></li>
-	        <li><a href="javascript:setArea(2);">城都地区</a></li>
-	        <li><a href="javascript:setArea(3);">芳缘地区</a></li>
-	        <li><a href="javascript:setArea(4);">新奥地区</a></li>
+		<!--{loop $regionlist $region}-->
+			<li><a href="javascript:setRegion($region[id]);">$region[name_c]</a></li>
+		<!--{/loop}-->
     	</ul>
 	</div>
 	<div><h2>路标类型</h2>
 		<ul class="radio">
 			<li><a href="javascript:setType('gym');">道馆赛</a></li>
 			<li><a href="javascript:setType('contest');">华丽大赛</a></li>
-			<li><a href="javascript:setType('land');">探险大陆</a></li>
+			<li><a href="javascript:setType('area');">探险大陆</a></li>
 		</ul>
 	</div>
 	<div><h2>道路选择</h2>
-		<ul id="landtitle" class="radio" style="height:130px;overflow:auto"></ul>
+		<ul id="areatitle" class="radio" style="height:130px;overflow:auto"></ul>
 	</div>
 	<div class="radio_li"><h2>道馆选择</h2>
 		<ul id="gymtitle" class="radio" style="height:130px;overflow:auto"></ul>
@@ -45,6 +44,13 @@
 	<!--{/loop}-->
 </div>
 <!--{/loop}-->
+
+<script type="text/javascript">
+var region_name = new Array();
+<!--{loop $regionlist $region}-->
+region_name[{$region[id]}] = '{$region[code]}';
+<!--{/loop}-->
+</script>
 
 <script type="text/javascript" src="./js/map.js"></script>
 

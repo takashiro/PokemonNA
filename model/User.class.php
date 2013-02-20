@@ -5,6 +5,12 @@ if(!defined('IN_PLUSQUIZ')) exit('Access Denied');
 class User extends DBObject{
 	public function __construct(){
 		parent::__construct('trainer');
+		$this->attr('status') && $this->attr('status', unserialize($this->attr('status')));
+	}
+
+	public function __destruct(){
+		$this->attr('status') && $this->attr('status', serialize($this->attr('status')));
+		parent::__destruct();
 	}
 
 	public function login($email = '', $password = ''){

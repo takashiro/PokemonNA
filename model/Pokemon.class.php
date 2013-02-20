@@ -1,29 +1,163 @@
 <?php
 
 class Pokemon extends DBObject{
-	function __construct($id){
+	protected $skillids = array();
+
+	public function __construct($id){
 		global $db;
 		parent::__construct('pokemon');
 		parent::fetchAttributesFromDB('*', 'id='.$id);
+
+		$this->skillids = explode(',', $this->attr('skill'));
+		$this->attr('tmpstatus') && $this->attr('tmpstatus', unserialize($this->attr('tmpstatus')));
+	
+		if($this->attr('hp') > 0){
+			if($this->attr('status') == Pokemon::DyingState){
+				$this->attr('status', Pokemon::NormalState);
+			}
+		}else{
+			if($this->attr('status') != Pokemon::DyingState){
+				$this->attr('status', Pokemon::DyingState);
+			}
+		}
 	}
 
-	function acquireSkill($skillid){
-
+	public function __destruct(){
+		$this->attr('tmpstatus') && $this->attr('tmpstatus', serialize($this->attr('tmpstatus')));
+		parent::__destruct();
 	}
 
-	function removeSkill($skillid){
-
+	public function getAtk(){
+		return $this->attr('atk') + $this->attr('tmpatk');
 	}
 
-	function getSkills(){
-
+	public function getDef(){
+		return $this->attr('def') + $this->attr('tmpdef');
 	}
 
-	function getSkillIds(){
-		return $this->attr['skill'];
+	public function getStk(){
+		return $this->attr('stk') + $this->attr('tmpstk');
 	}
 
-	function toReadable($mon = NULL){
+	public function getSdf(){
+		return $this->attr('sdf') + $this->attr('tmpsdf');
+	}
+
+	public function getSpd(){
+		return $this->attr('spd') + $this->attr('tmpspd');
+	}
+
+	public function getSpr(){
+		return floor(($this->attr('atk') + $this->attr('hp') + $this->attr('spd') + $this->attr('mqp')) / 10) + $this->attr('tmpspr');
+	}
+
+	public function getSkillIds(){
+		return $this->skillids;
+	}
+
+	public function hasSkill($skill_id){
+		return in_array($skill_id, $this->skillids);
+	}
+
+	public function acquireSkill($skill_id){
+		if(!in_array($skill_id, $this->skillids)){
+			$this->skillids[] = $skill_id;
+		}
+		$this->attr('skill', implode(',', $this->skillids));
+	}
+
+	public function removeSkill($skill_id){
+		foreach($this->skillids as $key => $id){
+			if($skill_id == $id){
+				unset($this->skillids[$key]);
+			}
+		}
+		$this->attr('skill', implode(',', $this->skillids));
+	}
+
+	public function useSkill($skill, &$target = null){
+		$damage = 0;
+		if($skill['type'] < 3){
+			//麻痹效果
+			if($this->attr('status') == 5 && rand(1, 5) <= 2){
+				$skill['spr'] = 0;
+				//$GLOBALS[$side.'_topmsg'] = $this->attr('name').'麻痹了，无法攻击！';
+				return -2;
+			}
+
+			if($this->attr('mp') > 0 && $skill['power'] && $skill['spr'] >= rand(1, 105)){//技能攻击
+				$atb_effect = PokemonFight::AtbEffect($skill['atb'], $target);
+				//其他因素修正(道具加成)在此添加
+				if($skill['atb'] == $this->attr('atb1') || $skill['atb'] == $this->attr('atb2')){//同属性修正
+					$skill['power'] = $skill['power'] * 1.5;
+				}
+
+				$attack = $defense = 0;
+				if($skill['atb'] <= 8){
+					$attack = $this->getStk();
+					$defense = $target->getSdf();
+				}else{
+					$attack = $this->getAtk();
+					$defense = $target->getDef();
+				}
+				$damage = floor((($this->attr('level') * 0.4 + 2) * $skill['power'] * $attack / $defense / 50 + 2) * $atb_effect * rand(85, 100) / 100);
+				$target->getDamaged($damage);
+
+			}else{
+				$damage = -1;
+				//if($skill['power']) $GLOBALS[$side.'_topmsg'] = $this->attr('name').'没有击中！';
+			}
+		}
+
+		return $damage;
+	}
+
+	public function getRandomSkill(){
+		return $this->skillids[array_rand($this->skillids)];
+	}
+
+	public function getDamaged($damage){
+		$this->attr('hp', max(0, $this->attr('hp') - $damage));
+		if($this->attr('hp') <= 0){
+			$this->attr('status', 0);
+		}
+	}
+
+	function gainExp($exp){
+		global $db, $tpre;
+		
+		$exp += $this->attr('exp');
+		$this->attr('exp', $exp);
+
+		$species = $db->fetch_first("SELECT hp,atk,def,stk,sdf,spd,growthtype FROM {$tpre}pokemoninfo WHERE id=".$this->attr('pokeid'));
+		$level = Pokemon::ExpToLevel($this->attr('level'), $exp, $species['growthtype']);
+
+		if($level != $this->attr('level')){
+			$hp = ceil(($species['hp'] * 2 + $this->attr('iv_hp') + ($this->attr('ep_hp') / 4)) * $level / 100 + 10 + $level);
+			$this->attr('hp', $hp);
+
+			$naturefix = PokemonNature::$value[$this->attr('natureid')];
+			foreach(array('atk','def','stk','sdf','spd') as $pi => $p){
+				$new_value = ceil((($species[$p] * 2 + $this->attr('iv_'.$p) + ( $this->attr('ep_'.$p) / 4)) * $level / 100 + 5) * $naturefix[$pi]);
+				$this->attr($p, $new_value);
+			}
+
+			$frd = $this->attr('frd') + abs($level - $this->attr('level')) * 5;
+			$this->attr('frd', $frd);
+
+			$this->attr('level', $level);
+		}
+	}
+
+
+	public function clearTempAttributes(){
+		$this->attr('tmpstatus', '');
+		foreach(array('tmpatk', 'tmpdef', 'tmpstk', 'tmpsdf', 'tmpspd', 'tmpspr') as $name){
+			$this->attr($name, 0);
+		}
+	}
+
+	public function toReadable($mon = NULL){
 		if($mon == NULL){
 			$mon = $this->attr;
 		}
@@ -48,7 +182,7 @@ class Pokemon extends DBObject{
 			if(isset($mon['growthtype'])){
 				$levelbase = Pokemon::LevelToExp($mon['level'], $mon['growthtype']);
 				$levelfloor = Pokemon::LevelToExp($mon['level']+1, $mon['growthtype']) - $levelbase;
-				$mon['exp_pct'] = intval (100 * ($mon['exp'] - $levelbase) / $levelfloor);
+				$mon['exp_pct'] = intval(100 * ($mon['exp'] - $levelbase) / $levelfloor);
 			}
 			$mon['frd_pct'] = floor(100 * $mon['frd'] / 255);
 			$mon['status_c'] = Pokemon::$Status[$mon['status']];
@@ -62,7 +196,7 @@ class Pokemon extends DBObject{
 			$mon['stk'] += $mon['tmpstk'];
 			$mon['sdf'] += $mon['tmpsdf'];
 			$mon['spd'] += $mon['tmpspd'];
-			$mon['spr'] = floor(($mon['atk'] + $mon['hp'] + $mon['speed'] + $mon['mqp']) / 10) + $mon['tmpspr'];
+			$mon['spr'] = floor(($mon['atk'] + $mon['hp'] + $mon['spd'] + $mon['mqp']) / 10) + $mon['tmpspr'];
 			$mon['height_c'] = $mon['height'].' m';
 			$mon['weight_c'] = $mon['weight'].' kg';
 			$mon['growthtype_c'] = Pokemon::$GrowthType[$mon['growthtype']];
@@ -70,13 +204,13 @@ class Pokemon extends DBObject{
 		return $mon;
 	}
 
-	function evolute($action = ''){
-		global $timestamp, $timeoffset, $db, $tpre, $_CONFIG;
+	public function evolute($action = ''){
+		global $timeoffset, $db, $tpre, $_CONFIG;
 
 		$mon = &$this->attr;
 		if($mon['status'] == 0 || $mon['status'] == 2 || $mon['status'] >= 9) return false;
 
-		$presenthour = intval(gmdate('H', $timestamp + 3600 * $timeoffset));
+		$presenthour = intval(gmdate('H', TIMESTAMP + 3600 * $timeoffset));
 		$success = FALSE;
 		$exsql = $success_msg = '';
 		$orimonid = $mon['id'];
@@ -230,11 +364,7 @@ class Pokemon extends DBObject{
 		return $success;
 	}
 
-	function useSkill($skillid, $target = null){
-
-	}
-
-	static function LevelToExp($level, $growth_type){
+	static public function LevelToExp($level, $growth_type){
 		switch($growth_type){
 			case 0:$exp = pow($level, 3);break;
 			case 1:
@@ -265,30 +395,13 @@ class Pokemon extends DBObject{
 		return floor($exp);
 	}
 
-	static function ExpToLevel($orilevel, $exp, $growth_type){
+	static public function ExpToLevel($orilevel, $exp, $growth_type){
 		$levelup = 0;
 		while(Pokemon::LevelToExp(($orilevel + $levelup), $growth_type) < $exp) $levelup++;
 		return $orilevel + $levelup - 1;
 	}
 
-	function pkw_exp_incre($orilevel, $exp, $monid, $pokeid, $natureid){
-		global $tpre, $db;
-		$selectfields = 's.growthtype';
-		foreach(array('hp','atk','def','stk','sdf','spd') as $p) $selectfields.= ',s.'.$p.',i.iv_'.$p.',i.ep_'.$p;
-		$mon = $db->fetch_first("SELECT $selectfields FROM {$tpre}pokemonext i LEFT JOIN {$tpre}mon s ON s.id=$pokeid WHERE i.id=$monid");
-		$mon['level'] = pkw_exp2lv($orilevel, $exp, $mon['growthtype']);
-		$mon['hp'] = ceil(($mon['hp']*2 + $mon['iv_hp'] + ($mon['ep_hp'] / 4)) * $mon['level'] / 100 + 10 + $mon['level']);
-
-		$naturefix = PokemonNature::$value[$natureid];
-		foreach(array('atk','def','stk','sdf','spd') as $pi => $p){
-			$mon[$p] = ceil((($mon[$p] * 2 + $mon['iv_'.$p] + ( $mon['ep_'.$p] / 4)) * $mon['level'] / 100 + 5) * $naturefix[$pi]);
-		}
-		$mon_frdup += ($mon['level'] - $orilevel) * 5;
-
-		return ",level=$mon[level],exp=$exp,frd=frd+$mon_frdup,mp=maxmp,hp=$mon[hp],atk=$mon[atk],def=$mon[def],stk=$mon[stk],sdf=$mon[sdf],spd=$mon[spd]";
-	}
-
-	static function Generate($pokeid, $level, $gender = 0, $shape = 0, $natureid = 0, $trait = 0, $status = 1){
+	static public function Generate($pokeid, $level, $gender = 0, $shape = 0, $natureid = 0, $trait = 0, $status = 1){
 		global $tpre, $db;
 
 		$query = $db->query("SELECT * FROM {$tpre}pokemoninfo WHERE id=$pokeid");
@@ -355,7 +468,7 @@ class Pokemon extends DBObject{
 		$db->INSERT($mon);
 	}
 
-	static function EvolutionCondition($e){
+	static public function EvolutionCondition($e){
 		global $db, $mon, $tpre;
 		switch($e['evotype']){
 		case 1:
@@ -460,12 +573,23 @@ class Pokemon extends DBObject{
 	static private $IndividualAttributes = array('pokeid','shape','ownerid','owner','name','regdate','atb1','atb2','level','exp','status','tmpstatus','gender','natureid','trait','tmptrait','height','weight','godev','frd','hp','maxhp','mp','maxmp','atk','tmpatk','def','tmpdef','stk','tmpstk','sdf','tmpsdf','spd','tmpspd','tmpspr','col','bty','cut','smt','tgh','equip','skill','ep_hp','ep_atk','ep_def','ep_stk','ep_sdf','ep_spd','iv_hp','iv_atk','iv_def','iv_stk','iv_sdf','iv_spd');
 	
 	static public $AttrName = array('godev'=>'善恶值','status'=>'状态','mqp'=>'智慧','bty'=>'魅力','level'=>'等级','frd'=>'友好度','hp'=>'体力','maxhp'=>'体力上限','mp'=>'气力','maxmp'=>'气力上限','atk'=>'攻击','atktemp'=>'临时攻击','def'=>'防御','deftemp'=>'临时防御','atk'=>'特攻','atktemp'=>'临时特攻','def'=>'特防','deftemp'=>'临时特防','spd'=>'速度','spdtemp'=>'临时速度','spr'=>'速度','sprtemp'=>'临时速度');
+	const Any = 0;
+
 	static public $Atb = array('所有','火','水','电','草','冰','超','龙','恶','普','格','飞','虫','毒','地','岩','钢','鬼','???');
-	static public $EggType = array('所有', '???','怪兽','水中1','水中2','水中3','虫','飞行','陆上','妖精','植物','矿物','人形','不定形','百变怪','龙','未发现');
-	static public $GrowthType = array('较快','不定','波动','较慢','快','慢');
-	static public $Gender = array('任意','<font color=#3399FF>雄性</font>','<font color=#FF3366>雌性</font>','无');
-	static public $Status = array('<font color=gray>不能战斗</font>','正常','<font color=pink>救治中……</font>','<font color=purple>中毒</font>','<font color=lightblue>睡眠</font>','<font color=brown>麻痹</font>','<font color=red>烧伤</font>','<font color=blue>冰冻</font>','','蛋');
+	const Fire = 1, Water = 2, Electric = 3, Grass = 4, Ice = 5, Psychic = 6, Dragon = 7, Dark = 8, Normal = 9, Fighting = 10, Flying = 11, Bug = 12, Poison = 13, Ground = 14, Rock = 15, Steel = 16, Ghost = 17;
 	
+	static public $EggType = array('所有', '???','怪兽','水中1','水中2','水中3','虫','飞行','陆上','妖精','植物','矿物','人形','不定形','百变怪','龙','未发现');
+	const MonsterEgg = 2, Water1Egg = 3, Water2Egg = 4, Water3Egg = 5, BugEgg = 6, FlyingEgg = 7, GroundEgg = 8, FairyEgg = 9, PlantEgg = 10, MineralEgg = 11, HumanShapeEgg = 12, Indeterminate = 13, DittoEgg = 14, DragonEgg = 15, NoEgg = 16;
+
+	static public $GrowthType = array('较快','不定','波动','较慢','快','慢');
+	const MediumFast = 0, Erratic = 1, Fluctuating = 2, MediumSlow = 3, Fast = 4, Slow = 5;
+
+	static public $Gender = array('任意','<font color=#3399FF>雄性</font>','<font color=#FF3366>雌性</font>','无');
+	const Male = 1, Female = 2, Neutral = 3;
+
+	static public $Status = array('<font color=gray>不能战斗</font>','正常','<font color=pink>救治中……</font>','<font color=purple>中毒</font>','<font color=lightblue>睡眠</font>','<font color=brown>麻痹</font>','<font color=red>烧伤</font>','<font color=blue>冰冻</font>','','蛋');
+	const DyingState = 0, NormalState = 1, CuredState = 2, PoisonedState = 3, SleepingState = 4, AnestheticState = 5, BurnedState = 6, FrozenState = 7, EggState = 9;
+
 	static public function nature(){
 		return PokemonNature::$value;
 	}

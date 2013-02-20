@@ -1,3 +1,4 @@
 ﻿data/log/
 data/tpl/
 data/cache/
+*.log.php

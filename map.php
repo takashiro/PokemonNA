@@ -1,6 +1,12 @@
 ﻿<?php
 require_once './core/init.inc.php';
 
+$regionlist = readcache('region');
+if(!$regionlist){
+	$regionlist = $db->fetch_all("SELECT * FROM {$tpre}region");
+	writecache('region', $regionlist);
+}
+
 $mymonlist = array();
 $query = $db->query("SELECT id,pokeid,shape,name FROM {$tpre}pokemon WHERE ownerid='$_USER[id]' AND status!=0 AND status!=2 AND status<9 LIMIT 6");
 while($m = $db->fetch_array($query)){

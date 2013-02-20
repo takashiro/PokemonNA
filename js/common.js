@@ -1,3 +1,14 @@
+
+function in_array(needle, arr){
+	for(var i in arr){
+		if(arr[i] == needle){
+			return true;
+		}
+	}
+
+	return false;
+}
+
 function shockwave(src, width, height, flashvar){
 	if(typeof flashvar == 'string' && flashvar){
 		src += '?' + flashvar;

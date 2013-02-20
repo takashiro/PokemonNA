@@ -1,8 +1,8 @@
 a.btn{border:1px solid;border-color:#FFFDEE #FDB939 #FDB939 #FFFDEE; background: #FFF8C5; color: #090 !important;line-height:34px;padding:6px 20px 4px 20px;margin:6px;text-decoration:none;}
 a:hover{text-decoration:none}
 #detailinfo{text-align:justify;}
-#obv_img{filter: FlipH}
-#undermsg{display:block;height:40px;line-height:40px}
-#rev_img, #obv_img{position:relative;}
-#rev_skill, #obv_skill, #weathershow{width:785px;height:300px;position:absolute;left:130px;top:60px;z-index:11}
+#neg_img{filter:flipH;-moz-transform:matrix(-1, 0, 0, 1, 0, 0);-webkit-transform:matrix(-1, 0, 0, 1, 0, 0);}
+#msg_under{display:block;height:40px;line-height:40px}
+#pos_img, #neg_img{position:relative;}
+#pos_skill, #neg_skill, #weathershow{width:785px;height:300px;position:absolute;left:130px;top:60px;z-index:11}
 .altbg{background:#F5FAFE;}

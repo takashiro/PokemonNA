@@ -36,7 +36,7 @@ $undermsg = $rev_topmsg = $rev_sidemsg = $rev_undermsg = $obv_topmsg = $obv_side
 $rev_hideskill = $obv_hideskill = $endbattle = FALSE;
 $rev_skill_back = TRUE;
 
-$revusql.= ',actiontime='.$timestamp;//加入动作时间
+$revusql.= ',actiontime='.TIMESTAMP;//加入动作时间
 
 $obv = $db->fetch_first("SELECT u.id AS uid,u.username,u.cash,u.monkid,u.obvid,u.obvhurt,u.battleon,m.* FROM {$tpre}trainer u LEFT JOIN {$tpre}pokemon m ON m.id=u.monid WHERE u.id=$rev[obvid]");//取出对手数据
 $obv['tmpstatus'] && $obv['tmpstatus'] = unserialize($obv['tmpstatus']);
@@ -64,7 +64,7 @@ elseif($receiver && !$rev['obvid'] && !$rev['gymid']){
 
 if($obv['obvid'] != $_USER[id]) showmsg('等待对方回应中，您可以随时取消此次挑战。', 'refresh');
 
-$g['weather'] = ($timestamp <= $rev['weatherexpiry'])?$rev['weather']:0;
+$g['weather'] = (TIMESTAMP <= $rev['weatherexpiry'])?$rev['weather']:0;
 
 if(!$kid || !$action){
 	$skillname = array();//技能名称显示
@@ -89,7 +89,7 @@ if($action == 'fight'){
 	unset($k);
 
 	//动作时限&ext25-先制攻击
-	if(($timestamp - $rev['actiontime'] < 5 && $rev_skill['ext'] != 25) || $timestamp - $rev['actiontime'] < 2){
+	if((TIMESTAMP - $rev['actiontime'] < 5 && $rev_skill['ext'] != 25) || TIMESTAMP - $rev['actiontime'] < 2){
 		exit('$(\'undermsg\').innerHTML += \'请勿非法操作！出招超前！\';');
 	}
 

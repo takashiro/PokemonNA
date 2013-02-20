@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=$_CONFIG['charset']" />
+<title>{$map[regionname]} - {$map[name]} - Pocket Monster NA</title>
+<meta name="generator" content="$_CONFIG[version]" />
+<meta name="author" content="JKT Team" />
+<meta name="copyright" content="2001-2007 Jidaiwo Koeru Tabi Inc." />
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link rel="stylesheet" type="text/css" href="$imgdir/style_default.css" />
+<link rel="stylesheet" type="text/css" href="$imgdir/style_battle.css" />
+<script type="text/javascript">var charset = '$_CONFIG['charset']', discuz_uid = $_USER['id'], imgpath = '$imgdir', mid = {$P[id]}, skillurl = 'area.php?action=fight', waittime = 3;</script>
+<script type="text/javascript" src="./js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="./js/common.js"></script>
+<script type="text/javascript" src="./js/battle.js"></script>
+</head>
+
+<body onkeydown="if(event.keyCode==27) return false;" oncontextmenu="return false;">
+<div id="append_parent"></div><div id="ajaxwaitid"></div>
+<div id="pos_skill"></div><div id="neg_skill"></div><div id="weathershow"></div>
+<div id="wrap" class="wrap" style="text-align:center;margin-top:4px">
+  <div class="mainbox">
+    <h1>{$map[regionname]} - {$map[name]}</h1>
+    <table>
+      <thead>
+        <td colspan="3">对方信息</td>
+		<td></td>
+		<td colspan="4">我方信息</td>
+	  </thead>
+        <tr class="altbg">
+          <td colspan="3" id="neg_topmsg">$neg_topmsg</td>
+          <td>&nbsp;</td>
+          <td colspan="4" id="pos_topmsg">$pos_topmsg</td>
+        </tr>
+      <tr>
+        <td colspan="3"><img src="$imgdir/pokemon/$N[picid].gif" id="neg_img" /></td>
+        <td>&nbsp;</td>
+        <td colspan="4"><img src="$imgdir/pokemon/$P[picid].gif" id="pos_img" /></td>
+        </tr>
+      <tr>
+        <td colspan="3" id="neg_undermsg">$neg_undermsg</td>
+        <td>&nbsp;</td>
+        <td colspan="4" id="pos_undermsg">$pos_undermsg</td>
+      </tr>
+      <tr id="detailinfo" class="altbg">
+        <td><p>体力：<span id="neg_hp">$N[hp]</span> / <span id="neg_maxhp">$N[maxhp]</span></p>
+		<p><div class="bar"><div id="neg_hpbar" class="hp" style="width:$N[hp_pct]%"></div></div></p>
+        <p>气力：<span id="neg_mp">$N[mp]</span> / <span id="neg_maxmp">$N[maxmp]</span></p>
+		<p><div class="bar"><div id="neg_mpbar" class="mp" style="width:$N[mp_pct]%"></div></div></p></td>
+        <td><p>等级：Lv.<span id="neg_level">$N[level]</span></p>
+        <p>属性：<span id="neg_atb"><img src="$imgdir/atb/$N[atb1].gif" /><!--{if $N[atb2]}--> <img src="$imgdir/atb/$N[atb2].gif" /><!--{/if}--></span></p>
+		<p>状态：<span id="neg_status">$N[status_c]</span></p></td>
+        <td>性别：$N[gender_c]</td>
+        <td>&nbsp;</td>
+        <td><p>等级：Lv.<span id="pos_level">$P[level]</span></p>
+            <p>属性：<span id="pos_atb"><img src="$imgdir/atb/$P[atb1].gif" /><!--{if $P[atb2]}--> <img src="$imgdir/atb/$P[atb2].gif" /><!--{/if}--></span></p>
+            <p>攻击：<span id="pos_atk">$P[atk]</span></p>
+            <p>防御：<span id="pos_def">$P[def]</span></p></td>
+        <td><p>性别：$P[gender_c]</p>
+			<p>特攻：<span id="pos_stk">$P[stk]</span></p>
+			<p>特防：<span id="pos_sdf">$P[sdf]</span></p>
+			<p>速度：<span id="pos_spd">$P[spd]</span></p></td>
+        <td><p>状态：<span id="pos_status">$P[status_c]</span></p></td>
+        <td><p>体力：<span id="pos_hp">$P[hp]</span> / <span id="pos_maxhp">$P[maxhp]</span></p>
+			<p><div class="bar"><div id="pos_hpbar" class="hp" style="width:$P[hp_pct]%"></div></div></p>
+            <p>气力：<span id="pos_mp">$P[mp]</span> / <span id="pos_maxmp">$P[maxmp]</span></p>
+			<p><div class="bar"><div id="pos_mpbar" class="mp" style="width:$P[mp_pct]%"></div></div></p></td>
+      </tr>
+      <tr>
+        <td colspan="8"><div id="undermsg">$undermsg</div></td>
+      </tr>
+      <tr class="altbg">
+        <td colspan="8" id="skillshow">
+			<!--{loop $P['skilllist'] $v}--><button class="submit" onclick="useSkill({$v})">$skillname[$v]</button><!--{/loop}-->		</td>
+      </tr>
+      <tr>
+        <td colspan="8">
+    			<button class="submit" onclick="location='area.php?gid=$gid&action=escape&revid=$P[id]'">逃离战斗</button>
+    			<button class="submit" onclick="changePokemon()">替换精灵</button>
+    			<button class="submit" onclick="viewBackpack(3)">扔精灵球</button>
+    			<button class="submit" onclick="viewBackpack(2)">使用恢复道具</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

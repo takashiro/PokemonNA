@@ -3,9 +3,12 @@
 define('IN_PLUSQUIZ', true);//用于防止模块文件被直接运行
 define('S_ROOT', dirname(dirname(__FILE__)).'/');//网站根目录常量
 define('S_VERSION', 'Lugia');
-error_reporting(E_ERROR | E_WARNING | E_PARSE);//Debug
-set_magic_quotes_runtime(0);//魔法括号
+error_reporting(E_ALL ^ E_NOTICE);//Debug
 set_time_limit(0);
+
+if(PHP_VERSION < '5.3'){
+	set_magic_quotes_runtime(0);//魔法括号
+}
 
 //类自动加载
 function __autoload($classname){

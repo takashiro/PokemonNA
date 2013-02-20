@@ -28,7 +28,7 @@ $onlinelist = array();
 }*/
 $onlinenum = count($onlinelist);
 
-list($hour, $minute) = explode(':', gmdate('H:i', $timestamp + 3600 * $timeoffset));
+list($hour, $minute) = explode(':', gmdate('H:i', TIMESTAMP + 3600 * $timeoffset));
 if($minute <= 15) $joy_time = $hour.':15';
 elseif($minute > 15 && $minute <= 45) $joy_time = $hour.':45';
 elseif($minute > 45) $joy_time = (($hour == 23)?0:$hour+1).':15';
