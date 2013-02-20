@@ -2,6 +2,10 @@
 require_once './core/init.inc.php';
 include S_ROOT.'data/cache/contest.php';
 
+if($_USER['id'] != 1){
+	showmsg('华丽大赛赛场建设中，请期待哦~');
+}
+
 if(!$g = $_CONFIG['contest'][$gid]) showmsg('抱歉，本次华丽大赛已经结束了！', 'back');
 else $g['banneduser'] = explode(',', $g['banneduser']);
 
