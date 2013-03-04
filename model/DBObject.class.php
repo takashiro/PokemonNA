@@ -12,10 +12,13 @@ class DBObject{
 
 	function __destruct(){
 		global $db;
+
 		$update = array();
-		foreach($this->oattr as $key => $value){
-			if($value != $this->attr[$key]){
-				$update[$key] = $this->attr[$key];
+		if($this->oattr){
+			foreach($this->oattr as $key => $value){
+				if($value != $this->attr[$key]){
+					$update[$key] = $this->attr[$key];
+				}
 			}
 		}
 
