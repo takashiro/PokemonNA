@@ -29,7 +29,7 @@ if($item == 'calc'){
 		$f['hard'] = $hardarray[$f['hard']];
 		$fruitlist[] = $f;
 	}
-}elseif($item == 'cpanel'){
+}elseif($item == 'cpanel' && $_G['user']->isLoggedIn()){
 	if(submitcheck('cpanelupdate')){
 		$_G['user']->attr('localpath', $_POST['localpath']);
 		$_G['user']->attr('battleone', intval($_POST['battleon']));

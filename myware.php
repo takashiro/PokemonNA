@@ -1,6 +1,10 @@
 ﻿<?php
 require_once './core/init.inc.php';
 
+if(!$_G['user']->isLoggedIn()){
+	showmsg('请先登录后操作。', 'memcp.php?action=login');
+}
+
 if(!$_POST){
 	$query = $db->query("SELECT id,pokeid,name,shape FROM {$tpre}pokemon WHERE ownerid=$_USER[id] AND status<9 LIMIT 6");
 	$mymon = array();
