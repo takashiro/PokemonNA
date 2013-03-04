@@ -1,11 +1,9 @@
-﻿<!--{eval header('Cache-Control: no-cache, must-revalidate');}-->
-<!--{eval header('Content-type: text/plain;charset=GBK');}-->
-<table>
-  <thead><td></td><td>名称</td><td>个数</td><td>说明</td><td>操作</td></thead>
-<!--{loop $warelist $ware}-->
-<tr><td><img src="$imgdir/ware/$ware[ico]" /></td>
-<td>$ware[name_c]</td><td>$ware[nums]</td><td>$ware[intro]</td><td><a href="adven.php?action=catch&revid=$revid&ballid=$ware[wareid]">[使用]</a></td></tr>
-<!--{/loop}-->
+﻿<table class="itemlist" title="$ware[intro]">
+	<!--{loop $warelist $ware}-->
+	<tr class="item" onclick="useWare($ware[wareid])">
+		<td class="ico"><img src="$imgdir/ware/$ware[ico]" /></td>
+		<td class="name">$ware[name_c]</td>
+		<td class="nums">$ware[nums]</td>
+	</tr>
+	<!--{/loop}-->
 </table>
-<div class="pages_btns">$multipage</div>
-<script type="text/javascript">$('float_confirm_title').innerText = '我的背包';</script>

@@ -135,7 +135,7 @@ $backpack->updateStorage($mymon_equip, 1);
 	}
 }
 
-if(!$ajax){
+if(!$_GET['ajax']){
 	unset(Ware::$Type[0]);
 	include view('myware');
 }else include view('myware_ajax');

@@ -203,7 +203,7 @@ td.selector { width: 20px; text-align: center; }
 
 /* ~~~~ Control Panel ~~~~ */
 .container { width: 100%; overflow: hidden; }
-	.content { float: right; width: 80%; }
+	.container > .content { float: right; width: 80%; }
 		.content .mainbox { padding-bottom: 5px; }
 		.content .footoperation, .content .mainbox thead th, .content .mainbox thead td,
 		.content .mainbox tbody th, .content .mainbox tbody td { border-top: none; border-bottom: 1px solid #CAD9EA; }
@@ -232,10 +232,6 @@ td.selector { width: 20px; text-align: center; }
 /* ~~~~ DropMenu ~~~~ */
 
 .dropmenu { padding-right: 15px !important; background-image: url(./common/arrow_down.gif) !important; background-position: 100% 50% !important; background-repeat: no-repeat !important; cursor: pointer; }
-#pm_ntc_view ul, .popup { text-align: left; line-height: 1.4em; padding: 10px; overflow: hidden; border: 1px solid #CAD9EA; background: #FFF url("./common/portalbox_bg.gif"); background-repeat: repeat-x; background-position: 0 1px;  }
-	#pm_ntc_view ul li{font-weight:bold}
-	#pm_ntc_view ul em{font-weight:normal;margin-right:10px}
-#pm_ntc span{color:red;font-weight:bold;}
 .headermenu_popup { width: 170px; }
 	.headermenu_popup li { float: left; width: 7em; line-height: 24px; height: 24px; overflow: hidden; border-bottom: 1px solid #E8E8E8; }
 .userinfopanel { border: 1px solid #CAD9EA; width: 140px; background: #FFF url("./common/portalbox_bg.gif"); background-repeat: repeat-x; background-position: 0 0; padding: 10px; }
@@ -246,8 +242,6 @@ td.selector { width: 20px; text-align: center; }
 	.userinfopanel dl { border-bottom: 1px solid #E8E8E8; margin: 5px 0; padding: 5px 0; }
 	.postauthor cite a { float: left; padding: 5px; border: solid #E8F3FD; border-width: 1px 1px 0; height: 10px; overflow: hidden; }
 		.postauthor cite a.hover { border-color: #CAD9EA; background-color: #FFF; }
-	.popup .postauthor { width: 180px; }
-		.popup .postauthor a { color: #069; }
 #styleswitcher_menu { overflow: visible; }
 	#styleswitcher_menu, #styleswitcher_menu ul li, #styleswitcher_menu ul li.current a, #styleswitcher_menu ul li a { white-space: nowrap; }
 	#styleswitcher_menu ul li.current { font-weight: bold; }
@@ -316,4 +310,4 @@ li.poplink { text-indent: 20px; padding: 4px; background: url(./common/homelink.
 		.announcementinfo span { float: left; font-weight: 700; height: 30px; line-height: 30px; margin-left: 16px; color: #000; }
 		.announcementmessage { padding: 10px; border-bottom: 1px solid #CAD9EA; }
 
-.popup {display:none; position:absolute; }
+.popup {display:none; position:absolute; z-index:99;}

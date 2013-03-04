@@ -4,5 +4,12 @@ a:hover{text-decoration:none}
 #neg_img{filter:flipH;-moz-transform:matrix(-1, 0, 0, 1, 0, 0);-webkit-transform:matrix(-1, 0, 0, 1, 0, 0);}
 #msg_under{display:block;height:40px;line-height:40px}
 #pos_img, #neg_img{position:relative;}
-#pos_skill, #neg_skill, #weathershow{width:785px;height:300px;position:absolute;left:130px;top:60px;z-index:11}
+#pos_skill, #neg_skill, #weathershow{width:785px;height:300px;position:absolute;left:130px;top:60px;z-index:2}
 .altbg{background:#F5FAFE;}
+
+.itemlist{width:auto;}
+.itemlist .item{position:relative;cursor:pointer;height:32px;width:100%}
+.itemlist .item:hover{background:#EEE;top:-1px;left:-1px;}
+.itemlist .item .ico{width:32px;}
+.itemlist .item .name{text-align:left;}
+.itemlist .item .nums{width:40px;}

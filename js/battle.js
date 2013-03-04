@@ -17,10 +17,11 @@ function useSkill(skill_id){
 
 	if(waittime > 0){
 		$('#msg_under').html('技能使用中...');
-		setTimeout('useSkill('+skill_id+');', waittime * 1000);
-		waittime = 0;
+		setTimeout('useSkill('+skill_id+');', 1000);
+		waittime--;
 		return;
 	}
+	waittime = 3;
 
 	$.ajax({
 		url:skillurl + '&mid=' + mid + '&kid=' + skill_id,
@@ -42,7 +43,6 @@ function useSkill(skill_id){
 		complete:function(){
 			skill_onrequest = false;
 			$('#skillshow button').attr('disabled', false);
-			waittime = 3;
 		}
 	});
 }
@@ -58,95 +58,41 @@ function setHp(side, hp){
 	$('#' + side + '_hp').html(hp);
 }
 
-/*function changeMon(){
-	if(waittime > 0){
-		$('undermsg').innerHTML = '替换中...剩余'+waittime+'秒';
-		setTimeout('changeMon()', waittime);
-		return;
-	}
-	floatwin('open_confirm', -1, 400, 180);
-	$('floatwin_confirm').className = 'mainbox';
-	$('floatwin_confirm_mask').className = '';
-	$('floatwin_confirm_content').style.height = '80%';
-	$('floatwin_confirm_content').style.overflow = 'auto';
-
-	var url = 'pkw.php?index=view&action=ajax';
-	var request=creatrequest();
-	request.open("Get", url, true);
-	request.onreadystatechange = updatePage;
-	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	request.send('');
-	function updatePage() {
-		if (request.readyState == 4){
-			if (request.status == 200){
-				response = request.responseText;
-				$('floatwin_confirm_content').innerHTML = '<ul id="monselect">'+response+'</ul>';
-			}else{
-				floatwin('close_confirm');
-			}
-		}
-	}
-}
-
 function viewBackpack(type){
-	if(waittime > 0){
-		$('undermsg').innerHTML = '打开背包中，剩余'+waittime+'秒';
-		setTimeout('viewBackpack('+type+')', waittime);
-		return;
-	}
-	floatwin('open_confirm', -1, 400, 180);
-	$('floatwin_confirm').className = 'mainbox';
-	$('floatwin_confirm_mask').className = '';
-	$('floatwin_confirm_content').style.overflow = 'auto';
+	if($('#backpack').length == 0){
+		var backpack = $('<div></div>');
+		backpack.attr('id', 'backpack');
+		backpack.attr('class', 'box popup');
+		backpack.css({'width':170, 'height':280});
 
-	var url = 'pkw.php?index=myware&ajax=1&revid='+revid+'&type='+type;
-	var request=creatrequest();
-	request.open("Get", url, true);
-	request.onreadystatechange = updatePage;
-	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	request.send('');
-	function updatePage() {
-		if (request.readyState == 4){
-			if (request.status == 200){
-				response = request.responseText;
-				$('floatwin_confirm_content').innerHTML = '<ul>'+response+'</ul>';
-			}else{
-				floatwin('close_confirm');
-			}
-		}
+		var top = ($(window).height() - backpack.outerHeight()) / 2 + $(window).scrollTop();
+		var left = ($(window).width() - backpack.outerWidth()) / 2 + $(window).scrollLeft();
+		backpack.css({'top':top, 'left':left});
+
+		var title = $('<h4></h4>');
+		title.html('我的背包');
+
+		var content = $('<div></div>');
+		content.attr('class', 'content');
+		content.css({'height':270, 'overflow-y':'auto'});
+
+		backpack.append(title);
+		backpack.append(content);
+
+		$('body').append(backpack);
+	}else{
+		$('#backpack').slideUp();
 	}
+
+	$('#backpack .content').load('myware.php?ajax=1&mid='+mid+'&type='+type, function(){
+		$(this).parent().slideDown();
+	});
 }
 
 function setattrib(element, attrib, value, laytime){
 	if(laytime <= 0) eval("$('"+element+"')."+attrib+"='"+value+"';");
 	else setTimeout("setattrib('"+element+"', '"+attrib+"', '"+value+"', 0);", laytime);
 }
-
-function barpercent(element, percent){
-	var ori = parseInt($(element).style.width, 10);
-	var fix = (percent > ori)?1:(percent < ori)?-1:0;
-	setTimeout('changebar("'+element+'", '+fix+', '+percent+')', 10);
-}
-
-function changebar(element, fix, percent){
-	var ori = parseInt($(element).style.width, 10);
-	if(element.substr(3, 5) == 'hpbar'){
-		if(ori <= 10) $(element).className = 'godev';
-		else if(ori <= 45) $(element).className = 'exp';
-		else $(element).className = 'hp';
-	}
-	if(ori != percent){
-		$(element).style.width = (ori+fix)+"%";
-		setTimeout('changebar("'+element+'", '+fix+', '+percent+')', 10);
-	}
-}
-
-function reduceTime(){
-	if(waittime > 0){
-		waittime -= 1;
-	}
-}
-setInterval('reduceTime()', 1000);
 
 function startFloat(element){
 	setInterval('floatElement(\"'+element+'\");', 100);
@@ -163,5 +109,3 @@ function shockimg(element){
 	setattrib(element, 'style.left', '-30px', 200);
 	setattrib(element, 'style.left', '0px', 250);
 }
-
-*/
