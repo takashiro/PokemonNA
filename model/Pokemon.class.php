@@ -546,7 +546,7 @@ class Pokemon extends DBObject{
 			$e['require_c'] = "学会{$requireskill}进化";
 		break;
 		case 21:
-			$query = $db->query("SELECT name_c FROM {$tpre}mon WHERE id=$e[require]");
+			$query = $db->query("SELECT name_c FROM {$tpre}pokemoninfo WHERE id=$e[require]");
 			$requiremon = $db->result($query, 0);
 			$e['require_c'] = "队伍中有{$requiremon}进化";
 		break;

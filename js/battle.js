@@ -16,7 +16,7 @@ function useSkill(skill_id){
 	}
 
 	if(waittime > 0){
-		$('#undermsg').html('技能使用中...');
+		$('#msg_under').html('技能使用中...');
 		setTimeout('useSkill('+skill_id+');', waittime * 1000);
 		waittime = 0;
 		return;
@@ -27,7 +27,7 @@ function useSkill(skill_id){
 		type:'get',
 		dataType:'json',
 		success:function(data){
-			$('#undermsg').html('');
+			$('#msg_under').html('');
 			
 			setHp('pos', data.pos_hp);
 			setHp('neg', data.neg_hp);
@@ -37,7 +37,7 @@ function useSkill(skill_id){
 			}
 		},
 		error:function(){
-			$('#undermsg').html('技能施展失败，请重新施展');
+			$('#msg_under').html('技能施展失败，请重新施展');
 		},
 		complete:function(){
 			skill_onrequest = false;
