@@ -1,7 +1,5 @@
 <?php
 
-if(!defined('IN_PLUSQUIZ')) exit('Access Denied');
-
 class Mysql {
 
 	var $version = '';		//Mysql版本

@@ -1,7 +1,5 @@
 <?php
 
-if(!defined('IN_PLUSQUIZ')) exit('Access Denied');
-
 class User extends DBObject{
 	public function __construct(){
 		parent::__construct('trainer');
